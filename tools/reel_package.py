@@ -57,6 +57,8 @@ def timeline_html(title, job, spec, meta, qc=None):
     for t in job.get('flash', []): ev.append((t, 'FLASH', 'full-colour word flash'))
     ev.sort(key=lambda e: e[0])
     words = job['words'] if isinstance(job['words'], list) else json.load(open(job['words']))
+    from template_render import fix_words
+    words = fix_words([tuple(w) for w in words], job.get('glossary'))
     words = [w for w in words if w[1] < job['duration']]
     rows = ''.join(f'<tr><td>{fmt(t)}</td><td class="k">{k}</td><td>{html.escape(str(v))}</td></tr>' for t, k, v in ev)
     sec = {}

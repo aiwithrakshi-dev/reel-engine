@@ -3,7 +3,7 @@
 > **Private.** House-style editing system for **@AIwithRakshith** (Kannada) and **aiwithrakshith.global** (English).
 > Rakshith uploads one raw talking-head video (Kannada or English); any capable LLM agent with a shell and this repo
 > turns it into a finished **1080×1920, 60 fps HD** Instagram Reel. Every reel is 60 fps, and every reel opens with its own
-> **unique hook animation**. Pick one of **7 templates** with `/temp-1` … `/temp-7`; every finished reel is filed in
+> **unique hook animation**. Pick one of **16 templates** with `/temp-1` … `/temp-16`; every finished reel is filed in
 > Google Drive (`Social Media / month / day`) with its thumbnail, caption Doc and timeline Doc, and logged to `memory/`
 > so the next run knows what was already used.
 
@@ -35,9 +35,10 @@ The gap audit behind these tools: [`docs/AUDIT_2026-11-21.md`](docs/AUDIT_2026-1
 [`docs/SKILL_SCORECARD.md`](docs/SKILL_SCORECARD.md) · full Instagram & Reels rulebook:
 [`docs/INSTAGRAM_REELS_GUIDELINES.md`](docs/INSTAGRAM_REELS_GUIDELINES.md).
 
-## 7 templates: `/temp-1` … `/temp-7`
+## 16 templates: `/temp-1` … `/temp-16`
 
-![The 7 templates on the same Day 4 footage](docs/images/templates_strip.jpg)
+![Templates 1-7 on the same Day 4 footage](docs/images/templates_strip.jpg)
+![Templates 8-16 on the same Day 4 footage](docs/images/templates_strip_2.jpg)
 
 | command | template | style reference | use it for |
 |---|---|---|---|
@@ -48,9 +49,20 @@ The gap audit behind these tools: [`docs/AUDIT_2026-11-21.md`](docs/AUDIT_2026-1
 | `/temp-5` | **Bold Yellow Creator** | @artzenmedia | creator tips, app walkthroughs |
 | `/temp-6` | **Orange Explainer** | @hammadkhalid8 | business, money, frameworks |
 | `/temp-7` | **SaaS Split-Screen** | @marcel_grauu | product / SaaS demos |
+| `/temp-8` | **Warm Cinematic** | t-8 (Amazon seller explainer) | expert explainers, calm authority |
+| `/temp-9` | **Peach Premium** | t-9 (video-editor tips) | "3 ways / tips" lists, premium tutorials |
+| `/temp-10` | **Card Stage** | t-10 (Submagic) | app / AI-tool reviews, launches |
+| `/temp-11` | **Green Terminal** | t-11 (Claude Code reel) | money / numbers, dev & agent tools |
+| `/temp-12` | **Cream Editorial** | t-12 (OmniRoute reel) | "free / unlimited" reveals, deep dives |
+| `/temp-13` | **Kanglish Tech Split** | t-13 (Hinglish tech reel) | **Kannada / Kanglish** tool news |
+| `/temp-14` | **Glass Dock** | t-14 (Hinglish AI-tools reel) | "N free AI tools" roundups |
+| `/temp-15` | **Clean White Split** | t-15 (all-AI-in-one-app reel) | cost comparisons, tool tours |
+| `/temp-16` | **Lime Polaroid** | sezz0283 (agency reel) | agency / founder intros, results |
 
 Each template is a spec in `engine/templates.py` (grade, fonts, palette, headline + caption zones, scene types,
-transitions, hook, pace, music) rendered by `engine/template_render.py` at 60 fps; `/temp-1` uses the house renderer.
+transitions, hook, pace, music) rendered by `engine/template_render.py` (2-7) + `engine/template_styles_b.py` (8-16) at 60 fps;
+`/temp-1` uses the house renderer. Split, card, dome and polaroid layouts carry their own face zone, so the guard follows the face
+wherever the layout puts it. ASR spellings are fixed before drawing (job `glossary` + hyphen-split merge: Juni → Junie, Anti -Gravity → Antigravity).
 Full specs and the alignment grid: [`templates/`](templates/README.md). Claude skill: `skill/aiwithrakshith-reel-templates/`.
 
 ```bash

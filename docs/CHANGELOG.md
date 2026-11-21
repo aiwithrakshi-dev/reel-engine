@@ -1,5 +1,17 @@
 # Changelog
 
+## v8 — 21 Nov 2026 (9 more templates: /temp-8 … /temp-16)
+- Nine new styles deconstructed frame by frame from the second reference batch (t-8 … t-15, sezz0283): Warm Cinematic,
+  Peach Premium, Card Stage, Green Terminal, Cream Editorial, Kanglish Tech Split, Glass Dock, Clean White Split, Lime Polaroid.
+  Code in `engine/template_styles_b.py` (mixed into the same renderer: guards, hooks, audio, QC unchanged).
+- Layout helpers `fit()` (scaled A-roll + blurred room fill) and `crop_card()` (PiP, card, dome, facecam, polaroid), each
+  returning the face zone of that layout; `check()` accepts it so face-clear holds in every layout.
+- New transitions: warm light leak, RGB glitch, paper bend, hard cut. New components: blur-in headline words, number tiles,
+  floating shortcut cards, outlined background word, slot-machine counter, stamp, count-up stat page, condensed italic words,
+  uppercase caption chips, glass/dark icon dock, light-beam burst, navy labels, typed cost table, polaroid + ribbon badge + tree.
+- ASR fixes before drawing: hyphen-split merge + job `glossary` (Juni → Junie, Anti -Gravity → Antigravity). Demos 2-7
+  re-rendered with the corrected spellings.
+
 ## v7 — 21 Nov 2026 (7 templates, Drive delivery, memory, portable setup)
 - **7 templates** selectable with `/temp-1` … `/temp-7`: house Red Kinetic + six styles deconstructed frame by frame from
   reference reels (@tahacreate, @ahmadjamilofficial1, @weblyfe, @artzenmedia, @hammadkhalid8, @marcel_grauu).

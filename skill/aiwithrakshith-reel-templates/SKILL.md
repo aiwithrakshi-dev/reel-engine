@@ -1,9 +1,9 @@
 ---
 name: aiwithrakshith-reel-templates
-description: Edit Rakshith's talking-head video into a 60 fps Instagram Reel in one of 7 templates chosen with /temp-1 … /temp-7, with face-clear safe-grid alignment, then file video, thumbnail, caption and timeline Google Docs into Drive Social Media/month/day.
+description: Edit Rakshith's talking-head video into a 60 fps Instagram Reel in one of 16 templates chosen with /temp-1 … /temp-16, with face-clear safe-grid alignment, then file video, thumbnail, caption and timeline Google Docs into Drive Social Media/month/day.
 ---
 
-# AI with Rakshith — Reel Templates (/temp-1 … /temp-7)
+# AI with Rakshith — Reel Templates (/temp-1 … /temp-16)
 
 Router skill. Rakshith types `/temp-N` (+ a video, or "same video as before") and gets a finished 60 fps reel in that
 template's style, plus a Drive day folder with the video, thumbnail, caption Doc and timeline Doc.
@@ -25,7 +25,19 @@ The engine is the GitHub repo **rakshithgowdams/reel-engine** (private). The hou
 | `/temp-5` | Bold Yellow Creator | @artzenmedia | creator tips, app walkthroughs | `zoom_punch` |
 | `/temp-6` | Orange Explainer | @hammadkhalid8 | business, money, frameworks | `strip_slam` |
 | `/temp-7` | SaaS Split-Screen | @marcel_grauu | product / SaaS demos | `halftone_iris` |
+| `/temp-8` | Warm Cinematic | t-8 | expert explainers, insights | `rgb_converge` |
+| `/temp-9` | Peach Premium | t-9 | "3 ways / tips" lists | `pixel_assemble` |
+| `/temp-10` | Card Stage | t-10 | app / AI-tool reviews | `strip_slam` |
+| `/temp-11` | Green Terminal | t-11 | money / numbers, dev tools | `slice_glitch` |
+| `/temp-12` | Cream Editorial | t-12 | "free / unlimited" reveals | `shutter_blinds` |
+| `/temp-13` | Kanglish Tech Split | t-13 | **Kannada / Kanglish** tool news | `zoom_punch` |
+| `/temp-14` | Glass Dock | t-14 | "N free AI tools" roundups | `halftone_iris` |
+| `/temp-15` | Clean White Split | t-15 | cost comparisons, tool tours | `red_wipe` |
+| `/temp-16` | Lime Polaroid | sezz0283 | agency / founder intros, results | `letterbox_open` |
 Full specs: `templates/temp-N/TEMPLATE.md` (generated from `engine/templates.py`, the single source of truth).
+Styles 2-7 live in `engine/template_render.py`, 8-16 in `engine/template_styles_b.py`. Template-specific job keys:
+`banner` (4), `flash` (7), `hook_until` (2), `tiles` (9), `brand` (10), `stamp` on a headline (11), `stat` scene (11),
+`dock` (14), `rows`/`total`/`result` table scene (15), `polaroid`/`name`/`badge`/`items` scene (16). Always pass `glossary`.
 If the default hook is blocked by memory, pick another from `python3 tools/memory.py suggest --energy <energy>`.
 No `/temp-N` given → suggest one from the topic + `memory.py suggest`, say which, and go.
 
@@ -34,8 +46,9 @@ No `/temp-N` given → suggest one from the topic + `memory.py suggest`, say whi
 - **Bands:** HEAD y 280–430 (labels/headlines above the cap) · FACE cap→chin (nothing, ever) · CAPTION chin+24 → 1245.
 - **Face-clear:** `FaceZone.from_head(cap_top, chin, x0, x1)` + 24 px margin. `Reel.check()` stops the render if any
   text/card/chip box touches it. Only whole-frame transitions ≤ 0.2 s may pass over the face.
-- **Character:** A-roll moved down `dy` (60 px for his room framing) so cap ≥ 505 and chin ≤ 1100; /temp-7 scales him
-  to 0.92 in the lower panel. Never crop his face; hands may leave the frame.
+- **Character:** A-roll moved down `dy` (60 px for his room framing) so cap ≥ 505 and chin ≤ 1100. Split layouts scale him
+  (`fit`: 7 = 0.92, 12/13 = 0.8, 14 = 0.56, 15 = 0.58) or crop him into a card (8 PiP, 10 card/dome, 11 facecam, 16 polaroid);
+  each layout passes its own face zone to the guard. Never crop his face; hands may leave the frame.
 - **Text:** max 30 chars per caption line, auto-shrink to 860 px wide; captions appear on the word's start frame,
   never early; one keyword per beat; English video → English, Kannada video → Kanglish headline + English captions.
 - **Pace:** an event every 0.3–0.6 s; scene length per template (/temp-3 fastest ~1.7 s, /temp-4 chapters ~8 s);
@@ -81,3 +94,4 @@ No `/temp-N` given → suggest one from the topic + `memory.py suggest`, say whi
 - Don't reuse a hook from the last 5 reels; don't reuse the same music bed two reels in a row.
 - Don't save captions/timelines as .txt in Drive; don't create a second "Social Media" or month folder.
 - Don't burn the Instagram caption into the video; don't exceed 5 hashtags.
+- Don't ship ASR spellings: pass the reel's `glossary` (verified names) in every job.

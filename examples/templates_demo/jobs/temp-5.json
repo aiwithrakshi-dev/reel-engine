@@ -71,5 +71,6 @@
  "hook": "zoom_punch",
  "vo": "/home/claude/d4/vo_proc.wav",
  "music": "/home/claude/d4/music/Pressure_Line.mp3",
- "music_db": -16
+ "music_db": -16,
+ "glossary": "/home/claude/aiwithrakshith-reel-engine/examples/templates_demo/../day4_android_studio/glossary.json"
 }

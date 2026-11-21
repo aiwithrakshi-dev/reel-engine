@@ -20,6 +20,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from templates import TEMPLATES, SAFE
 from face_guard import FaceZone
 import hooks as HK
+from template_styles_b import StylesB
 
 W, H, FPS = 1080, 1920, 60
 from paths import FONT_DIRS
@@ -136,6 +137,24 @@ def vgrad(c0, c1, h=H, w=W):
 def ease_out(x): x = min(max(x, 0.0), 1.0); return 1 - (1 - x) ** 3
 
 
+def fix_words(words, glossary=None):
+    """ASR clean-up before anything is drawn: join hyphen-split tokens ('Anti' + '-Gravity.' -> 'Anti-Gravity.'), then
+    apply the reel's verified spellings (glossary dict or path: {'Juni': 'Junie', 'Anti-Gravity': 'Antigravity'})."""
+    out = []
+    for w, s, e in words:
+        if out and w.startswith('-') and len(w) > 1: pw, ps, pe = out.pop(); out.append((pw + w, ps, e)); continue
+        out.append((w, s, e))
+    if isinstance(glossary, str): glossary = json.load(open(glossary))
+    if glossary:
+        g = {k.lower().replace(' ', ''): v for k, v in glossary.items()}
+        fixed = []
+        for w, s, e in out:
+            m = re.match(r'^(\W*)(.*?)(\W*)$', w); core = m.group(2)
+            fixed.append((m.group(1) + g.get(core.lower(), core) + m.group(3), s, e))
+        out = fixed
+    return out
+
+
 # ------------------------------------------------------------------ source + grade
 class Source:
     def __init__(self, path, fps=30):
@@ -197,19 +216,29 @@ def build_audio(job, spec, out_wav):
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', job['vo'], '-stream_loop', '-1', '-i', job['music'], '-i', sf_path,
                     '-filter_complex', fc, '-map', '[a]', '-ac', '2', '-t', str(dur), out_wav], check=True)
     os.remove(sf_path)
+    # second pass: measure and correct to -14 LUFS (single-pass loudnorm can land ~1 dB low), keep true peak <= -1.5 dBTP
+    import soundfile as sf, pyloudnorm as pyln
+    y, sr_ = sf.read(out_wav); L = pyln.Meter(sr_).integrated_loudness(y)
+    if abs(L + 14) > 0.3:
+        tmp = out_wav + '.fix.wav'
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', out_wav, '-af', f'volume={-14 - L:.2f}dB,alimiter=limit=0.84:level=false', tmp], check=True)
+        os.replace(tmp, out_wav)
 
 
 # ------------------------------------------------------------------ the template engine
-class Reel:
+class Reel(StylesB):
     def __init__(self, job):
         self.job = job; self.n = int(job['template']); self.spec = TEMPLATES[self.n]; self.pal = self.spec['palette']
         self.src = Source(job['aroll'], job.get('src_fps', 30)); self.dur = job['duration']
         f = job['face']; self.face = FaceZone.from_head(f['cap_top'], f['chin'], f['x0'], f['x1'])
         self.words = [tuple(w) for w in json.load(open(job['words']))] if isinstance(job['words'], str) else [tuple(w) for w in job['words']]
+        self.words = fix_words(self.words, job.get('glossary'))
         self.heads = job.get('headlines', []); self.scenes = job.get('scenes', [])
         self.bigset = {w.lower() for h in self.heads for w in re.findall(r'[\w+]+', h['big'])}
         self.imgs = {}; self.boxes = []
-        self.trans = {2: ('blur', 10), 3: ('wash', 8), 4: ('whip', 8), 5: ('zoom', 8), 6: ('swoosh', 10), 7: ('scale', 6)}[self.n]
+        self.trans = {2: ('blur', 10), 3: ('wash', 8), 4: ('whip', 8), 5: ('zoom', 8), 6: ('swoosh', 10), 7: ('scale', 6),
+                      8: ('leak', 12), 9: ('blur', 10), 10: ('scale', 8), 11: ('glitch', 6), 12: ('blur', 8), 13: ('bend', 12),
+                      14: ('zoom', 8), 15: ('cut', 2), 16: ('scale', 8)}[self.n]
         if self.n == 7: self.face = self._t7_face()
 
     # --- helpers
@@ -222,7 +251,8 @@ class Reel:
         x0, y0, x1, y1 = box
         if x0 < SAFE[0] - 2 or x1 > SAFE[2] + 2 or y0 < SAFE[1] - 2 or y1 > SAFE[3] + 2:
             raise ValueError(f'temp-{self.n}: {what} {box} leaves the safe zone at {t:.2f}s')
-        if face: self.face.check(box, f'temp-{self.n} {what}', t)
+        if face is True: self.face.check(box, f'temp-{self.n} {what}', t)
+        elif face: face.check(box, f'temp-{self.n} {what}', t)  # layout-specific face zone (split, card, polaroid)
 
     def head_at(self, t):
         cur = None
@@ -291,6 +321,24 @@ class Reel:
 
     def transition(self, kind, a, b, p):
         p = min(max(p, 0), 1)
+        if kind == 'leak':   # warm light-leak flash (t-8)
+            base = a * (1 - p) + b * p; k = math.sin(math.pi * p)
+            if not hasattr(self, '_leak'):
+                yy, xx = np.mgrid[0:H, 0:W].astype(np.float32); g = np.exp(-(((xx - 300) ** 2) / (2 * 520 ** 2) + ((yy - 700) ** 2) / (2 * 900 ** 2)))
+                self._leak = g[..., None] * np.array((255, 205, 120), np.float32) + (1 - g[..., None]) * np.array((255, 120, 160), np.float32) * 0.6
+            return np.clip(base * (1 - 0.65 * k) + self._leak * k * 0.85 + base * k * 0.3, 0, 255)
+        if kind == 'glitch':  # RGB split + slice offsets (t-11)
+            src = a if p < 0.5 else b; k = math.sin(math.pi * p); out = src.copy(); rnd = np.random.default_rng(int(p * 97))
+            sh = int(28 * k); out[..., 0] = np.roll(src[..., 0], sh, axis=1); out[..., 2] = np.roll(src[..., 2], -sh, axis=1)
+            for _ in range(6):
+                y0 = int(rnd.integers(0, H - 80)); hgt = int(rnd.integers(20, 80)); out[y0:y0 + hgt] = np.roll(out[y0:y0 + hgt], int(rnd.integers(-60, 60) * k), axis=1)
+            return out
+        if kind == 'bend':    # paper-bend page turn (t-13)
+            e = ease_out(p); src = np.float32([[0, 0], [W, 0], [W, H], [0, H]]); ins = 260 * (1 - e); dy = 420 * (1 - e)
+            dst = np.float32([[ins, dy], [W - ins * 0.4, dy * 0.6], [W, H], [0, H]]); M = cv2.getPerspectiveTransform(src, dst)
+            wb = cv2.warpPerspective(b, M, (W, H), borderValue=(0, 0, 0)); m = cv2.warpPerspective(np.ones((H, W), np.float32), M, (W, H))[..., None]
+            return a * (1 - m) * (0.6 + 0.4 * (1 - e)) + wb * m
+        if kind == 'cut': return b if p >= 0.5 else a
         if kind == 'blur':
             k = math.sin(math.pi * p) * 22 + 0.1; return cv2.GaussianBlur(a, (0, 0), k) * (1 - p) + cv2.GaussianBlur(b, (0, 0), k) * p
         if kind == 'wash':

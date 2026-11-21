@@ -22,9 +22,11 @@ from PIL import features
 line(bool(features.check('raqm')), 'Pillow RAQM (Kannada shaping)')
 from paths import FONT_DIRS
 from template_render import FONT_FILES
+import subprocess as _sp
+line(_sp.run([sys.executable, os.path.join(ROOT, "tools", "lint_guard.py")], capture_output=True).returncode == 0, "guard lint: every text layer goes through the alignment check")
 for f in sorted(set(FONT_FILES.values()) | {'NotoSansKannada%5Bwdth,wght%5D.ttf'}):
     line(any(os.path.exists(os.path.join(d, f)) for d in FONT_DIRS), f'font {f}')
 try:
-    import templates, face_guard, hooks, captions; line(len(templates.TEMPLATES) == 7 and len(hooks.HOOKS) >= 11, f'7 templates, {len(hooks.HOOKS)} hooks')
+    import templates, face_guard, hooks, captions, template_render, template_styles_b; line(len(templates.TEMPLATES) >= 16 and len(hooks.HOOKS) >= 11, f'{len(templates.TEMPLATES)} templates, {len(hooks.HOOKS)} hooks')
 except Exception as e: line(False, f'engine import: {e}')
 print('READY' if ok else 'NOT READY: fix the !! lines (./setup.sh installs fonts + modules)'); sys.exit(0 if ok else 1)

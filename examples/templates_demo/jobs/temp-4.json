@@ -75,6 +75,7 @@
  "vo": "/home/claude/d4/vo_proc.wav",
  "music": "/home/claude/d4/music/Glitch_Bounce_Loop.mp3",
  "music_db": -16,
+ "glossary": "/home/claude/aiwithrakshith-reel-engine/examples/templates_demo/../day4_android_studio/glossary.json",
  "banner": [
   0.0,
   3.1,

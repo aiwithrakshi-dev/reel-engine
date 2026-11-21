@@ -1,6 +1,6 @@
 # Reel engine memory (generated — read this before every edit)
 
-Updated 2026-11-21 13:57. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
+Updated 2026-11-21 15:03. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
 
 ## Non-negotiables
 - 1080x1920, **60 fps**, H.264 High + AAC 48 kHz, -14 LUFS, true peak <= -1 dBTP.
@@ -20,6 +20,15 @@ Updated 2026-11-21 13:57. Source: memory/content_log.json + memory/lessons.md. R
 | /temp-5 | Bold Yellow Creator | creator tips, tool walkthroughs, Canva/app tutorials | high |
 | /temp-6 | Orange Explainer | business, money, book lessons, frameworks | high |
 | /temp-7 | SaaS Split-Screen | product demos, SaaS / app features, before-after workflows | medium |
+| /temp-8 | Warm Cinematic | expert explainers, "most people never see this" insights, calm authority | medium |
+| /temp-9 | Peach Premium | "3 ways / 3 tips" lists, creative-tool tips, premium tutorials | medium |
+| /temp-10 | Card Stage | app / AI-tool reviews, "this tool just ..." launches, SaaS features | high |
+| /temp-11 | Green Terminal | money / numbers stories, dev & AI-agent tools, "I built X" breakdowns | high |
+| /temp-12 | Cream Editorial | "free / unlimited" reveals, dev-tool deep dives, documentary tone | medium |
+| /temp-13 | Kanglish Tech Split | KANNADA / Kanglish tool news, app walkthroughs, "free alternative" reels | high |
+| /temp-14 | Glass Dock | "N free AI tools" roundups, app recommendations, creator tool stacks | high |
+| /temp-15 | Clean White Split | cost comparisons, "replace N subscriptions", tool tours | medium |
+| /temp-16 | Lime Polaroid | agency / founder intros, client results, case studies, service offers | medium |
 
 ## Google Drive
 - Social Media root: https://drive.google.com/drive/folders/1JBIU5uDtb8-5eDNs4hDbtGomyTqXzTmt (id `1JBIU5uDtb8-5eDNs4hDbtGomyTqXzTmt`)
@@ -50,3 +59,4 @@ Updated 2026-11-21 13:57. Source: memory/content_log.json + memory/lessons.md. R
 - Deliver into Drive: Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / <reel> with caption + timeline as Google Docs.
 - 2026-11-21: Drive connector inside Claude carries max ~3.1 MB per file: thumbnails + Docs go through it, the 60 fps videos go up with tools/drive_publish.py (local OAuth) or by hand. Images need disableConversionToGoogleType=true or they become empty Docs.
 - 2026-11-21: Alignment guard: size every popped/scaled element for its PEAK scale (e.g. maxw 720 for a 1.18x pop); two-line captions under the chin need 30-34 px + 62 px with a 68 px step.
+- 2026-11-21: Always pass the reel glossary in template jobs: raw ASR showed 'Juni' and 'Anti -Gravity' in captions until fix_words() merged hyphen splits and applied the glossary.
