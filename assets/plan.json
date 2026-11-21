@@ -1,0 +1,339 @@
+{
+ "note": "Target library for the 16 templates. Counts add up to ~2,500 files; at ~95 per run (account download cap) this is ~27 runs. Edit freely.",
+ "jobs": [
+  {
+   "type": "icon",
+   "theme": "ai",
+   "query": "artificial intelligence",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "code",
+   "query": "coding programming",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "app",
+   "query": "mobile app",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "money",
+   "query": "money earning",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "social",
+   "query": "social media like comment share",
+   "style": "outline",
+   "count": 60,
+   "params": {
+    "filters[shape]": "outline"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "arrows",
+   "query": "arrow direction",
+   "style": "outline",
+   "count": 60,
+   "params": {
+    "filters[shape]": "outline"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "check",
+   "query": "check cross tick",
+   "style": "fill",
+   "count": 60,
+   "params": {
+    "filters[shape]": "fill"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "rocket",
+   "query": "rocket startup launch",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "chart",
+   "query": "chart growth analytics",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "cloud",
+   "query": "cloud server data",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "security",
+   "query": "security lock shield",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "education",
+   "query": "education book learning",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "video",
+   "query": "video camera editing",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "design",
+   "query": "graphic design tools",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "marketing",
+   "query": "marketing megaphone ads",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "ecommerce",
+   "query": "shopping cart ecommerce",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "chat",
+   "query": "chat message bot",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "time",
+   "query": "time clock deadline",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "india",
+   "query": "india karnataka culture",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "icon",
+   "theme": "brands-generic",
+   "query": "browser window app ui",
+   "style": "lineal-color",
+   "count": 60,
+   "params": {
+    "filters[shape]": "lineal-color"
+   }
+  },
+  {
+   "type": "vector",
+   "theme": "tech-bg",
+   "query": "technology abstract background",
+   "style": "flat",
+   "count": 120
+  },
+  {
+   "type": "vector",
+   "theme": "gradient-bg",
+   "query": "gradient abstract background",
+   "style": "flat",
+   "count": 80
+  },
+  {
+   "type": "vector",
+   "theme": "paper-texture",
+   "query": "paper texture background",
+   "style": "flat",
+   "count": 60
+  },
+  {
+   "type": "vector",
+   "theme": "grid-bg",
+   "query": "grid pattern background",
+   "style": "flat",
+   "count": 60
+  },
+  {
+   "type": "vector",
+   "theme": "dev-scenes",
+   "query": "software developer flat illustration",
+   "style": "flat",
+   "count": 80
+  },
+  {
+   "type": "vector",
+   "theme": "ai-scenes",
+   "query": "artificial intelligence concept illustration",
+   "style": "flat",
+   "count": 80
+  },
+  {
+   "type": "vector",
+   "theme": "business-scenes",
+   "query": "business growth illustration",
+   "style": "flat",
+   "count": 60
+  },
+  {
+   "type": "vector",
+   "theme": "ui-kits",
+   "query": "mobile app ui kit",
+   "style": "flat",
+   "count": 40
+  },
+  {
+   "type": "vector",
+   "theme": "social-templates",
+   "query": "instagram post template",
+   "style": "flat",
+   "count": 40
+  },
+  {
+   "type": "photo",
+   "theme": "studio-desk",
+   "query": "modern desk setup laptop",
+   "count": 60,
+   "image_size": "large"
+  },
+  {
+   "type": "photo",
+   "theme": "bengaluru-city",
+   "query": "bangalore city",
+   "count": 40,
+   "image_size": "large"
+  },
+  {
+   "type": "photo",
+   "theme": "karnataka",
+   "query": "karnataka",
+   "count": 40,
+   "image_size": "large"
+  },
+  {
+   "type": "photo",
+   "theme": "office-team",
+   "query": "indian office team",
+   "count": 40,
+   "image_size": "large"
+  },
+  {
+   "type": "psd",
+   "theme": "phone-mockups",
+   "query": "iphone mockup",
+   "count": 40
+  },
+  {
+   "type": "psd",
+   "theme": "laptop-mockups",
+   "query": "laptop screen mockup",
+   "count": 30
+  },
+  {
+   "type": "psd",
+   "theme": "social-mockups",
+   "query": "instagram mockup",
+   "count": 30
+  },
+  {
+   "type": "video",
+   "theme": "transitions",
+   "query": "transition overlay",
+   "count": 40
+  },
+  {
+   "type": "video",
+   "theme": "light-leaks",
+   "query": "light leak overlay",
+   "count": 30
+  },
+  {
+   "type": "video",
+   "theme": "tech-loops",
+   "query": "technology background loop",
+   "count": 40
+  },
+  {
+   "type": "video",
+   "theme": "glitch",
+   "query": "glitch overlay",
+   "count": 30
+  }
+ ],
+ "total": 2240
+}

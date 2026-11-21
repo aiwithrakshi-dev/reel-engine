@@ -243,7 +243,11 @@ class Reel(StylesB):
 
     # --- helpers
     def img(self, p):
-        if p not in self.imgs: self.imgs[p] = np.asarray(Image.open(p).convert('RGB'))
+        if p not in self.imgs:
+            if ':' in p and not os.path.exists(p):   # library reference, e.g. 'vector:tech-bg/0' (engine/assets.py)
+                import assets; p2 = assets.pick(p)
+            else: p2 = p
+            self.imgs[p] = np.asarray(Image.open(p2).convert('RGB'))
         return self.imgs[p]
 
     def check(self, box, what, t, face=True):

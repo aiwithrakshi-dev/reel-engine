@@ -42,6 +42,30 @@ Styles 2–7 live in `engine/template_render.py`, 8–16 in `engine/template_sty
 If the default hook is blocked by memory, pick another from `python3 tools/memory.py suggest --energy <energy>`.
 No `/temp-N` given → suggest one from the topic + `memory.py suggest`, say which, and go.
 
+## 1b. Assets (after the template is chosen)
+Two sources. **Use the Drive library first — it is the recommended default.**
+
+| | A. Drive library (recommended) | B. Magnific connector (live, logged in) |
+|---|---|---|
+| What | `Editing Pack › Magnific Asset Library` — licensed, watermark-free originals already downloaded (icons SVG + PNG 512, vectors, photos, PSD mockups, videos) + the "Asset Index" sheet | `stock_search` + `stock_download` during the edit |
+| Limits | none — no download cap, works on any machine (`python3 tools/magnific_library.py pull`) | every file counts against the account download cap (~100 per window on Plus); the edit stalls when it hits |
+| Consistency | curated themes/styles that match the 16 templates | styles vary per search |
+| Use when | always first | only for an item the library lacks — then add it to the library |
+
+- **Job references:** `icon:<theme>/<n>` (dock, tiles, chips), `vector:<theme>/<n>` or `photo:<theme>/<n>` as a scene `image`.
+  `engine/assets.py` resolves them from `work/assets`; outline icons take `tint` (white on dark templates).
+- **Defaults per template:** outline icons tinted white on dark looks (1, 11, 13); lineal-colour icons on tiles/docks
+  (9, 14, 16); light flat vectors for white/peach pages (2, 9, 10, 15); dark tech backgrounds for 11, 12, 13.
+- **Watermark rule:** use only files from the official download path (`stock_download` / API download endpoints).
+  Never use preview or thumbnail URLs, screenshots of previews, or anything with a watermark — and never remove,
+  crop or cover a watermark. No AI-generated stock unless Rakshith asks.
+- **Licence:** the library stays private in his Drive. Never commit the files to GitHub (the repo is MIT-licensed)
+  and never share the folder publicly — Freepik forbids redistributing resources as a downloadable collection.
+- **Not in Magnific stock:** music (use his Drive music beds), SFX (engine synth), fonts (OFL fonts from `setup.sh`).
+- **Growing the library:** `MAGNIFIC_API_KEY=… python3 tools/magnific_library.py build --plan assets/plan.json --max 95`
+  then `… upload`. It stops cleanly at the download cap and resumes next run (plan targets ~2,240 files).
+  Inside Claude without a key: `stock_download` one file per call, stop when the tool reports the limit.
+
 ## 2. Alignment rules (every template, enforced by the renderer)
 - **Canvas** 1080×1920, 60 fps. **Safe box** x 65–960, y 270–1250 for every readable element; centre line x 512.
 - **Bands:** HEAD y 280–430 (labels/headlines above the cap) · FACE cap→chin (nothing, ever) · CAPTION chin+24 → 1245.
@@ -98,5 +122,6 @@ No `/temp-N` given → suggest one from the topic + `memory.py suggest`, say whi
 - Don't reuse a hook from the last 5 reels; don't reuse the same music bed two reels in a row.
 - Don't save captions/timelines as .txt in Drive; don't create a second "Social Media" or month folder.
 - Don't burn the Instagram caption into the video; don't exceed 5 hashtags.
+- Don't use watermarked previews or remove a watermark; don't commit library files to GitHub.
 - Don't ship ASR spellings: pass the reel's verified `glossary` in every job (fix_words also merges hyphen splits,
   e.g. Juni → Junie, Anti -Gravity → Antigravity).

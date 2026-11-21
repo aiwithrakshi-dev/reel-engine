@@ -10,3 +10,5 @@
 - 2026-11-21: Drive connector inside Claude carries max ~3.1 MB per file: thumbnails + Docs go through it, the 60 fps videos go up with tools/drive_publish.py (local OAuth) or by hand. Images need disableConversionToGoogleType=true or they become empty Docs.
 - 2026-11-21: Alignment guard: size every popped/scaled element for its PEAK scale (e.g. maxw 720 for a 1.18x pop); two-line captions under the chin need 30-34 px + 62 px with a 68 px step.
 - 2026-11-21: Always pass the reel glossary in template jobs: raw ASR showed 'Juni' and 'Anti -Gravity' in captions until fix_words() merged hyphen splits and applied the glossary.
+- 2026-11-21: Magnific stock downloads did not use credits on the Plus plan, but the account hit a stock download cap after ~100 files (21 Nov 2026) and the tool says not to retry in that conversation. Build the 1,000-3,000 library in ~95-file runs with tools/magnific_library.py (API key) or across days.
+- 2026-11-21: Assets: Drive library first (Editing Pack / Magnific Asset Library), Magnific connector only for missing items. Only official download files — never preview URLs or anything watermarked. Library stays private: never in GitHub.

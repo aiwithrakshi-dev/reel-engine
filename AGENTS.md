@@ -36,3 +36,9 @@ You are editing Instagram Reels for Rakshith (@AIwithRakshith, Kannada / aiwithr
 - After QC: `tools/reel_package.py` → `tools/drive_publish.py` (Drive: Social Media/YYYY-MM Month/Day DD - YYYY-MM-DD/<title>,
   caption + timeline as Google Docs) → `tools/memory.py log` → commit `memory/`.
 - New machine: `./setup.sh` then `python3 tools/doctor.py` must print READY.
+
+## Assets (added v9)
+- After the template, take assets from the Drive library first (`memory/drive_index.json` → `asset_library`; local copy
+  `work/assets` via `tools/magnific_library.py pull`). Use the Magnific connector only for missing items.
+- Only official download files; never preview/thumbnail URLs or watermarked images; never remove a watermark.
+- Never commit library files (work/ is gitignored) or share them publicly.

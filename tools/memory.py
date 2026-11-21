@@ -62,7 +62,8 @@ def write_context():
         di = json.load(open(os.path.join(MEM, 'drive_index.json')))
         L += ['', '## Google Drive', f"- Social Media root: {di['social_media_root']['url']} (id `{di['social_media_root']['id']}`)",
               f"- Months: {', '.join(f'{k} `{v}`' for k, v in di['months'].items())}", f"- Days: {', '.join(f'{k} `{v}`' for k, v in di['days'].items())}",
-              '- Layout: Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / <reel title> / video, thumbnail, Caption (Doc), Timeline (Doc)']
+              '- Layout: Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / <reel title> / video, thumbnail, Caption (Doc), Timeline (Doc)',
+              f"- Asset library (use FIRST, before the Magnific connector): {di.get('asset_library', {}).get('url', 'not built yet')} — {di.get('asset_library', {}).get('contents_2026_11_21', '')}"]
     except Exception: pass
     L += ['', '## Recent reels (newest first)', '| date | title | brand | template | hook | Drive |', '|---|---|---|---|---|---|']
     for r in reels[:15]:

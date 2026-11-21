@@ -1,5 +1,15 @@
 # Changelog
 
+## v9 — 21 Nov 2026 (Magnific asset library)
+- Private asset library in Drive `Editing Pack › Magnific Asset Library`: 98 licensed icons (AI, code, app, money,
+  social-outline; SVG + PNG 512), 2 vectors, contact sheet, "Asset Index" Google Sheet. The account's stock download
+  cap stopped the session at ~100 files.
+- `tools/magnific_library.py` (build / upload / pull / index): official API downloads only, resumable manifest, stops at
+  the download cap, skips AI-generated stock, ZIPs per theme into Drive. `assets/plan.json` targets ~2,240 files.
+- `engine/assets.py`: `icon:<theme>/<n>`, `vector:<theme>/<n>`, `photo:<theme>/<n>` references in jobs; outline icons
+  tint for dark templates. Dock tiles (temp-14/15) and scene images resolve library assets.
+- Skill: "Assets" section — Drive library recommended, Magnific connector as fallback; watermark and licence rules.
+
 ## v8 — 21 Nov 2026 (9 more templates: /temp-8 … /temp-16)
 - Nine new styles deconstructed frame by frame from the second reference batch (t-8 … t-15, sezz0283): Warm Cinematic,
   Peach Premium, Card Stage, Green Terminal, Cream Editorial, Kanglish Tech Split, Glass Dock, Clean White Split, Lime Polaroid.

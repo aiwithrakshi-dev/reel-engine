@@ -75,6 +75,23 @@ python3 engine/template_render.py examples/templates_demo/jobs/temp-4.json --ful
 (x 65–960, y 270–1250) or touching the face oval stops the render with the time and the element. Layout bands:
 HEAD y 280–430 above the cap · FACE (nothing) · CAPTION chin+24 … 1245. Captions appear on the word's first frame.
 
+## Asset library (Magnific / Freepik) — Drive first
+
+Pick a template, then pull its assets from the **private Drive library** (`Editing Pack › Magnific Asset Library`):
+licensed, watermark-free originals (icons as SVG + PNG 512, vectors, photos, PSD mockups, videos) with an
+"Asset Index" sheet. The live Magnific connector is the fallback for items the library lacks, because every live
+download counts against the account's download cap.
+
+```bash
+python3 tools/magnific_library.py pull                                   # new machine: Drive library -> work/assets
+MAGNIFIC_API_KEY=... python3 tools/magnific_library.py build --max 95    # grow it (resumable, stops at the cap)
+python3 tools/magnific_library.py upload                                 # ZIP per theme -> Drive
+```
+In a job file: `"icon": "icon:ai/3"` (dock / tiles) or `"image": "vector:tech-bg/0"` (scene) — resolved by `engine/assets.py`;
+outline icons take `"tint": "#FFFFFF"`. Target plan: `assets/plan.json` (~2,240 files across 40 themes).
+Rules: official download files only (never previews, never anything watermarked), no AI-generated stock by default,
+and the files never go into this repo or a public share (Freepik licence: no redistribution).
+
 ## Drive delivery + memory
 
 ```bash

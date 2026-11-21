@@ -145,7 +145,11 @@ class StylesB:
         for it in items:
             if it['t'] <= t:
                 s = pop(t - it['t'])
-                if it.get('image'):
+                if it.get('icon'):   # library icon on a rounded tile, e.g. 'icon:ai/3' (engine/assets.py)
+                    import assets
+                    im = Image.new('RGBA', (tile, tile), (0, 0, 0, 0)); ImageDraw.Draw(im).rounded_rectangle((0, 0, tile - 1, tile - 1), 22, fill=T.rgb(it.get('color', '#FFFFFF')) + (255,))
+                    ic = Image.fromarray(assets.pick(it['icon'], size=int(tile * 0.72), tint=it.get('tint'))); im.alpha_composite(ic, ((tile - ic.width) // 2, (tile - ic.height) // 2)); lay = np.asarray(im)
+                elif it.get('image'):
                     lay = T.rounded_card(self.img(it['image']), tile, tile, r=22, shadow=False)
                 else:
                     col = T.rgb(it.get('color', '#333333')); hi = tuple(min(255, v + 50) for v in col)

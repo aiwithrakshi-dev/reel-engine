@@ -1,6 +1,6 @@
 # Reel engine memory (generated — read this before every edit)
 
-Updated 2026-11-21 15:16. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
+Updated 2026-11-21 15:39. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
 
 ## Non-negotiables
 - 1080x1920, **60 fps**, H.264 High + AAC 48 kHz, -14 LUFS, true peak <= -1 dBTP.
@@ -35,6 +35,7 @@ Updated 2026-11-21 15:16. Source: memory/content_log.json + memory/lessons.md. R
 - Months: 2026-11 November `1jjPyisRuBOBlO1WUWUo41KETIct3Lw7G`
 - Days: 2026-11-21 `1FP4073opUPgKV2jep81VwPWFeUDnZX3H`
 - Layout: Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / <reel title> / video, thumbnail, Caption (Doc), Timeline (Doc)
+- Asset library (use FIRST, before the Magnific connector): https://drive.google.com/drive/folders/1w8JfNSj9YE5CduUC8q6NzJ2uqe-FMMXK — 98 icons (ai 26, code 18, app 18, money 18 lineal-color; social 18 outline) + 2 vectors (tech-bg, dev-scenes)
 
 ## Recent reels (newest first)
 | date | title | brand | template | hook | Drive |
@@ -60,3 +61,5 @@ Updated 2026-11-21 15:16. Source: memory/content_log.json + memory/lessons.md. R
 - 2026-11-21: Drive connector inside Claude carries max ~3.1 MB per file: thumbnails + Docs go through it, the 60 fps videos go up with tools/drive_publish.py (local OAuth) or by hand. Images need disableConversionToGoogleType=true or they become empty Docs.
 - 2026-11-21: Alignment guard: size every popped/scaled element for its PEAK scale (e.g. maxw 720 for a 1.18x pop); two-line captions under the chin need 30-34 px + 62 px with a 68 px step.
 - 2026-11-21: Always pass the reel glossary in template jobs: raw ASR showed 'Juni' and 'Anti -Gravity' in captions until fix_words() merged hyphen splits and applied the glossary.
+- 2026-11-21: Magnific stock downloads did not use credits on the Plus plan, but the account hit a stock download cap after ~100 files (21 Nov 2026) and the tool says not to retry in that conversation. Build the 1,000-3,000 library in ~95-file runs with tools/magnific_library.py (API key) or across days.
+- 2026-11-21: Assets: Drive library first (Editing Pack / Magnific Asset Library), Magnific connector only for missing items. Only official download files — never preview URLs or anything watermarked. Library stays private: never in GitHub.

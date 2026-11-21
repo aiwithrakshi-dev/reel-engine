@@ -29,4 +29,8 @@ for f in sorted(set(FONT_FILES.values()) | {'NotoSansKannada%5Bwdth,wght%5D.ttf'
 try:
     import templates, face_guard, hooks, captions, template_render, template_styles_b; line(len(templates.TEMPLATES) >= 16 and len(hooks.HOOKS) >= 11, f'{len(templates.TEMPLATES)} templates, {len(hooks.HOOKS)} hooks')
 except Exception as e: line(False, f'engine import: {e}')
+try:
+    import assets; av = assets.available()
+    print('  OK  asset library: ' + ', '.join(f"{k} {sum(v.values())}" for k, v in av.items()) if av else '  --  asset library empty: python3 tools/magnific_library.py pull (Drive) — templates still render without it')
+except Exception as e: print(f'  --  asset library: {e}')
 print('READY' if ok else 'NOT READY: fix the !! lines (./setup.sh installs fonts + modules)'); sys.exit(0 if ok else 1)
