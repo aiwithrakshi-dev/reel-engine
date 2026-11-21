@@ -15,7 +15,7 @@
    - Not enough room (< 150 px) → reduce DY (face moves up, headline auto-shrinks) until both fit.
 5. Cutaways: headline `stack(..., top=278)`; screen window x 75–950, y 560–1210; caption stays in its band.
 6. Composite order: room → big type behind → cards behind head → him (matte) → chest row → captions →
-   FX (blocks, streaks, rings) → whole-frame devices → grain 3.5.
+   FX (blocks, streaks, rings) → whole-frame devices → hook → grain 3.5.
 
 **Captions**: Inter Tight Bold Italic 44 px, white, 3 px dark stroke + soft shadow, one line, ≤ 5 words / ≤ 30 chars,
 centred in the safe box; the word being spoken gets a red `#E3121B` highlight (karaoke). English: word-synced to

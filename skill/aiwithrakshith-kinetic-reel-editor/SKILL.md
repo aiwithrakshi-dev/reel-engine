@@ -70,6 +70,8 @@ If Rakshith is around, send the preview frames before the full render; if not, d
 
 - Headline is never a full sentence; tech/product names always in English spelling (Kling, Codex, Claude, Junie).
 - Captions are wanted on every reel (replaces the old "no subtitles" rule) — short, one line, synced (§8).
+- Instagram post caption: exactly 4 lines (hook, what it is, why it matters, CTA + source credit), then 5 lowercase
+  hashtags ending with `#aiwithrakshith`.
 - Kannada font: **Noto Sans Kannada** (OFL)
   `raw.githubusercontent.com/google/fonts/main/ofl/notosanskannada/NotoSansKannada%5Bwdth%2Cwght%5D.ttf`,
   rendered with `ImageFont.Layout.RAQM` (Pillow with raqm). No italic → apply a 10° shear for the brand look.
@@ -158,14 +160,14 @@ every cutaway entry/exit, slam back on the cut, downbeat on the slam; end on the
 audio, use the Drive `Background music` folder in the edit package
 https://drive.google.com/drive/folders/1tWaeU9u8_vI3wiVATkvfLKEln9Vo8PBP (its SFX folders are YouTube re-uploads → don't use).
 
-**SFX** (synthesised in `engine/audio.py`, or licensed stock), one per visual event: impact+glitch open, per-letter
-ticks −28 dB, blip on type-on start, zap on neon streak, whoosh+boom on rings, swish on smear/marker, riser+whoosh
-into cutaways, impact on cutaway slams/exits, pop on every card/pill/icon, final hit. B-roll native audio only where
-it proves something (e.g. stereo → auto-pan L→R).
+**SFX** (synthesised in `engine/audio.py`, or licensed stock), one per visual event: the hook's paired hit (§9b),
+per-letter ticks −28 dB, blip on type-on start, zap on neon streak, whoosh+boom on rings, swish on smear/marker,
+riser+whoosh into cutaways, impact on cutaway slams/exits, pop on every card/pill/icon, final hit. B-roll native
+audio only where it proves something (e.g. stereo → auto-pan L→R).
 
 **Mix**: VO high-pass 80 Hz, de-ess, 3:1 comp; music −14 dB pre-duck + sidechain (thr 0.04, ratio 5, att 15, rel 260)
 so dialogue stays on top and the bed breathes smoothly; master −14 LUFS, limiter ceiling −2.9 dBTP before AAC
-→ ≤ −1 dBTP on the final MP4.
+→ ≤ −1 dBTP on the final MP4 (re-measure after the final mux).
 
 ---
 
@@ -183,7 +185,7 @@ so dialogue stays on top and the bed breathes smoothly; master −14 LUFS, limit
    - Not enough room (< 150 px) → reduce DY (face moves up, headline auto-shrinks) until both fit.
 5. Cutaways: headline `stack(..., top=278)`; screen window x 75–950, y 560–1210; caption stays in its band.
 6. Composite order: room → big type behind → cards behind head → him (matte) → chest row → captions →
-   FX (blocks, streaks, rings) → whole-frame devices → grain 3.5.
+   FX (blocks, streaks, rings) → whole-frame devices → hook → grain 3.5.
 
 **Captions**: Inter Tight Bold Italic 44 px, white, 3 px dark stroke + soft shadow, one line, ≤ 5 words / ≤ 30 chars,
 centred in the safe box; the word being spoken gets a red `#E3121B` highlight (karaoke). English: word-synced to
@@ -238,7 +240,8 @@ Rules:
   As of 21 Nov 2026 the Kling 4.0 and Day 4 reels both used `neg_flash`, so it is blocked for the next reels.
 - Match energy to the topic (news/launch → high, tutorial → medium, story → calm); `pick_hook(energy, recent)` does it.
 - The first headline still types on its first spoken word; the hook only frames the opening.
-- Set it with `HOOK=<name>` when rendering; pair the SFX from the table; add the row to `hook_log.md` on delivery.
+- Set it with `HOOK=<name>` when rendering; pair the SFX from the table; add the row to `hook_log.md` on delivery
+  (and push it to the repo).
 - Preview all hooks on the new reel's own frames with `tools/hook_preview.py` when choosing.
 - New hooks may be added to `engine/hooks.py` (same style: red/pink/cyan palette, stepped or punchy, ≤ 0.3 s, inside the
   frame logic, no AI generation); add them to this table and the log.
@@ -278,8 +281,9 @@ Any failure → fix the timeline, re-render only the affected range, splice, re-
 ---
 
 ## 11. Deliverables
-`final_reel_60fps.mp4` (1080×1920, 60 fps, hook named in the QC report and logged) · `cover.png` (reads in the 3:4 grid crop) · `captions.srt` (English) ·
-`instagram_post.txt` (caption, hashtags, Story line, source credits, label reminders) · `facts.md` · `credits.csv`
+`final_reel_60fps.mp4` (1080×1920, 60 fps, hook named in the QC report and logged) · `cover.png` (reads in the 3:4
+grid crop) · `contact.png` (safe-zone contact sheet) · `captions.srt` (English) · `instagram_post.txt` (4-line caption,
+5 lowercase tags, Story line, source credits, label reminders) · `facts.md` · `credits.csv`
 (every B-roll/stock/music/SFX item + licence) · `qc_report.md` (deviations, fixes, audit results) · QC sheets
 (contact, join, safe-zone) · `vo_tight.wav` · optional no-music version. Save new layout learnings into `docs/`.
 

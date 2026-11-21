@@ -23,7 +23,8 @@ Rules:
   As of 21 Nov 2026 the Kling 4.0 and Day 4 reels both used `neg_flash`, so it is blocked for the next reels.
 - Match energy to the topic (news/launch → high, tutorial → medium, story → calm); `pick_hook(energy, recent)` does it.
 - The first headline still types on its first spoken word; the hook only frames the opening.
-- Set it with `HOOK=<name>` when rendering; pair the SFX from the table; add the row to `hook_log.md` on delivery.
+- Set it with `HOOK=<name>` when rendering; pair the SFX from the table; add the row to `hook_log.md` on delivery
+  (and push it to the repo).
 - Preview all hooks on the new reel's own frames with `tools/hook_preview.py` when choosing.
 - New hooks may be added to `engine/hooks.py` (same style: red/pink/cyan palette, stepped or punchy, ≤ 0.3 s, inside the
   frame logic, no AI generation); add them to this table and the log.

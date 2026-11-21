@@ -24,11 +24,11 @@ every cutaway entry/exit, slam back on the cut, downbeat on the slam; end on the
 audio, use the Drive `Background music` folder in the edit package
 https://drive.google.com/drive/folders/1tWaeU9u8_vI3wiVATkvfLKEln9Vo8PBP (its SFX folders are YouTube re-uploads → don't use).
 
-**SFX** (synthesised in `engine/audio.py`, or licensed stock), one per visual event: impact+glitch open, per-letter
-ticks −28 dB, blip on type-on start, zap on neon streak, whoosh+boom on rings, swish on smear/marker, riser+whoosh
-into cutaways, impact on cutaway slams/exits, pop on every card/pill/icon, final hit. B-roll native audio only where
-it proves something (e.g. stereo → auto-pan L→R).
+**SFX** (synthesised in `engine/audio.py`, or licensed stock), one per visual event: the hook's paired hit (§9b),
+per-letter ticks −28 dB, blip on type-on start, zap on neon streak, whoosh+boom on rings, swish on smear/marker,
+riser+whoosh into cutaways, impact on cutaway slams/exits, pop on every card/pill/icon, final hit. B-roll native
+audio only where it proves something (e.g. stereo → auto-pan L→R).
 
 **Mix**: VO high-pass 80 Hz, de-ess, 3:1 comp; music −14 dB pre-duck + sidechain (thr 0.04, ratio 5, att 15, rel 260)
 so dialogue stays on top and the bed breathes smoothly; master −14 LUFS, limiter ceiling −2.9 dBTP before AAC
-→ ≤ −1 dBTP on the final MP4.
+→ ≤ −1 dBTP on the final MP4 (re-measure after the final mux).

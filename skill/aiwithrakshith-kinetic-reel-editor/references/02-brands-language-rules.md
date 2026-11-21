@@ -12,6 +12,8 @@
 
 - Headline is never a full sentence; tech/product names always in English spelling (Kling, Codex, Claude, Junie).
 - Captions are wanted on every reel (replaces the old "no subtitles" rule) — short, one line, synced (§8).
+- Instagram post caption: exactly 4 lines (hook, what it is, why it matters, CTA + source credit), then 5 lowercase
+  hashtags ending with `#aiwithrakshith`.
 - Kannada font: **Noto Sans Kannada** (OFL)
   `raw.githubusercontent.com/google/fonts/main/ofl/notosanskannada/NotoSansKannada%5Bwdth%2Cwght%5D.ttf`,
   rendered with `ImageFont.Layout.RAQM` (Pillow with raqm). No italic → apply a 10° shear for the brand look.
