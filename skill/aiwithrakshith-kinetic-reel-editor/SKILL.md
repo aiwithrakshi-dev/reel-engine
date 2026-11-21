@@ -1,15 +1,19 @@
 ---
 name: aiwithrakshith-kinetic-reel-editor
-description: Edit a raw Kannada or English talking-head video into a 60 fps @AIwithRakshith / aiwithrakshith.global Reel: research, verified B-roll, Instagram safe zone, synced Kanglish headlines and English captions.
+description: Edit a raw Kannada or English talking-head video into a 60 fps @AIwithRakshith / aiwithrakshith.global Reel with a unique hook, verified B-roll, Instagram safe zone, Kanglish headlines and English captions.
 ---
 
-# AI with Rakshith — Kinetic-Type Reel Editor (v3)
+# AI with Rakshith — Kinetic-Type Reel Editor (v4)
 
 Rakshith uploads ONE raw talking-head video (Kannada or English). The editor does everything else: understands it,
 researches the topic, pulls verified B-roll, edits it in his kinetic-type house style (giant red 3D words typing on
 **behind his head**, pixel-block glitches, neon squiggle streaks, halftone ring bursts, red-framed cards, screen
 cutaways, topic-matched music and an SFX on every visual event) inside the Instagram safe zone, syncs every word of
-on-screen text and captions to his dialogue, audits every frame in a loop and delivers a **1080×1920, 60 fps HD** Reel.
+on-screen text and captions to his dialogue, opens with a **unique hook animation**, audits every frame in a loop and
+delivers a **1080×1920, 60 fps HD** Reel. Every reel, no exceptions.
+
+Detailed reference files (one topic each, generated from this file) live next to it in `references/`; the hook
+rotation log is `references/hook_log.md`.
 
 Approved builds: Kling 4.0 Kannada reel and Day 4 "Claude & Codex in Android Studio" English reel (Nov 2026).
 Engine code: this repository (`engine/`, `examples/`) — also mirrored in the claude.ai Project
@@ -33,6 +37,8 @@ Engine code: this repository (`engine/`, `examples/`) — also mirrored in the c
    Motion is snappy and stepped (overshoot pops), never floaty/linear.
 8. Music never louder than the voice; every graphic has a sound; hard button ending (no fade-out).
 9. Respect Instagram's Terms, Community Guidelines, Music Guidelines and privacy (§4).
+10. **Every reel opens with a unique hook** (§9b): never a hook used in the last 5 reels; log it in `hook_log.md`.
+11. **Every reel is delivered at 1080×1920, 60 fps HD** (§9c). Never deliver 30 fps; never frame-double a 30 fps render.
 
 ---
 
@@ -42,7 +48,8 @@ Engine code: this repository (`engine/`, `examples/`) — also mirrored in the c
 3. **Research + fact-check** the topic on the open web, official/verified sources only (§5).
 4. **Gather** B-roll (official media, screenshots, demo clips) + Magnific stock (vectors, photos, illustrations,
    templates, PSDs, mockups, videos, icons, 3D models, fonts) + topic-matched music + SFX (§7).
-5. **Plan** the EDL: every keyword, caption chunk, cutaway, device and SFX on its spoken word; layout per §8.
+5. **Plan** the EDL: pick the hook (§9b), then every keyword, caption chunk, cutaway, device and SFX on its spoken word;
+   layout per §8.
 6. **Build** headlines, captions, graphics, cutaways, audio.
 7. **Preview**: render ~15 key frames with the safe-zone overlay, LOOK at them, fix, then full render.
 8. **Audit loop** (§10) on every frame — fix and re-render the affected range until 100 % clean.
@@ -52,6 +59,7 @@ If Rakshith is around, send the preview frames before the full render; if not, d
 ---
 
 ## 2. Brands & language rules
+
 | | AI with Rakshith (@AIwithRakshith) | aiwithrakshith.global |
 |---|---|---|
 | Raw voice | Kannada / Kanglish | English |
@@ -59,6 +67,7 @@ If Rakshith is around, send the preview frames before the full render; if not, d
 | Captions (bottom of safe zone) | **English translation**, phrase-synced to his lips | English, word-synced |
 | Handle pill / CTA | `@aiwithrakshith` | `@aiwithrakshith.global` (confirm exact handle) |
 | Post caption | Kannada-English mix + Kannada hashtags (#KannadaAI …) | English, global hashtags |
+
 - Headline is never a full sentence; tech/product names always in English spelling (Kling, Codex, Claude, Junie).
 - Captions are wanted on every reel (replaces the old "no subtitles" rule) — short, one line, synced (§8).
 - Kannada font: **Noto Sans Kannada** (OFL)
@@ -70,12 +79,14 @@ If Rakshith is around, send the preview frames before the full render; if not, d
 
 ## 3. Instagram Reels safe zone guide (1080×1920)
 **Safe box (hard limit for every element): x 65–960, y 270–1250.**
+
 | Edge | Keep clear | What Instagram overlays there |
 |---|---|---|
 | Top | 270 px (14 %) | status bar, "Reels" title, camera icon |
 | Bottom | 670 px (35 %) | profile name, follow button, caption text, audio ticker |
 | Left | 65 px (6 %) | screen edge / rounded corners |
 | Right | 120 px (+ ~230 px wide rail on the lower 40 %) | like, comment, share, save, more, audio thumbnail |
+
 - Source: Meta's Reels ad margins (top 14 %, bottom 35 %, sides 6 %). Organic Reels have no published spec, so use
   the stricter ad numbers; re-check periodically (the UI changes).
 - Full-bleed backgrounds/B-roll fill may extend outside the box; anything readable or meaningful may not.
@@ -134,12 +145,14 @@ Own B-roll: scene-detect (`scdet`), cache to .npy, stills 3 frames after each cu
 cut to another shot on the beat, never freeze.
 
 **Music** — a *different, topic-matched* track every video (log used tracks; don't repeat back-to-back):
+
 | Topic energy | Bed |
 |---|---|
 | News / launch / hype / tool drop | 120–135 BPM dark trap / bass-house, deep 808 (e.g. Black_Asphalt) |
 | Tutorial / how-to / calm explainer | 85–105 BPM lo-fi / soft electronic |
 | Story / emotional / film | 70–95 BPM cinematic pulse, pads |
 | Business / money / freelancing | 100–118 BPM upbeat house / corporate groove |
+
 Analyse BPM/key/sub with librosa; re-sequence on bar lines; cuts inside cutaways on beats; drop-out 0.17 s before
 every cutaway entry/exit, slam back on the cut, downbeat on the slam; end on the final hit. If Magnific has no stock
 audio, use the Drive `Background music` folder in the edit package
@@ -181,9 +194,10 @@ headline word being typed in the same 0.3 s.
 ---
 
 ## 9. Device library & timing (`engine/fx.py`; frame counts are 30-fps units → at 60 fps use `n * FPS // 30`)
+
 | Device | Frames (30 fps units) | Use |
 |---|---|---|
-| Negative flash open | 3 (inverted blur ×0.55 + cyan→red blocks), then scale-in 92→100 % over 3 | frame 0 |
+| Hook opener | 6–9 (12–18 at 60 fps) — one of the 10 hooks in §9b, never repeated within 5 reels | frame 0 |
 | Big word type-on | **1 letter per frame**; newest letter 1.22× ghost → 1.06× → lock; each part starts on its own spoken word | every keyword |
 | Label scatter-in | words stagger 2, snap home in 2-frame steps | small labels |
 | Pixel blocks | 2–5 each, 18–42 px on a 6 px grid, reds/pinks | on the letter being revealed / dissolves |
@@ -195,15 +209,48 @@ headline word being typed in the same 0.3 s.
 | Card / pill pop | 4 (0→62→108→100 %) | chest row, cards |
 | Marker highlight | red→cyan→green, 2 per word | label emphasis |
 | Hold + pixel flicker, hard cut | last 0.8 s | ending |
+
 Budget per ~40 s: ≈ 3 streaks, 6 rings, 1 smear, 2 swooshes, 4 negative flashes. Every jump cut hidden by one.
 - A new visual event every 0.3–0.5 s on a spoken word; ~75 % talking head, ~25 % cutaways.
 - **Every headline fully typed ≥ 0.25 s before its scene changes** — if speech is too dense, move the cut later or
   shorten the word. `word_on()` writes `<out>.tlog.json` (start / fully typed / on-screen-until).
 - End: VO end + 0.28 s final hit; reel ends VO end + 0.82 s, hard cut.
 
-**60 fps render**: `FPS = 60` in fx/render; the 25 fps A-roll is frame-held, graphics animate at 60. Render in two
-parallel halves, stream frames (7 GB RAM), grain 3.5. Encode `libx264 High, -r 60, CRF 17, -maxrate 35M
--bufsize 70M, -preset veryfast, AAC 320k 48 kHz, +faststart`.
+## 9b. Hook library — a unique opener for every reel (`engine/hooks.py`)
+The first 0.2–0.3 s decides the scroll-stop, so no two recent reels may open the same way.
+
+| Hook | Frames @60 | Energy | Look | SFX |
+|---|---|---|---|---|
+| `neg_flash` | 12 | high | negative frame + cyan→red blocks, scale-in 92→100 % | impact + glitch burst |
+| `pixel_assemble` | 12 | high | giant red mosaic (144→12 px) resolves into the frame | digital crunch + impact |
+| `strip_slam` | 18 | high | 5 horizontal strips slam in from alternate sides, red edges | 5 fast slams + sub hit |
+| `red_wipe` | 16 | medium | diagonal red light band sweeps and reveals the frame | whoosh + impact |
+| `zoom_punch` | 14 | high | white pop, 135 % → 98 % → 100 % zoom-blur punch with RGB split | reverse whoosh into punch |
+| `rgb_converge` | 12 | medium | R/G/B channels fly in from 90 px offsets and lock, scanlines fade | glitch zap + soft hit |
+| `halftone_iris` | 16 | calm | iris opens from his face through a red halftone dot ring | riser tail + boom |
+| `slice_glitch` | 14 | high | horizontal slices displaced, cyan/red tints, settle in 7 steps | data glitch + impact |
+| `letterbox_open` | 14 | calm | black bars part from the face line, red edge lines | cinematic hit + sub |
+| `shutter_blinds` | 18 | medium | 12 vertical blinds snap open from the centre outwards | shutter clicks + pop |
+
+Rules:
+- Read `references/hook_log.md` first. Never use a hook from the last 5 reels; never the same energy hook 3 times in a row.
+- Match energy to the topic (news/launch → high, tutorial → medium, story → calm); `pick_hook(energy, recent)` does it.
+- The first headline still types on its first spoken word; the hook only frames the opening.
+- Set it with `HOOK=<name>` when rendering; pair the SFX from the table; add the row to `hook_log.md` on delivery.
+- Preview all hooks on the new reel's own frames with `tools/hook_preview.py` when choosing.
+- New hooks may be added to `engine/hooks.py` (same style: red/pink/cyan palette, stepped or punchy, ≤ 0.3 s, inside the
+  frame logic, no AI generation); add them to this table and the log.
+
+## 9c. 60 fps render (mandatory for every reel)
+- Template: `examples/day4_android_studio/render_day4_60.py`. Frame numbers are 60 fps frames `g`; the timeline logic runs
+  in 30-fps units (`f = g // 2`, `SUB = 0 / 0.5`), so every device keeps its approved timing while continuous motion —
+  halftone rings, neon streaks, swooshes, screen push-ins, grain — gets real in-between frames. The hook runs per 60 fps frame.
+- Usage: `HOOK=<name> python3 render.py <g0> <g1> part.mp4` (two parallel halves), test frames
+  `python3 render.py 0 0 test_dir g1,g2,...`.
+- Encode `libx264 High, -r 60, CRF 17, -maxrate 35M -bufsize 70M, -preset veryfast, AAC 320k 48 kHz, +faststart`;
+  verify `r_frame_rate=60/1` and the frame count (≈ 60 × duration) with ffprobe.
+- The A-roll stays at its native cadence (25 fps, frame-held); never motion-interpolate his face.
+- Re-measure audio after muxing: true peak must be ≤ −1 dBTP (lower the mix 0.5 dB if needed).
 
 **Setup**: clone this repo (or restore `reel-engine/*` from the Project); fonts Inter Tight (OFL, google/fonts
 `ofl/intertight`) + Noto Sans Kannada; RVM
@@ -222,13 +269,14 @@ parallel halves, stream frames (7 GB RAM), grain 3.5. Encode `libx264 High, -r 6
 7. Matte edges at 100 %; cap artifacts invisible; no readable garbled AI text; room present on every talking frame.
 8. Audio: −14 LUFS ±1, ≤ −1 dBTP on the final MP4, VO on top, music smooth (no abrupt jumps except designed
    drop-outs), every graphic has its SFX.
-9. Frame 1 = negative flash + hit; ending = hard button.
+9. Frame 1 = the chosen hook + its SFX hit; ending = hard button.
+10. Hook not used in the last 5 reels (`hook_log.md`); ffprobe shows `60/1` and ≈ 60 frames per second of runtime.
 Any failure → fix the timeline, re-render only the affected range, splice, re-run the whole audit.
 
 ---
 
 ## 11. Deliverables
-`final_reel_60fps.mp4` (1080×1920, 60 fps) · `cover.png` (reads in the 3:4 grid crop) · `captions.srt` (English) ·
+`final_reel_60fps.mp4` (1080×1920, 60 fps, hook named in the QC report and logged) · `cover.png` (reads in the 3:4 grid crop) · `captions.srt` (English) ·
 `instagram_post.txt` (caption, hashtags, Story line, source credits, label reminders) · `facts.md` · `credits.csv`
 (every B-roll/stock/music/SFX item + licence) · `qc_report.md` (deviations, fixes, audit results) · QC sheets
 (contact, join, safe-zone) · `vo_tight.wav` · optional no-music version. Save new layout learnings into `docs/`.
@@ -246,3 +294,6 @@ Any failure → fix the timeline, re-render only the affected range, splice, re-
 - YouTube downloads are bot-blocked → use official blog/doc media.
 - AI cap artifacts (colour flips, white logo growth) appear in most of his AI talking heads → always scan and fix.
 - Rings at full opacity cover his face → op ≤ 0.75.
+- The first two reels both opened with `neg_flash` → hooks now rotate from a 10-hook library with a log.
+- Frame-doubling a 30 fps file is not 60 fps → render with the 60 fps template.
+- 60 fps muxing raised the true peak to −0.7 dBTP → always re-measure after the final mux.

@@ -19,3 +19,10 @@
   swooshes, push-ins and grain get in-between frames).
 - README hero image, workflow flowchart, Day 4 contact sheet, compressed sample reels in `samples/`.
 - `docs/WORKFLOW_GUIDE.md`: shareable step-by-step guide with the flowchart, Instagram safe zone and rules checklist.
+
+## v4 — 21 Nov 2026: unique hooks + 60 fps mandatory
+- `engine/hooks.py`: 10 hook openers (neg_flash, pixel_assemble, strip_slam, red_wipe, zoom_punch, rgb_converge,
+  halftone_iris, slice_glitch, letterbox_open, shutter_blinds) + `pick_hook()`; rotation log `references/hook_log.md`.
+- 60 fps HD is mandatory for every reel; the 60 fps template takes `HOOK=<name>`.
+- Skill split into `references/*.md` (one per topic) by `tools/build_skill_refs.py`; SKILL.md stays the source.
+- `tools/hook_preview.py` + `samples/hooks_preview_60fps.mp4`.

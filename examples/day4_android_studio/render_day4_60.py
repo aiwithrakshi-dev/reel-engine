@@ -12,6 +12,11 @@ from islands import snapped
 from subject_d4 import combined_alpha
 from PIL import Image as PImage
 import fx as _fx
+sys.path.insert(1, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'engine'))
+from hooks import apply_hook, HOOKS
+HOOK = os.environ.get('HOOK', 'neg_flash')     # pick a hook NOT used in the last 5 reels (references/hook_log.md)
+FACE = (530, 840)                              # face centre in reel coords, for face-centred hooks
+assert HOOK in HOOKS, f'unknown hook {HOOK}: {sorted(HOOKS)}'
 SUB = 0.0
 def _cont(fn):
     def g(canvas, j, *a, **k):
@@ -478,14 +483,7 @@ def render_frame(f, subj):
         if kind == 'smear' and 0 <= j < 3: vertical_smear(c, j)
         if kind == 'radial' and 0 <= j < 3: radial_blur(c, CX, 900, amt=[0.06, 0.04, 0.02][j])
         if kind == 'rgb': rgb_ghost(c, j)
-    if f < 3:                                     # negative flash open
-        negative(c, blur=9); c *= 0.55; rnd = random.Random(f); colb = (0x29, 0xE0, 0xE6) if f < 2 else RED
-        for _ in range(2):
-            x, y = rnd.uniform(420, 640), rnd.uniform(600, 900); c[int(y):int(y) + 48, int(x):int(x) + 48] = np.array(colb, np.float32)
-    elif f < 6:                                   # scale-in
-        j = f - 3; s = [0.92, 0.96, 0.99][j]; bl = [12, 6, 2][j]
-        M = np.float32([[s, 0, 540 * (1 - s)], [0, s, 960 * (1 - s)]])
-        c[:] = cv2.GaussianBlur(cv2.warpAffine(c, M, (W, H), borderMode=cv2.BORDER_REPLICATE), (0, 0), bl)
+    apply_hook(HOOK, c, 2 * f + int(SUB * 2), face=FACE)   # unique opener per reel (engine/hooks.py)
     for jt in (J[0], J[6]):                       # cutaway exits on a jump cut: magenta ghost 1 fr -> negative 2 fr
         j = f - F(jt)
         if j == 0: magenta_ghost(c)

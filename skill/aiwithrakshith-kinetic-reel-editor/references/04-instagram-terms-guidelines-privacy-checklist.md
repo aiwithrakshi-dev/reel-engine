@@ -1,0 +1,16 @@
+<!-- Generated from SKILL.md by tools/build_skill_refs.py. Edit SKILL.md, not this file. -->
+
+# 4. Instagram terms, guidelines & privacy checklist
+
+**Music**: only tracks we hold a licence for (Drive `Background music` — confirm its generator/plan allows
+  commercial Instagram use; stock audio only if its licence covers social/commercial). Never commercial
+  songs. Offer a no-music version if he prefers Instagram's in-app licensed audio.
+- **Third-party media**: official product screenshots/demos used editorially (news/review); no watermarked stock,
+  no ripped TV/film/sports clips, no other creators' videos. Credit sources in the post caption.
+- **Trademarks/logos**: editorial reference only; never imply sponsorship. If the post is paid → remind him to
+  turn on the Paid Partnership label.
+- **AI content**: his AI-generated footage/avatar → remind him to turn on the "AI info" label.
+- **Privacy**: no private individuals' faces, names, phone numbers, emails, addresses, plates or chats from the web;
+  blur them in screenshots (incl. usernames in demos unless public brand accounts).
+- **Truthfulness**: no misleading claims, fake numbers, fake UI, or clickbait the video doesn't deliver.
+- Comment-to-DM CTAs are fine; no giveaways without rules; stay within Community Guidelines.

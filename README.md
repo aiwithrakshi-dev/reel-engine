@@ -2,7 +2,8 @@
 
 > **Private.** House-style editing system for **@AIwithRakshith** (Kannada) and **aiwithrakshith.global** (English).
 > Rakshith uploads one raw talking-head video (Kannada or English); any capable LLM agent with a shell and this repo
-> turns it into a finished **1080×1920, 60 fps** Instagram Reel.
+> turns it into a finished **1080×1920, 60 fps HD** Instagram Reel. Every reel is 60 fps, and every reel opens with its own
+> **unique hook animation**.
 
 ![AI with Rakshith kinetic reel — Day 4 "Claude & Codex inside Android Studio" (cover + key frames)](docs/images/readme_hero.jpg)
 
@@ -13,11 +14,38 @@ every visual event. Everything stays inside the Instagram safe zone and nothing 
 
 ---
 
+## Hook library: a unique opener for every reel
+
+Ten hook openers live in [`engine/hooks.py`](engine/hooks.py). A reel never reuses a hook from the last 5 reels;
+the rotation is tracked in [`hook_log.md`](skill/aiwithrakshith-kinetic-reel-editor/references/hook_log.md).
+
+| Hook | Energy | Look |
+|---|---|---|
+| `neg_flash` | high | negative frame + cyan→red blocks, scale-in |
+| `pixel_assemble` | high | giant red mosaic resolves into the frame |
+| `strip_slam` | high | 5 strips slam in from alternate sides |
+| `red_wipe` | medium | diagonal red light band reveals the frame |
+| `zoom_punch` | high | 135 % zoom-blur punch with RGB split |
+| `rgb_converge` | medium | R/G/B channels fly in and lock |
+| `halftone_iris` | calm | iris opens from his face through a red dot ring |
+| `slice_glitch` | high | displaced horizontal slices settle |
+| `letterbox_open` | calm | black bars part from the face line |
+| `shutter_blinds` | medium | 12 vertical blinds snap open |
+
+Watch all ten on real Day 4 frames: [`samples/hooks_preview_60fps.mp4`](samples/hooks_preview_60fps.mp4). Each row
+below is one hook, read left to right:
+
+![All 10 hooks, frame by frame](docs/images/hooks_strip.jpg)
+
+Pick one with `HOOK=<name>` when rendering, or preview them on a new reel with
+`python3 tools/hook_preview.py reel.mp4 --face 530,840`.
+
 ## Sample videos
 
 | Video | What it shows |
 |---|---|
 | [`samples/day4_android_studio_byoa_60fps_preview.mp4`](samples/day4_android_studio_byoa_60fps_preview.mp4) | Day 4 reel built with this engine: English, 1080×1920 **60 fps**, 40 s, safe-zone layout v3 |
+| [`samples/hooks_preview_60fps.mp4`](samples/hooks_preview_60fps.mp4) | All 10 hook openers on Day 4 frames, 60 fps |
 | [`samples/sample_reel_chatgpt_gif_update.mp4`](samples/sample_reel_chatgpt_gif_update.mp4) | Sample reel from Rakshith ("ChatGPT GIF update", 26.5 s) |
 
 These are compressed web previews so they fit in git. Full-quality masters (134–138 MB) are kept in Drive, not in the repo.
@@ -35,14 +63,19 @@ aiwithrakshith-reel-engine/
 ├── README.md                     ← you are here
 ├── AGENTS.md                     ← instructions for ANY coding agent (Codex, Cursor, Gemini CLI, Copilot, Aider…)
 ├── CLAUDE.md                     ← pointer for Claude Code / Claude
-├── skill/aiwithrakshith-kinetic-reel-editor/SKILL.md   ← the full editing rulebook (v3) — the source of truth
+├── skill/aiwithrakshith-kinetic-reel-editor/
+│   ├── SKILL.md                  ← the full editing rulebook (v4): the source of truth
+│   └── references/               ← one .md per topic (generated from SKILL.md) + hook_log.md
 ├── prompts/universal_system_prompt.md                  ← paste into ChatGPT / Gemini / Claude / any chat LLM
 ├── engine/                       ← reusable Python engine (NumPy / OpenCV / Pillow + ffmpeg)
 ├── examples/
 │   ├── kling40/                  ← approved Kling 4.0 Kannada reel timeline (v1 layout)
 │   └── day4_android_studio/      ← approved Day 4 English reel (v3 safe-zone layout, 30 + 60 fps renders) + facts + post text
 ├── samples/                      ← compressed sample reels (web previews)
-├── tools/safe_zone_check.py      ← Instagram safe-zone audit sheets for any reel
+├── tools/
+│   ├── safe_zone_check.py        ← Instagram safe-zone audit sheets for any reel
+│   ├── hook_preview.py           ← preview every hook on a reel's own frames
+│   └── build_skill_refs.py       ← regenerate references/*.md from SKILL.md
 ├── docs/                         ← layout notes and change history
 └── requirements.txt
 ```
@@ -58,6 +91,7 @@ aiwithrakshith-reel-engine/
 | `chair_mask.py`, `subject.py` | Gaming-chair mask from the red piping; person + chair, wood-fringe removal, 1 px choke |
 | `cap_patch.py`, `cap_logo_fix.py` | Repairs AI cap artifacts (crown colour flips, white logo growth) |
 | `audio.py` | Synthesised SFX, music re-sequenced on bar lines with drop-outs, VO chain, sidechain duck |
+| `hooks.py` | 10 unique hook openers (60 fps) + `pick_hook()` rotation helper |
 | `master.py` | −14 LUFS integrated, true-peak limiter (ceiling −2.9 dBTP before AAC) |
 
 The render script (timeline) is per reel. Copy `examples/day4_android_studio/render_day4.py` (current layout, with `stack()`,
@@ -155,13 +189,13 @@ curl -L -o work/rvm_resnet50_fp32.onnx \
 > search-and-replace the path constants at the top of each script before running.
 
 ### Render commands
-For a true 60 fps render use `examples/day4_android_studio/render_day4_60.py`. Its frame numbers are 60 fps frames. Every
+Every reel renders at 60 fps from the template `examples/day4_android_studio/render_day4_60.py`, with the hook set by `HOOK=<name>`. Its frame numbers are 60 fps frames. Every
 effect keeps its 30-fps timing, while rings, neon streaks, swooshes, screen push-ins and grain get real in-between frames.
 ```bash
 # test frames first (PNG), look at them
-python3 render.py 0 0 test_frames 4,36,100,230,400
-# full render in two parallel halves, then concat + mux
-python3 render.py 0 1200 part1.mp4 & python3 render.py 1200 2400 part2.mp4; wait
+HOOK=pixel_assemble python3 render.py 0 0 test_frames 0,8,72,200,460
+# full render in two parallel halves (60 fps frame numbers), then concat + mux
+HOOK=pixel_assemble python3 render.py 0 1202 part1.mp4 & HOOK=pixel_assemble python3 render.py 1202 99999 part2.mp4; wait
 ffmpeg -f concat -safe 0 -i parts.txt -i mix_final.wav -map 0:v -map 1:a \
   -c:v libx264 -profile:v high -r 60 -crf 17 -maxrate 35M -bufsize 70M -preset veryfast \
   -c:a aac -b:a 320k -ar 48000 -movflags +faststart final_reel_60fps.mp4

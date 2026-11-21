@@ -5,7 +5,7 @@ One raw talking-head video in, one finished 1080×1920, 60 fps Instagram Reel ou
 Full rules: [`skill/aiwithrakshith-kinetic-reel-editor/SKILL.md`](../skill/aiwithrakshith-kinetic-reel-editor/SKILL.md).
 
 Three rules never bend: everything stays inside the Instagram safe zone, nothing covers his face, and nothing in
-the reel is AI-generated.
+the reel is AI-generated. Every reel is also delivered at **60 fps HD** and opens with a **unique hook**.
 
 ## Flowchart
 
@@ -74,6 +74,8 @@ Every readable element stays inside **x 65–960, y 270–1250**.
 - His room stays behind him (darkened 20 %, desaturated 20 %, lightly blurred). Keywords are red #E3121B 3D italic
   Inter Tight. Labels are white italic, 20 px above the word.
 - Effects come only from the house library, and every jump cut is hidden by one. Motion is snappy and stepped.
+- **Hook:** pick one of the 10 openers in `engine/hooks.py` that wasn't used in the last 5 reels (`hook_log.md`),
+  matched to the topic's energy, and log it on delivery.
 - Text types at 1 frame per letter and is fully typed at least 0.25 s before any cut.
 - Music: news/launch 120–135 BPM trap; tutorial 85–105 lo-fi; story 70–95 cinematic; business 100–118 house.
 - The voice always sits on top. Master at −14 LUFS with peaks at or below −1 dBTP. Every graphic has a sound, and the
