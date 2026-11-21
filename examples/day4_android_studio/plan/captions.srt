@@ -1,0 +1,120 @@
+1
+00:00:00,000 --> 00:00:01,320
+Google just let Claude
+
+2
+00:00:01,320 --> 00:00:02,260
+and Codex inside
+
+3
+00:00:02,260 --> 00:00:04,240
+Android Studio and they
+
+4
+00:00:04,240 --> 00:00:05,700
+can test their own code.
+
+5
+00:00:06,080 --> 00:00:07,040
+Bring Your Own Agent
+
+6
+00:00:07,040 --> 00:00:08,320
+is now in the stable
+
+7
+00:00:08,320 --> 00:00:08,770
+release
+
+8
+00:00:08,960 --> 00:00:09,660
+not a beta.
+
+9
+00:00:10,020 --> 00:00:10,900
+Pick from more than
+
+10
+00:00:10,900 --> 00:00:11,920
+40 agents.
+
+11
+00:00:12,260 --> 00:00:12,960
+Claude Agent
+
+12
+00:00:13,220 --> 00:00:13,960
+Codex
+
+13
+00:00:14,020 --> 00:00:14,560
+Junie
+
+14
+00:00:14,700 --> 00:00:15,660
+Antigravity.
+
+15
+00:00:15,860 --> 00:00:16,540
+The big difference?
+
+16
+00:00:16,840 --> 00:00:18,380
+The agent sees your whole
+
+17
+00:00:18,380 --> 00:00:18,920
+project
+
+18
+00:00:19,260 --> 00:00:20,800
+build setup and your compose
+
+19
+00:00:20,800 --> 00:00:21,620
+previews.
+
+20
+00:00:21,660 --> 00:00:22,700
+It can run the app
+
+21
+00:00:22,700 --> 00:00:24,000
+on the emulator and check
+
+22
+00:00:24,000 --> 00:00:24,880
+its own work.
+
+23
+00:00:24,880 --> 00:00:26,020
+you sign in with
+
+24
+00:00:26,020 --> 00:00:27,260
+the plan you already pay
+
+25
+00:00:27,260 --> 00:00:30,420
+for settings tools AI agents
+
+26
+00:00:30,420 --> 00:00:32,420
+for freelancers this means
+
+27
+00:00:32,420 --> 00:00:34,060
+small client apps in days
+
+28
+00:00:34,060 --> 00:00:36,180
+not weeks comment build
+
+29
+00:00:36,180 --> 00:00:37,440
+and I'll send my setup
+
+30
+00:00:37,440 --> 00:00:38,920
+guide and five app prompts
+

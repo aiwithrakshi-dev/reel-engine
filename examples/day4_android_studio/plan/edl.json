@@ -1,0 +1,375 @@
+{
+ "brand": "global",
+ "lang": "en",
+ "energy": "high",
+ "hook": "zoom_punch",
+ "hook_sfx": "reverse whoosh into punch",
+ "music": "120-135 BPM dark trap / bass-house, deep 808",
+ "end_t": 39.74,
+ "headlines": [
+  {
+   "id": "h1",
+   "label": "claude and codex inside",
+   "big": "ANDROID STUDIO",
+   "label_t": 0.0,
+   "big_t": 2.26,
+   "sentence": "Google just let Claude and Codex inside Android Studio",
+   "score": 4.4,
+   "typed_t": 2.73,
+   "scene_change_t": 3.24,
+   "hold": 0.51,
+   "ok": true
+  },
+  {
+   "id": "h2",
+   "label": "and they can",
+   "big": "TEST",
+   "label_t": 3.24,
+   "big_t": 4.4,
+   "sentence": "and they can test their own code.",
+   "score": 2.6,
+   "typed_t": 4.57,
+   "scene_change_t": 6.08,
+   "hold": 1.51,
+   "ok": true
+  },
+  {
+   "id": "h3",
+   "label": "bring your own",
+   "big": "AGENT",
+   "label_t": 6.08,
+   "big_t": 6.76,
+   "sentence": "Bring Your Own Agent is now in the stable release,",
+   "score": 5.6,
+   "typed_t": 6.96,
+   "scene_change_t": 8.96,
+   "hold": 2.0,
+   "ok": true
+  },
+  {
+   "id": "h4",
+   "label": "not a",
+   "big": "BETA",
+   "label_t": 8.96,
+   "big_t": 9.5,
+   "sentence": "not a beta.",
+   "score": 2.6,
+   "typed_t": 9.67,
+   "scene_change_t": 10.02,
+   "hold": 0.35,
+   "ok": true
+  },
+  {
+   "id": "h5",
+   "label": "pick from more than",
+   "big": "40 AGENTS",
+   "label_t": 10.02,
+   "big_t": 10.9,
+   "sentence": "Pick from more than 40 agents.",
+   "score": 4.3,
+   "typed_t": 11.2,
+   "scene_change_t": 12.26,
+   "hold": 1.06,
+   "ok": true
+  },
+  {
+   "id": "h6",
+   "label": "your pick",
+   "big": "ANY AGENT",
+   "label_t": 12.26,
+   "big_t": 12.26,
+   "sentence": "Claude Agent, Codex, Junie, Antigravity.",
+   "score": 5.0,
+   "typed_t": 12.56,
+   "scene_change_t": 15.86,
+   "hold": 3.3,
+   "ok": true
+  },
+  {
+   "id": "h7",
+   "label": "the big",
+   "big": "DIFFERENCE?",
+   "label_t": 15.86,
+   "big_t": 16.2,
+   "sentence": "The big difference?",
+   "score": 2.6,
+   "typed_t": 16.57,
+   "scene_change_t": 16.84,
+   "hold": 0.27,
+   "ok": true
+  },
+  {
+   "id": "h8",
+   "label": "agent sees your whole",
+   "big": "PROJECT",
+   "label_t": 16.84,
+   "big_t": 18.38,
+   "sentence": "The agent sees your whole project,",
+   "score": 2.6,
+   "typed_t": 18.65,
+   "scene_change_t": 19.26,
+   "hold": 0.61,
+   "ok": true
+  },
+  {
+   "id": "h9",
+   "label": "and your compose",
+   "big": "BUILD SETUP",
+   "label_t": 19.26,
+   "big_t": 19.26,
+   "sentence": "build setup and your compose previews.",
+   "score": 3.4,
+   "typed_t": 19.63,
+   "scene_change_t": 21.66,
+   "hold": 2.03,
+   "ok": true
+  },
+  {
+   "id": "h10",
+   "label": "the app on the",
+   "big": "EMULATOR",
+   "label_t": 21.66,
+   "big_t": 22.98,
+   "sentence": "It can run the app on the emulator",
+   "score": 1.1,
+   "typed_t": 23.28,
+   "scene_change_t": 23.42,
+   "hold": 0.14,
+   "ok": false,
+   "fix": "shorten the big word or move the next cut later (needs hold >= 0.25 s)"
+  },
+  {
+   "id": "h11",
+   "label": "and",
+   "big": "CHECK",
+   "label_t": 23.42,
+   "big_t": 23.76,
+   "sentence": "and check its own work.",
+   "score": 0.6,
+   "typed_t": 23.96,
+   "scene_change_t": 24.88,
+   "hold": 0.92,
+   "ok": true
+  },
+  {
+   "id": "h12",
+   "label": "sign in with the",
+   "big": "PLAN",
+   "label_t": 24.88,
+   "big_t": 26.12,
+   "sentence": "you sign in with the plan you already pay",
+   "score": 2.6,
+   "typed_t": 26.29,
+   "scene_change_t": 27.26,
+   "hold": 0.97,
+   "ok": true
+  },
+  {
+   "id": "h13",
+   "label": "for settings tools",
+   "big": "AI",
+   "label_t": 27.26,
+   "big_t": 28.82,
+   "sentence": "for settings tools AI agents for",
+   "score": 5.0,
+   "typed_t": 28.92,
+   "scene_change_t": 31.02,
+   "hold": 2.1,
+   "ok": true
+  },
+  {
+   "id": "h14",
+   "label": "this means small",
+   "big": "FREELANCERS",
+   "label_t": 31.02,
+   "big_t": 31.02,
+   "sentence": "freelancers this means small client apps in days not weeks comment build",
+   "score": 2.6,
+   "typed_t": 31.42,
+   "scene_change_t": 36.18,
+   "hold": 4.76,
+   "ok": true
+  },
+  {
+   "id": "h15",
+   "label": "and i'll",
+   "big": "SEND",
+   "label_t": 36.18,
+   "big_t": 36.78,
+   "sentence": "and I'll send my setup guide",
+   "score": 0.6,
+   "typed_t": 36.95,
+   "scene_change_t": 37.72,
+   "hold": 0.77,
+   "ok": true
+  },
+  {
+   "id": "h16",
+   "label": "and five app",
+   "big": "PROMPTS",
+   "label_t": 37.72,
+   "big_t": 38.66,
+   "sentence": "and five app prompts",
+   "score": 2.6,
+   "typed_t": 38.93,
+   "scene_change_t": 39.74,
+   "hold": 0.81,
+   "ok": true
+  }
+ ],
+ "chest_row": [
+  {
+   "type": "struck_pill",
+   "text": "beta",
+   "t": 9.5,
+   "head": "h4"
+  },
+  {
+   "type": "tile",
+   "text": "Claude Agent",
+   "t": 12.26,
+   "head": "h6"
+  },
+  {
+   "type": "tile",
+   "text": "Codex",
+   "t": 13.22,
+   "head": "h6"
+  },
+  {
+   "type": "tile",
+   "text": "Junie",
+   "t": 14.02,
+   "head": "h6"
+  },
+  {
+   "type": "tile",
+   "text": "Antigravity",
+   "t": 14.7,
+   "head": "h6"
+  },
+  {
+   "type": "struck_pill",
+   "text": "weeks",
+   "t": 34.66,
+   "head": "h14"
+  },
+  {
+   "type": "cta_card",
+   "text": "BUILD",
+   "t": 35.02,
+   "head": "h14"
+  }
+ ],
+ "cutaways": [
+  {
+   "t0": 0.0,
+   "t1": 5.7,
+   "head": "h1",
+   "suggest": "screen cutaway: official screenshot/demo showing \"Android Studio\" (push-in on it) + official screenshot/demo showing \"test\" (push-in on it)"
+  },
+  {
+   "t0": 19.26,
+   "t1": 23.42,
+   "head": "h9",
+   "suggest": "screen cutaway: official screenshot/demo showing \"build setup\" (push-in on it) + official screenshot/demo showing \"emulator\" (push-in on it)"
+  },
+  {
+   "t0": 27.26,
+   "t1": 31.02,
+   "head": "h13",
+   "suggest": "screen cutaway: official screenshot/demo showing \"AI\" (push-in on it)"
+  },
+  {
+   "t0": 37.72,
+   "t1": 38.92,
+   "head": "h16",
+   "suggest": "screen cutaway: official screenshot/demo showing \"prompts\" (push-in on it)"
+  }
+ ],
+ "jump_cut_devices": [
+  {
+   "t": 6.12,
+   "device": "neon_streak",
+   "sfx": "zap"
+  },
+  {
+   "t": 10.04,
+   "device": "halftone_ring",
+   "sfx": "whoosh + boom"
+  },
+  {
+   "t": 15.88,
+   "device": "vertical_smear",
+   "sfx": "swish"
+  },
+  {
+   "t": 17.0,
+   "device": "halftone_ring_lines",
+   "sfx": "whoosh + boom"
+  },
+  {
+   "t": 19.12,
+   "device": "neon_streak",
+   "sfx": "zap"
+  },
+  {
+   "t": 21.8,
+   "device": "cutaway",
+   "sfx": "riser + whoosh in, impact on slam"
+  },
+  {
+   "t": 25.24,
+   "device": "vertical_smear",
+   "sfx": "swish"
+  },
+  {
+   "t": 27.84,
+   "device": "cutaway",
+   "sfx": "riser + whoosh in, impact on slam"
+  },
+  {
+   "t": 30.92,
+   "device": "cutaway",
+   "sfx": "riser + whoosh in, impact on slam"
+  },
+  {
+   "t": 35.44,
+   "device": "halftone_ring",
+   "sfx": "whoosh + boom"
+  }
+ ],
+ "checks": [
+  [
+   "Hook text on screen in the first 1.0 s",
+   true,
+   "first label 0.0 s, big word 2.26 s"
+  ],
+  [
+   "Something changes on screen at least every 3 s",
+   false,
+   "longest still stretch 3.64 s at 31.02 s"
+  ],
+  [
+   "Every headline typed >= 0.25 s before its scene changes",
+   false,
+   "1 too tight"
+  ],
+  [
+   "Length in the 15-90 s sweet spot (3 min max)",
+   true,
+   "39.7 s"
+  ],
+  [
+   "CTA in the last 25 %",
+   true,
+   "BUILD"
+  ],
+  [
+   "Hook `zoom_punch` not used in the last 5 reels",
+   true,
+   "recent: neg_flash, neg_flash"
+  ]
+ ],
+ "loop_tip": "End on a line that pays off the first line so the replay feels seamless (rewatches count)."
+}

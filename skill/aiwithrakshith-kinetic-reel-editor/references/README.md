@@ -18,6 +18,8 @@ One file per topic, split from `../SKILL.md`.
 | [`09-device-library-timing-engine-fx.md`](09-device-library-timing-engine-fx.md) | 9. Device library & timing (`engine/fx.py`; frame counts are 30-fps units → at 60 fps use `n * FPS // 30`) |
 | [`09b-hook-library-unique-opener-reel.md`](09b-hook-library-unique-opener-reel.md) | 9b. Hook library — a unique opener for every reel (`engine/hooks.py`) |
 | [`09c-60-fps-render-mandatory-reel.md`](09c-60-fps-render-mandatory-reel.md) | 9c. 60 fps render (mandatory for every reel) |
+| [`09d-retention-algorithm-rules-2026-research.md`](09d-retention-algorithm-rules-2026-research.md) | 9d. Retention & algorithm rules (2026 research) |
+| [`09e-reference-reel-devices-engine-ref_devices-py.md`](09e-reference-reel-devices-engine-ref_devices-py.md) | 9e. Reference-reel devices (`engine/ref_devices.py`) |
 | [`10-audit-loop-repeat-until-zero.md`](10-audit-loop-repeat-until-zero.md) | 10. Audit loop (repeat until zero failures) |
 | [`11-deliverables.md`](11-deliverables.md) | 11. Deliverables |
 | [`12-lessons-learned-don-t-repeat.md`](12-lessons-learned-don-t-repeat.md) | 12. Lessons learned (don't repeat) |

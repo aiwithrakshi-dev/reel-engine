@@ -3,7 +3,7 @@ name: aiwithrakshith-kinetic-reel-editor
 description: Edit a raw Kannada or English talking-head video into a 60 fps @AIwithRakshith / aiwithrakshith.global Reel with a unique hook, verified B-roll, Instagram safe zone, Kanglish headlines and English captions.
 ---
 
-# AI with Rakshith — Kinetic-Type Reel Editor (v4)
+# AI with Rakshith — Kinetic-Type Reel Editor (v5)
 
 Rakshith uploads ONE raw talking-head video (Kannada or English). The editor does everything else: understands it,
 researches the topic, pulls verified B-roll, edits it in his kinetic-type house style (giant red 3D words typing on
@@ -48,11 +48,13 @@ Engine code: this repository (`engine/`, `examples/`) — also mirrored in the c
 3. **Research + fact-check** the topic on the open web, official/verified sources only (§5).
 4. **Gather** B-roll (official media, screenshots, demo clips) + Magnific stock (vectors, photos, illustrations,
    templates, PSDs, mockups, videos, icons, 3D models, fonts) + topic-matched music + SFX (§7).
-5. **Plan** the EDL: pick the hook (§9b), then every keyword, caption chunk, cutaway, device and SFX on its spoken word;
-   layout per §8.
+5. **Plan** the EDL with `tools/script_gen.py` (transcript → hook, headlines, captions, chest row, cutaway spots,
+   jump-cut devices, SFX, music, IG caption draft, retention checks), then review it (`--interactive` or edit
+   `edl.json`): taste, facts and B-roll choices are the editor's. Layout per §8.
 6. **Build** headlines, captions, graphics, cutaways, audio.
 7. **Preview**: render ~15 key frames with the safe-zone overlay, LOOK at them, fix, then full render.
-8. **Audit loop** (§10) on every frame — fix and re-render the affected range until 100 % clean.
+8. **Audit loop** (§10) on every frame — `tools/qc_audit.py` + the contact sheets; fix and re-render the affected
+   range until 100 % clean.
 9. **Deliver** 60 fps HD MP4 + cover + SRT + post text + sources + QC report (§11).
 If Rakshith is around, send the preview frames before the full render; if not, decide and note it in the report.
 
@@ -105,7 +107,12 @@ If Rakshith is around, send the preview frames before the full render; if not, d
   no ripped TV/film/sports clips, no other creators' videos. Credit sources in the post caption.
 - **Trademarks/logos**: editorial reference only; never imply sponsorship. If the post is paid → remind him to
   turn on the Paid Partnership label.
-- **AI content**: his AI-generated footage/avatar → remind him to turn on the "AI info" label.
+- **AI content**: Meta requires the AI label for photorealistic video or realistic-sounding audio that was digitally
+  created or altered (penalties possible). His AI-generated talking head / avatar or AI voice → the "AI info" label
+  is REQUIRED on that reel; list it in `instagram_post.txt` and the QC report.
+- **Originality** (Instagram, Apr 2026): low-effort reposts lose recommendations. Third-party media only inside our
+  framed windows with a push-in, our headline and his commentary; never a full-screen repost or a re-upload of
+  someone's clip. Original A-roll is always the backbone.
 - **Privacy**: no private individuals' faces, names, phone numbers, emails, addresses, plates or chats from the web;
   blur them in screenshots (incl. usernames in demos unless public brand accounts).
 - **Truthfulness**: no misleading claims, fake numbers, fake UI, or clickbait the video doesn't deliver.
@@ -187,11 +194,18 @@ so dialogue stays on top and the bed breathes smoothly; master −14 LUFS, limit
 6. Composite order: room → big type behind → cards behind head → him (matte) → chest row → captions →
    FX (blocks, streaks, rings) → whole-frame devices → hook → grain 3.5.
 
-**Captions**: Inter Tight Bold Italic 44 px, white, 3 px dark stroke + soft shadow, one line, ≤ 5 words / ≤ 30 chars,
+**Captions** (`engine/captions.py`; two styles; turn Instagram's auto-captions OFF when captions are burned in):
+- `karaoke` (default on talking head): Inter Tight Bold Italic 44 px, white, 3 px dark stroke + soft shadow, one line, ≤ 5 words / ≤ 30 chars,
 centred in the safe box; the word being spoken gets a red `#E3121B` highlight (karaoke). English: word-synced to
 Whisper word times. Kannada: English phrase chunks timed to the Kannada phrase spans (start on the first syllable,
 end ≤ 0.15 s after the last), never ahead of his lips. Never cover the face; drop a chunk that just repeats the
 headline word being typed in the same 0.3 s.
+- `chip` (reference-reel style, for punch lines over cutaways/slates or fast news reels): 2–4 heavy upright caps
+  words, ONE keyword on a red rounded box ("SAVE **THIS**", "JUST **DROPPED**", "**FIX** SINGLE FRAMES"), stepped pop.
+- Line breaks keep names and number pairs together ("Android Studio", "40 agents") and never end on "and / the / a".
+  Run `apply_glossary` with the verified spellings from `facts.md` (Juni → Junie, Cling → Kling).
+- Kannada/Kanglish labels: `engine/kannada_text.py` (script runs, RAQM, conjunct-safe type-on, 10° shear).
+- The caption band and the chest row must not touch: `CaptionTrack(..., avoid=[chest_row_box])` raises if they do.
 
 ---
 
@@ -233,6 +247,7 @@ The first 0.2–0.3 s decides the scroll-stop, so no two recent reels may open t
 | `slice_glitch` | 14 | high | horizontal slices displaced, cyan/red tints, settle in 7 steps | data glitch + impact |
 | `letterbox_open` | 14 | calm | black bars part from the face line, red edge lines | cinematic hit + sub |
 | `shutter_blinds` | 18 | medium | 12 vertical blinds snap open from the centre outwards | shutter clicks + pop |
+| `face_punch` | 14 | high | extreme close-up on his eyes snaps back (2.6× → 1×), red frame flash | bass drop + shutter snap |
 
 Rules:
 - Read `references/hook_log.md` first. Never use a hook from the last 5 reels; never the same energy hook 3 times in a row.
@@ -245,6 +260,18 @@ Rules:
 - Preview all hooks on the new reel's own frames with `tools/hook_preview.py` when choosing.
 - New hooks may be added to `engine/hooks.py` (same style: red/pink/cyan palette, stepped or punchy, ≤ 0.3 s, inside the
   frame logic, no AI generation); add them to this table and the log.
+
+## 9e. Reference-reel devices (`engine/ref_devices.py`)
+From the "ChatGPT GIF update" reference (Nov 2026), house palette, inside the safe zone:
+
+| Device | Use |
+|---|---|
+| `slate` | dark blue-grey full-frame background for UI / card scenes (instead of a blurred room) |
+| `news_stack` | 2–3 headline cards from official sources popping 3 frames apart, red NEW sticker on the first |
+| `face_grid` | grid of his own frames/photos popping 2 frames apart ("SAME FACE", "EVERY POST") |
+| `badge` | one big red word with white rim and overshoot pop ("FREE", "NEW", "STABLE"): headline zone, never on the face |
+| `prompt_card` | dark-blue prompt bubble typing 2 chars/frame, the @mention inside a red chip |
+| `face_punch` hook | extreme close-up on his eyes snapping back with a red frame flash (§9b) |
 
 ## 9c. 60 fps render (mandatory for every reel)
 - Template: `examples/day4_android_studio/render_day4_60.py`. Frame numbers are 60 fps frames `g`; the timeline logic runs
@@ -264,6 +291,17 @@ Rules:
 
 ---
 
+## 9d. Retention & algorithm rules (2026 research)
+- Watch time, sends per reach and likes per reach are the top ranking signals. Edit for completion and rewatch.
+- The hook is visible AND readable in the first second: hook animation + the first label on screen by ≤ 1.0 s.
+- Something changes on screen at least every 3 s (our 0.3–0.5 s events usually exceed it; script_gen flags gaps).
+- One idea per reel; cut every pause and filler; target 15–60 s (90 s max unless the topic needs it; 3 min ceiling
+  for recommendations).
+- Loop: the last line or final frame pays off the first, so the replay feels seamless.
+- Caption (post): line 4 is the CTA. Use the comment keyword when there's a DM offer, otherwise "save / send this to…"
+  (sends drive non-follower reach).
+- Unsure between two hooks → post one as a Trial Reel (non-followers first) and keep the winner's hook in the log.
+
 ## 10. Audit loop (repeat until zero failures)
 1. Contact sheet at **≥ 12 fps** with the green safe-zone box.
 2. Join sheet: 5 frames either side of every jump cut, splice and cutaway edge.
@@ -276,6 +314,8 @@ Rules:
    drop-outs), every graphic has its SFX.
 9. Frame 1 = the chosen hook + its SFX hit; ending = hard button.
 10. Hook not used in the last 5 reels (`hook_log.md`); ffprobe shows `60/1` and ≈ 60 frames per second of runtime.
+11. `python3 tools/qc_audit.py final.mp4 --tlog *.tlog.json --hook <name> --new-reel --srt captions.srt --cover cover.png
+    --sheets qc/` passes; attach its `qc_report.md`.
 Any failure → fix the timeline, re-render only the affected range, splice, re-run the whole audit.
 
 ---
@@ -303,3 +343,7 @@ grid crop) · `contact.png` (safe-zone contact sheet) · `captions.srt` (English
 - The first two reels both opened with `neg_flash` → hooks now rotate from a 10-hook library with a log.
 - Frame-doubling a 30 fps file is not 60 fps → render with the 60 fps template.
 - 60 fps muxing raised the true peak to −0.7 dBTP → always re-measure after the final mux.
+- The skill required captions but the engine had no caption code → `captions.py` (+ SRT, glossary, overlap guards).
+- Day 4's layout put the chest row where a caption line now needs to go → reserve the caption band when planning DY.
+- Whisper splits words across jump cuts and drops punctuation late in a take → script_gen splits sentences on cuts,
+  conjunctions and length too.

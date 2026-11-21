@@ -13,4 +13,6 @@
    drop-outs), every graphic has its SFX.
 9. Frame 1 = the chosen hook + its SFX hit; ending = hard button.
 10. Hook not used in the last 5 reels (`hook_log.md`); ffprobe shows `60/1` and ≈ 60 frames per second of runtime.
+11. `python3 tools/qc_audit.py final.mp4 --tlog *.tlog.json --hook <name> --new-reel --srt captions.srt --cover cover.png
+    --sheets qc/` passes; attach its `qc_report.md`.
 Any failure → fix the timeline, re-render only the affected range, splice, re-run the whole audit.

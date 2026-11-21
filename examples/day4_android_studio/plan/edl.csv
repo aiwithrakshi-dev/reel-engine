@@ -1,0 +1,85 @@
+t,type,text,detail
+0.0,hook,zoom_punch,reverse whoosh into punch
+0.0,caption,Google just let Claude,until 1.32
+0.0,cutaway,0.0-5.7 s,"screen cutaway: official screenshot/demo showing ""Android Studio"" (push-in on it) + official screenshot/demo showing ""test"" (push-in on it)"
+0.0,label,claude and codex inside,h1
+1.32,caption,and Codex inside,until 2.26
+2.26,big_word,ANDROID STUDIO,"typed 2.73 s, hold 0.51 s"
+2.26,caption,Android Studio and they,until 4.24
+3.24,label,and they can,h2
+4.24,caption,can test their own code.,until 5.70
+4.4,big_word,TEST,"typed 4.57 s, hold 1.51 s"
+6.08,caption,Bring Your Own Agent,until 7.04
+6.08,label,bring your own,h3
+6.12,jump_cut,neon_streak,zap
+6.76,big_word,AGENT,"typed 6.96 s, hold 2.0 s"
+7.04,caption,is now in the stable,until 8.32
+8.32,caption,"release,",until 8.77
+8.96,caption,not a beta.,until 9.66
+8.96,label,not a,h4
+9.5,big_word,BETA,"typed 9.67 s, hold 0.35 s"
+9.5,struck_pill,beta,h4
+10.02,caption,Pick from more than,until 10.90
+10.02,label,pick from more than,h5
+10.04,jump_cut,halftone_ring,whoosh + boom
+10.9,big_word,40 AGENTS,"typed 11.2 s, hold 1.06 s"
+10.9,caption,40 agents.,until 11.92
+12.26,big_word,ANY AGENT,"typed 12.56 s, hold 3.3 s"
+12.26,caption,"Claude Agent,",until 12.96
+12.26,label,your pick,h6
+12.26,tile,Claude Agent,h6
+13.22,caption,"Codex,",until 13.96
+13.22,tile,Codex,h6
+14.02,caption,"Junie,",until 14.56
+14.02,tile,Junie,h6
+14.7,caption,Antigravity.,until 15.66
+14.7,tile,Antigravity,h6
+15.86,caption,The big difference?,until 16.54
+15.86,label,the big,h7
+15.88,jump_cut,vertical_smear,swish
+16.2,big_word,DIFFERENCE?,"typed 16.57 s, hold 0.27 s"
+16.84,caption,The agent sees your whole,until 18.38
+16.84,label,agent sees your whole,h8
+17.0,jump_cut,halftone_ring_lines,whoosh + boom
+18.38,big_word,PROJECT,"typed 18.65 s, hold 0.61 s"
+18.38,caption,"project,",until 18.92
+19.12,jump_cut,neon_streak,zap
+19.26,big_word,BUILD SETUP,"typed 19.63 s, hold 2.03 s"
+19.26,caption,build setup and your compose,until 20.80
+19.26,cutaway,19.26-23.42 s,"screen cutaway: official screenshot/demo showing ""build setup"" (push-in on it) + official screenshot/demo showing ""emulator"" (push-in on it)"
+19.26,label,and your compose,h9
+20.8,caption,previews.,until 21.62
+21.66,caption,It can run the app,until 22.70
+21.66,label,the app on the,h10
+21.8,jump_cut,cutaway,"riser + whoosh in, impact on slam"
+22.7,caption,on the emulator and check,until 24.00
+22.98,big_word,EMULATOR,"typed 23.28 s, hold 0.14 s TOO TIGHT"
+23.42,label,and,h11
+23.76,big_word,CHECK,"typed 23.96 s, hold 0.92 s"
+24.0,caption,its own work.,until 24.88
+24.88,caption,you sign in with,until 26.02
+24.88,label,sign in with the,h12
+25.24,jump_cut,vertical_smear,swish
+26.02,caption,the plan you already pay,until 27.26
+26.12,big_word,PLAN,"typed 26.29 s, hold 0.97 s"
+27.26,caption,for settings tools AI agents,until 30.42
+27.26,cutaway,27.26-31.02 s,"screen cutaway: official screenshot/demo showing ""AI"" (push-in on it)"
+27.26,label,for settings tools,h13
+27.84,jump_cut,cutaway,"riser + whoosh in, impact on slam"
+28.82,big_word,AI,"typed 28.92 s, hold 2.1 s"
+30.42,caption,for freelancers this means,until 32.42
+30.92,jump_cut,cutaway,"riser + whoosh in, impact on slam"
+31.02,big_word,FREELANCERS,"typed 31.42 s, hold 4.76 s"
+31.02,label,this means small,h14
+32.42,caption,small client apps in days,until 34.06
+34.06,caption,not weeks comment build,until 36.18
+34.66,struck_pill,weeks,h14
+35.02,cta_card,BUILD,h14
+35.44,jump_cut,halftone_ring,whoosh + boom
+36.18,caption,and I'll send my setup,until 37.44
+36.18,label,and i'll,h15
+36.78,big_word,SEND,"typed 36.95 s, hold 0.77 s"
+37.44,caption,guide and five app prompts,until 38.92
+37.72,cutaway,37.72-38.92 s,"screen cutaway: official screenshot/demo showing ""prompts"" (push-in on it)"
+37.72,label,and five app,h16
+38.66,big_word,PROMPTS,"typed 38.93 s, hold 0.81 s"

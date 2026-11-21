@@ -26,3 +26,12 @@
 - 60 fps HD is mandatory for every reel; the 60 fps template takes `HOOK=<name>`.
 - Skill split into `references/*.md` (one per topic) by `tools/build_skill_refs.py`; SKILL.md stays the source.
 - `tools/hook_preview.py` + `samples/hooks_preview_60fps.mp4`.
+
+## v5 — 21 Nov 2026: audit + automation
+- Gap audit vs 2026 Instagram research, AI auto-edit tools and the reference reels: `docs/AUDIT_2026-11-21.md`.
+- `tools/script_gen.py`: transcript (EN words or KN phrase table) → edit script: hook, headlines, captions, chest row,
+  cutaway spots, jump-cut devices, SFX, music bed, IG caption draft, retention/timing checks; `--interactive`.
+- `engine/captions.py` (karaoke + chip, SRT, glossary, overlap guards), `engine/kannada_text.py` (Kanglish, conjunct-safe),
+  `engine/ref_devices.py` (slate, news stack, face grid, badge, prompt card), hook `face_punch`.
+- `tools/qc_audit.py`: one-command delivery audit → `qc_report.md`.
+- SKILL v5: retention & algorithm rules, originality rule, exact AI-label rule, caption styles, reference devices.

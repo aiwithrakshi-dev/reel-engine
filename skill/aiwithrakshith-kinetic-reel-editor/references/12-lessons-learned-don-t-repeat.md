@@ -15,3 +15,7 @@ STUDIO (plain background) was rejected — keep his room. Dark-red labels vanish
 - The first two reels both opened with `neg_flash` → hooks now rotate from a 10-hook library with a log.
 - Frame-doubling a 30 fps file is not 60 fps → render with the 60 fps template.
 - 60 fps muxing raised the true peak to −0.7 dBTP → always re-measure after the final mux.
+- The skill required captions but the engine had no caption code → `captions.py` (+ SRT, glossary, overlap guards).
+- Day 4's layout put the chest row where a caption line now needs to go → reserve the caption band when planning DY.
+- Whisper splits words across jump cuts and drops punctuation late in a take → script_gen splits sentences on cuts,
+  conjunctions and length too.

@@ -9,7 +9,12 @@
   no ripped TV/film/sports clips, no other creators' videos. Credit sources in the post caption.
 - **Trademarks/logos**: editorial reference only; never imply sponsorship. If the post is paid → remind him to
   turn on the Paid Partnership label.
-- **AI content**: his AI-generated footage/avatar → remind him to turn on the "AI info" label.
+- **AI content**: Meta requires the AI label for photorealistic video or realistic-sounding audio that was digitally
+  created or altered (penalties possible). His AI-generated talking head / avatar or AI voice → the "AI info" label
+  is REQUIRED on that reel; list it in `instagram_post.txt` and the QC report.
+- **Originality** (Instagram, Apr 2026): low-effort reposts lose recommendations. Third-party media only inside our
+  framed windows with a push-in, our headline and his commentary; never a full-screen repost or a re-upload of
+  someone's clip. Original A-roll is always the backbone.
 - **Privacy**: no private individuals' faces, names, phone numbers, emails, addresses, plates or chats from the web;
   blur them in screenshots (incl. usernames in demos unless public brand accounts).
 - **Truthfulness**: no misleading claims, fake numbers, fake UI, or clickbait the video doesn't deliver.

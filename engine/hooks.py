@@ -165,6 +165,18 @@ def shutter_blinds(c, g, face=(540, 760)):
         if 0 <= j < 3: c[:, i * bw:i * bw + 3] = np.array(RED, np.float32)
 
 
+# ------------------------------------------------------------------ 11. face punch: extreme close-up on his eyes pulls back (reference reel)
+def face_punch(c, g, face=(540, 760)):
+    k = g // 2; zs = [2.6, 2.6, 2.1, 1.6, 1.25, 1.07, 1.0]
+    if k >= len(zs): return
+    cx, cy = face[0], face[1] - 60                      # eyes sit ~60 px above the face centre
+    z = zs[k]; jit = [(0, 0), (6, -4), (-5, 3), (3, 2), (0, 0), (0, 0), (0, 0)][k]
+    M = np.float32([[z, 0, cx * (1 - z) + jit[0]], [0, z, cy * (1 - z) + jit[1]]])
+    c[:] = cv2.warpAffine(c, M, (W, H), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+    if k == 2:                                           # red frame flash on the first pull-back
+        c[:14] = c[-14:] = np.array(RED, np.float32); c[:, :14] = c[:, -14:] = np.array(RED, np.float32)
+
+
 # name: (function, frames at 60 fps, energy, paired SFX)
 HOOKS = {
     'neg_flash':      (neg_flash,      12, 'high',   'impact + glitch burst'),
@@ -177,6 +189,7 @@ HOOKS = {
     'slice_glitch':   (slice_glitch,   14, 'high',   'data glitch + impact'),
     'letterbox_open': (letterbox_open, 14, 'calm',   'cinematic hit + sub'),
     'shutter_blinds': (shutter_blinds, 18, 'medium', 'shutter clicks + pop'),
+    'face_punch':     (face_punch,     14, 'high',   'bass drop + camera-shutter snap'),
 }
 
 

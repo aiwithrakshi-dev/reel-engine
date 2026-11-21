@@ -8,3 +8,4 @@ pyloudnorm
 faster-whisper
 regex
 scipy
+regex

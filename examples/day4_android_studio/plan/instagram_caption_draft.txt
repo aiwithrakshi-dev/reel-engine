@@ -1,0 +1,8 @@
+Google just let Claude and Codex inside Android Studio and they can test their own code 🤯
+Bring Your Own Agent is now in the stable release, not a beta.
+Freelancers this means small client apps in days not weeks comment build.
+Comment "BUILD" and I'll send it to you 👇 · Sources: <official source> · not sponsored
+
+#codex #claude #androidstudio #ownagent #aiwithrakshith
+
+(DRAFT: tighten each line, verify facts, keep 4 lines + 5 lowercase tags.)

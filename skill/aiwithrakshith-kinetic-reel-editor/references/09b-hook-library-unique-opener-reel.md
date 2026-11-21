@@ -16,6 +16,7 @@ The first 0.2–0.3 s decides the scroll-stop, so no two recent reels may open t
 | `slice_glitch` | 14 | high | horizontal slices displaced, cyan/red tints, settle in 7 steps | data glitch + impact |
 | `letterbox_open` | 14 | calm | black bars part from the face line, red edge lines | cinematic hit + sub |
 | `shutter_blinds` | 18 | medium | 12 vertical blinds snap open from the centre outwards | shutter clicks + pop |
+| `face_punch` | 14 | high | extreme close-up on his eyes snaps back (2.6× → 1×), red frame flash | bass drop + shutter snap |
 
 Rules:
 - Read `references/hook_log.md` first. Never use a hook from the last 5 reels; never the same energy hook 3 times in a row.

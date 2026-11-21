@@ -14,9 +14,26 @@ every visual event. Everything stays inside the Instagram safe zone and nothing 
 
 ---
 
+## Quick start: raw video → edit script → reel
+
+```bash
+# 1. transcript (Whisper large-v3 word timestamps) + speech islands (silencedetect) → words.json, islands.py
+# 2. draft the whole edit script (headlines, captions, hook, cutaways, devices, SFX, music, IG caption, checks)
+python3 tools/script_gen.py --words words.json --islands islands.py --brand global --glossary glossary.json --out plan/
+python3 tools/script_gen.py ... --interactive          # accept / edit each headline in the terminal
+#    Kannada: --phrases phrases.json --lang kn --brand kannada   (reviewed Kannada ↔ English phrase table)
+# 3. build render.py from plan/edl.json (template: examples/day4_android_studio/render_day4_60.py), render at 60 fps
+# 4. audit the delivery
+python3 tools/qc_audit.py final_reel_60fps.mp4 --tlog *.tlog.json --hook <name> --new-reel --srt plan/captions.srt \
+        --cover cover.png --sheets qc/
+```
+
+Real output on the Day 4 transcript: [`examples/day4_android_studio/plan/plan.md`](examples/day4_android_studio/plan/plan.md).
+The gap audit behind these tools: [`docs/AUDIT_2026-11-21.md`](docs/AUDIT_2026-11-21.md).
+
 ## Hook library: a unique opener for every reel
 
-Ten hook openers live in [`engine/hooks.py`](engine/hooks.py). A reel never reuses a hook from the last 5 reels;
+Eleven hook openers live in [`engine/hooks.py`](engine/hooks.py). A reel never reuses a hook from the last 5 reels;
 the rotation is tracked in [`hook_log.md`](skill/aiwithrakshith-kinetic-reel-editor/references/hook_log.md).
 
 | Hook | Energy | Look |
@@ -31,11 +48,18 @@ the rotation is tracked in [`hook_log.md`](skill/aiwithrakshith-kinetic-reel-edi
 | `slice_glitch` | high | displaced horizontal slices settle |
 | `letterbox_open` | calm | black bars part from the face line |
 | `shutter_blinds` | medium | 12 vertical blinds snap open |
+| `face_punch` | high | extreme close-up on his eyes snaps back, red frame flash |
 
-Watch all ten on real Day 4 frames: [`samples/hooks_preview_60fps.mp4`](samples/hooks_preview_60fps.mp4). Each row
+Watch them on real Day 4 frames: [`samples/hooks_preview_60fps.mp4`](samples/hooks_preview_60fps.mp4). Each row
 below is one hook, read left to right:
 
-![All 10 hooks, frame by frame](docs/images/hooks_strip.jpg)
+![All hooks, frame by frame](docs/images/hooks_strip.jpg)
+
+## Captions, Kanglish text and reference-reel devices
+
+`engine/captions.py` renders karaoke captions or the reference reel's chip style (one keyword on a red box), with SRT export. `engine/kannada_text.py` renders Kannada/Kanglish labels that type on without breaking conjuncts. `engine/ref_devices.py` adds the slate, news stack, face grid, badge and @mention prompt card:
+
+![Reference devices: news stack + chip caption, face grid, FREE badge, prompt card](docs/images/reference_devices.jpg)
 
 Pick one with `HOOK=<name>` when rendering, or preview them on a new reel with
 `python3 tools/hook_preview.py reel.mp4 --face 530,840`.
@@ -74,6 +98,8 @@ aiwithrakshith-reel-engine/
 ├── samples/                      ← compressed sample reels (web previews)
 ├── tools/
 │   ├── safe_zone_check.py        ← Instagram safe-zone audit sheets for any reel
+│   ├── script_gen.py             ← transcript → full edit script (EDL, captions, hook, checks, IG caption)
+│   ├── qc_audit.py               ← one-command delivery audit → qc_report.md
 │   ├── hook_preview.py           ← preview every hook on a reel's own frames
 │   └── build_skill_refs.py       ← regenerate references/*.md from SKILL.md
 ├── docs/                         ← layout notes and change history
@@ -91,7 +117,10 @@ aiwithrakshith-reel-engine/
 | `chair_mask.py`, `subject.py` | Gaming-chair mask from the red piping; person + chair, wood-fringe removal, 1 px choke |
 | `cap_patch.py`, `cap_logo_fix.py` | Repairs AI cap artifacts (crown colour flips, white logo growth) |
 | `audio.py` | Synthesised SFX, music re-sequenced on bar lines with drop-outs, VO chain, sidechain duck |
-| `hooks.py` | 10 unique hook openers (60 fps) + `pick_hook()` rotation helper |
+| `hooks.py` | 11 unique hook openers (60 fps) + `pick_hook()` rotation helper |
+| `captions.py` | karaoke / chip captions, smart line breaks, glossary fixes, SRT export, overlap guards |
+| `kannada_text.py` | Kannada + Kanglish rendering (RAQM), conjunct-safe type-on, italic shear |
+| `ref_devices.py` | slate, news stack + NEW sticker, face grid, badge, @mention prompt card |
 | `master.py` | −14 LUFS integrated, true-peak limiter (ceiling −2.9 dBTP before AAC) |
 
 The render script (timeline) is per reel. Copy `examples/day4_android_studio/render_day4.py` (current layout, with `stack()`,
