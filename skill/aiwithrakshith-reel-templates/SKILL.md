@@ -31,7 +31,7 @@ No `/temp-N` given → suggest one from the topic + `memory.py suggest`, say whi
 
 ## 2. Alignment rules (every template, enforced by the renderer)
 - **Canvas** 1080×1920, 60 fps. **Safe box** x 65–960, y 270–1250 for every readable element; centre line x 512.
-- **Bands:** HEAD y 280–430 (labels/headlines above the cap) · FACE cap→chin (nothing, ever) · CAPTION chin+40 → 1245.
+- **Bands:** HEAD y 280–430 (labels/headlines above the cap) · FACE cap→chin (nothing, ever) · CAPTION chin+24 → 1245.
 - **Face-clear:** `FaceZone.from_head(cap_top, chin, x0, x1)` + 24 px margin. `Reel.check()` stops the render if any
   text/card/chip box touches it. Only whole-frame transitions ≤ 0.2 s may pass over the face.
 - **Character:** A-roll moved down `dy` (60 px for his room framing) so cap ≥ 505 and chin ≤ 1100; /temp-7 scales him
@@ -62,10 +62,11 @@ No `/temp-N` given → suggest one from the topic + `memory.py suggest`, say whi
    Caption: 4 lines + exactly 5 lowercase hashtags; English for .global, Kannada-English mix for @AIwithRakshith.
 9. **Drive** — `Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / <Reel title> /`
    - Local machine: `python3 tools/drive_publish.py pkg/` (OAuth once; finds-or-creates folders, Docs conversion).
-   - Inside Claude (Google Drive connector): search each folder by exact title + parent first, create it only if
+   - Inside Claude (Google Drive connector): folder IDs are cached in `memory/drive_index.json`; otherwise search each
+     folder by exact title + parent first, create it only if
      missing (`create_file`, contentMimeType `application/vnd.google-apps.folder`); upload video/thumbnail with
      `base64Content = sha256:<hex>:<abs path>`; upload caption.html / timeline.html (QC table is inside the timeline) with
-     `textContent` and contentMimeType `text/html` (or `text/plain`) so they become **Google Docs** — never .txt.
+     a file reference (or `textContent`) and contentMimeType `text/html` so they become **Google Docs** — never .txt.
    - Connector limits: ~3.1 MB of file per call → thumbnails and Docs fit; the 60 fps video does not. Upload images with
      `disableConversionToGoogleType: true` (otherwise they turn into empty Docs). Send calls one at a time (parallel
      calls hit "Resource has been exhausted"; wait ~20 s and retry). For the video: run `drive_publish.py` on his
