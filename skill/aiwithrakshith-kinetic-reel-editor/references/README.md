@@ -24,3 +24,4 @@ One file per topic, split from `../SKILL.md`.
 | [`11-deliverables.md`](11-deliverables.md) | 11. Deliverables |
 | [`12-lessons-learned-don-t-repeat.md`](12-lessons-learned-don-t-repeat.md) | 12. Lessons learned (don't repeat) |
 | [`hook_log.md`](hook_log.md) | Hooks used per reel (hand-maintained; check before picking a hook) |
+| [`instagram_reels_guidelines.md`](instagram_reels_guidelines.md) | Full Instagram & Reels guidelines + face-clear rule (hand-maintained) |

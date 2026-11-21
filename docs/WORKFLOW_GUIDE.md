@@ -4,7 +4,8 @@ One raw talking-head video in, one finished 1080×1920, 60 fps Instagram Reel ou
 @AIwithRakshith (Kannada) and aiwithrakshith.global (English), for human editors and AI agents alike.
 Full rules: [`skill/aiwithrakshith-kinetic-reel-editor/SKILL.md`](../skill/aiwithrakshith-kinetic-reel-editor/SKILL.md).
 
-Three rules never bend: everything stays inside the Instagram safe zone, nothing covers his face, and nothing in
+Three rules never bend: everything stays inside the Instagram safe zone, **no text, component or effect layer ever
+touches his face** (enforced by `engine/face_guard.py`), and nothing in
 the reel is AI-generated. Every reel is also delivered at **60 fps HD** and opens with a **unique hook**.
 
 ## Flowchart

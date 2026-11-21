@@ -7,7 +7,9 @@
 3. tlog audit: every headline's hold ≥ 0.25 s.
 4. Caption audit: every chunk vs word/phrase times; none early, none over the face, none outside the box.
 5. Facts & spelling vs `facts.md` (Kling not Cling, Junie not Juni).
-6. Overlap scan: nothing over the face, nothing outside the safe box, labels never touch big words.
+6. Face-clear scan: on every contact-sheet frame, no text, component or effect layer touches the face oval
+   (`protect_face` in the render + `FaceZone.check` on every text/component box); nothing outside the safe box;
+   labels never touch big words.
 7. Matte edges at 100 %; cap artifacts invisible; no readable garbled AI text; room present on every talking frame.
 8. Audio: −14 LUFS ±1, ≤ −1 dBTP on the final MP4, VO on top, music smooth (no abrupt jumps except designed
    drop-outs), every graphic has its SFX.

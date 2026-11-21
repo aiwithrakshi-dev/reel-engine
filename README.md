@@ -29,7 +29,9 @@ python3 tools/qc_audit.py final_reel_60fps.mp4 --tlog *.tlog.json --hook <name> 
 ```
 
 Real output on the Day 4 transcript: [`examples/day4_android_studio/plan/plan.md`](examples/day4_android_studio/plan/plan.md).
-The gap audit behind these tools: [`docs/AUDIT_2026-11-21.md`](docs/AUDIT_2026-11-21.md).
+The gap audit behind these tools: [`docs/AUDIT_2026-11-21.md`](docs/AUDIT_2026-11-21.md) · skill score 8.0/10:
+[`docs/SKILL_SCORECARD.md`](docs/SKILL_SCORECARD.md) · full Instagram & Reels rulebook:
+[`docs/INSTAGRAM_REELS_GUIDELINES.md`](docs/INSTAGRAM_REELS_GUIDELINES.md).
 
 ## Hook library: a unique opener for every reel
 
@@ -118,6 +120,7 @@ aiwithrakshith-reel-engine/
 | `cap_patch.py`, `cap_logo_fix.py` | Repairs AI cap artifacts (crown colour flips, white logo growth) |
 | `audio.py` | Synthesised SFX, music re-sequenced on bar lines with drop-outs, VO chain, sidechain duck |
 | `hooks.py` | 11 unique hook openers (60 fps) + `pick_hook()` rotation helper |
+| `face_guard.py` | face-clear guard: restores the face oval after every FX pass; fails on text/component boxes over the face |
 | `captions.py` | karaoke / chip captions, smart line breaks, glossary fixes, SRT export, overlap guards |
 | `kannada_text.py` | Kannada + Kanglish rendering (RAQM), conjunct-safe type-on, italic shear |
 | `ref_devices.py` | slate, news stack + NEW sticker, face grid, badge, @mention prompt card |
@@ -169,6 +172,9 @@ python3 tools/safe_zone_check.py final_reel.mp4 --fps 12 --out qc/
 This draws the green safe box, red margins and the cyan 3:4 profile-grid crop on every frame at 12 fps.
 
 ### Hard rules (short version — full list in `SKILL.md`)
+- **Face-clear:** no text layer, component layer (card, pill, badge, sticker, window) or effect layer (streak, ring,
+  swoosh, glitch block) on his face. `engine/face_guard.py` makes effects pass behind the face and fails the render if
+  a text or component box touches it.
 - Keep his real room as the background. Never alter his voice; only cut silences.
 - **No AI generation** (video/image/music/voice). Use his B-roll, official media and licensed stock only.
 - Nothing over his face. Text types at 1 frame/letter and is fully typed ≥ 0.25 s before any cut.

@@ -19,3 +19,5 @@ STUDIO (plain background) was rejected — keep his room. Dark-red labels vanish
 - Day 4's layout put the chest row where a caption line now needs to go → reserve the caption band when planning DY.
 - Whisper splits words across jump cuts and drops punctuation late in a take → script_gen splits sentences on cuts,
   conjunctions and length too.
+- Day 4's neon streaks and swooshes crossed his face (15.8 s, 21.6 s, 35.4 s) → face-clear rule + `face_guard.py`;
+  effects now pass behind the face oval.

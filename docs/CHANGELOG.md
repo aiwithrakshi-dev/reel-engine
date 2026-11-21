@@ -35,3 +35,11 @@
   `engine/ref_devices.py` (slate, news stack, face grid, badge, prompt card), hook `face_punch`.
 - `tools/qc_audit.py`: one-command delivery audit → `qc_report.md`.
 - SKILL v5: retention & algorithm rules, originality rule, exact AI-label rule, caption styles, reference devices.
+
+## v6 — 21 Nov 2026: face-clear rule + Instagram rulebook + skill score
+- Face-clear rule: no text, component or effect layer on his face. `engine/face_guard.py` (`protect_face`,
+  `FaceZone.check`), wired into the 60 fps template. Day 4 re-rendered with effects passing behind the face.
+- `references/instagram_reels_guidelines.md` (+ `docs/INSTAGRAM_REELS_GUIDELINES.md`): specs, length, safe zone,
+  recommendation eligibility, text coverage, originality, music, 5-hashtag cap, AI / paid labels, privacy, posting checklist.
+- SKILL v6: contradictions fixed (transition FX vs safe zone; AI A-roll vs no-AI rule), new Instagram rules.
+- `docs/SKILL_SCORECARD.md`: skill scored 8.0/10 (v3 was 5.9/10) with what 10/10 needs.

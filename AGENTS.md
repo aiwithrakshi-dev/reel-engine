@@ -12,7 +12,10 @@ You are editing Instagram Reels for Rakshith (@AIwithRakshith, Kannada / aiwithr
 4. Hard rules you must never break:
    - Keep his real room background. Never change his voice (only cut silences).
    - No AI generation of video, images, music or voice. Use his B-roll, official media and licensed stock only.
-   - Everything inside the safe box **x 65–960, y 270–1250** on 1080×1920. Nothing over his face.
+   - Everything readable inside the safe box **x 65–960, y 270–1250** on 1080×1920.
+   - **Face-clear:** no text, component or effect layer on his face. Use `engine/face_guard.py` (`protect_face` after
+     every FX pass, `FaceZone.check` on every text/component box). Full Instagram rules:
+     `skill/aiwithrakshith-kinetic-reel-editor/references/instagram_reels_guidelines.md`.
    - Type-on is 1 frame per letter; every headline is fully typed ≥ 0.25 s before its scene changes.
    - English video → English headline + English captions. Kannada video → Kanglish headline (Kannada label +
      English keyword) + English captions translated from Kannada and synced to his lips.

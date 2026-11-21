@@ -3,7 +3,7 @@ name: aiwithrakshith-kinetic-reel-editor
 description: Edit a raw Kannada or English talking-head video into a 60 fps @AIwithRakshith / aiwithrakshith.global Reel with a unique hook, verified B-roll, Instagram safe zone, Kanglish headlines and English captions.
 ---
 
-# AI with Rakshith — Kinetic-Type Reel Editor (v5)
+# AI with Rakshith — Kinetic-Type Reel Editor (v6)
 
 Rakshith uploads ONE raw talking-head video (Kannada or English). The editor does everything else: understands it,
 researches the topic, pulls verified B-roll, edits it in his kinetic-type house style (giant red 3D words typing on
@@ -13,7 +13,8 @@ on-screen text and captions to his dialogue, opens with a **unique hook animatio
 delivers a **1080×1920, 60 fps HD** Reel. Every reel, no exceptions.
 
 Detailed reference files (one topic each, generated from this file) live next to it in `references/`; the hook
-rotation log is `references/hook_log.md`.
+rotation log is `references/hook_log.md`; the full Instagram & Reels rulebook is
+`references/instagram_reels_guidelines.md`.
 
 Approved builds: Kling 4.0 Kannada reel and Day 4 "Claude & Codex in Android Studio" English reel (Nov 2026).
 Engine code: this repository (`engine/`, `examples/`) — also mirrored in the claude.ai Project
@@ -26,11 +27,21 @@ Engine code: this repository (`engine/`, `examples/`) — also mirrored in the c
    red/black chair) stays behind him: darkened 20 %, desaturated 20 %, Gaussian σ 3 (~6 px). He is matted only so
    big type can sit *between* the room and him. Studio/plain background only if he asks for that one video.
 2. **Never alter his voice**: no dub, re-voice, speed or pitch change. Only remove silences (pauses → ~0.22 s).
-3. **No AI generation of any kind** — no video/image/music/voice generation (Magnific, Higgsfield, HeyGen, etc.).
-   B-roll = his own B-roll, real verified web media, and Magnific **stock** only (prefer `ai_generated: excluded`).
-4. **Everything inside the Instagram safe zone** (§3). No text, caption, card, pill, icon, screen window, glitch
-   block, streak or ring may sit outside it. Verify with an overlay on every audit (`tools/safe_zone_check.py`).
-5. **Nothing overlaps his face.** Text follows his speech; every animation finishes before the scene changes.
+3. **No AI generation of any kind by the editor** — no video/image/music/voice generation (Magnific, Higgsfield,
+   HeyGen, etc.). B-roll = his own B-roll, real verified web media, and Magnific **stock** only (prefer
+   `ai_generated: excluded`). (If HIS A-roll is an AI talking head he made, it is used as delivered and the reel
+   gets the AI info label, §4.)
+4. **Everything readable or persistent inside the Instagram safe zone** (§3): text, captions, cards, pills, icons,
+   badges, screen windows, chest row. Transition FX (neon streak, halftone ring, swoosh, smear, flashes) may cross the
+   margins for ≤ 0.2 s. Verify with `tools/safe_zone_check.py` on every audit.
+5. **FACE-CLEAR: no layer of any kind on his face.** No text layer (headline, label, caption, pill text), no
+   component layer (card, tile, pill, badge, sticker, icon, window, prompt card) and no edit/effect layer (neon
+   streak, ring, swoosh, pixel block, marker, bloom, PiP) may touch the face zone. The zone is an oval over the
+   measured head (min cap-top → max chin, ear to ear) + 24 px. Enforced in code: `engine/face_guard.py`
+   (`protect_face()` after every FX pass, so effects pass behind his face; `FaceZone.check()` fails the render on any
+   text/component box in the zone). Only whole-frame transitions ≤ 0.2 s (hook, negative flash, ghost, smear) may
+   cover it, because they are a cut, not a layer. Text follows his speech; every animation finishes before the
+   scene changes.
 6. On-screen claims must be factually exact even when the voice is loose (voice "15 reference images" → screen
    "15 REFERENCES"). Every number/name verified on official sources (§5).
 7. Only devices from the library (§9). No zoom-blur, cube spins, light leaks, film burn, emoji, robots.
@@ -96,6 +107,10 @@ If Rakshith is around, send the preview frames before the full render; if not, d
 - Full-bleed backgrounds/B-roll fill may extend outside the box; anything readable or meaningful may not.
 - Profile-grid crop is a 3:4 centre crop (1080×1440, y 240–1680): the cover headline + face must read inside it.
 - QC overlay: draw the box (green) on every preview/audit sheet; any element pixel outside it = fail.
+- **Text coverage:** Instagram recommends fewer Reels that are mostly covered by text. Big type, labels and captions
+  stay under ~35 % of the frame area on talking-head shots; cutaways show one headline, never paragraphs.
+- Full Instagram & Reels rulebook (specs, length, recommendations, originality, music, hashtags, labels, privacy,
+  posting checklist): `references/instagram_reels_guidelines.md`.
 
 ---
 
@@ -116,7 +131,11 @@ If Rakshith is around, send the preview frames before the full render; if not, d
 - **Privacy**: no private individuals' faces, names, phone numbers, emails, addresses, plates or chats from the web;
   blur them in screenshots (incl. usernames in demos unless public brand accounts).
 - **Truthfulness**: no misleading claims, fake numbers, fake UI, or clickbait the video doesn't deliver.
-- Comment-to-DM CTAs are fine; no giveaways without rules; stay within Community Guidelines.
+- **Hashtags: maximum 5** (Instagram-enforced since Dec 2025; caption + comments count together). Specific tags
+  only, never `#reels` / `#explore`.
+- **Recommendation eligibility:** never muted, blurry/low-res, bordered, or carrying another app's watermark; no
+  contest/giveaway framing (comment-keyword DM offers only); no unproven health or money claims.
+- Comment-to-DM CTAs are fine; stay within Community Guidelines.
 
 ---
 
@@ -308,7 +327,9 @@ From the "ChatGPT GIF update" reference (Nov 2026), house palette, inside the sa
 3. tlog audit: every headline's hold ≥ 0.25 s.
 4. Caption audit: every chunk vs word/phrase times; none early, none over the face, none outside the box.
 5. Facts & spelling vs `facts.md` (Kling not Cling, Junie not Juni).
-6. Overlap scan: nothing over the face, nothing outside the safe box, labels never touch big words.
+6. Face-clear scan: on every contact-sheet frame, no text, component or effect layer touches the face oval
+   (`protect_face` in the render + `FaceZone.check` on every text/component box); nothing outside the safe box;
+   labels never touch big words.
 7. Matte edges at 100 %; cap artifacts invisible; no readable garbled AI text; room present on every talking frame.
 8. Audio: −14 LUFS ±1, ≤ −1 dBTP on the final MP4, VO on top, music smooth (no abrupt jumps except designed
    drop-outs), every graphic has its SFX.
@@ -347,3 +368,5 @@ grid crop) · `contact.png` (safe-zone contact sheet) · `captions.srt` (English
 - Day 4's layout put the chest row where a caption line now needs to go → reserve the caption band when planning DY.
 - Whisper splits words across jump cuts and drops punctuation late in a take → script_gen splits sentences on cuts,
   conjunctions and length too.
+- Day 4's neon streaks and swooshes crossed his face (15.8 s, 21.6 s, 35.4 s) → face-clear rule + `face_guard.py`;
+  effects now pass behind the face oval.

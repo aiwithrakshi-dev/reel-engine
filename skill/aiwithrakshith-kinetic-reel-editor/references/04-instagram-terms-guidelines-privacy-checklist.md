@@ -18,4 +18,8 @@
 - **Privacy**: no private individuals' faces, names, phone numbers, emails, addresses, plates or chats from the web;
   blur them in screenshots (incl. usernames in demos unless public brand accounts).
 - **Truthfulness**: no misleading claims, fake numbers, fake UI, or clickbait the video doesn't deliver.
-- Comment-to-DM CTAs are fine; no giveaways without rules; stay within Community Guidelines.
+- **Hashtags: maximum 5** (Instagram-enforced since Dec 2025; caption + comments count together). Specific tags
+  only, never `#reels` / `#explore`.
+- **Recommendation eligibility:** never muted, blurry/low-res, bordered, or carrying another app's watermark; no
+  contest/giveaway framing (comment-keyword DM offers only); no unproven health or money claims.
+- Comment-to-DM CTAs are fine; stay within Community Guidelines.

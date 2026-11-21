@@ -16,6 +16,8 @@ sys.path.insert(1, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'
 from hooks import apply_hook, HOOKS
 HOOK = os.environ.get('HOOK', 'neg_flash')     # pick a hook NOT used in the last 5 reels (references/hook_log.md)
 FACE = (530, 840)                              # face centre in reel coords, for face-centred hooks
+from face_guard import FaceZone, protect_face
+FACE_ZONE = FaceZone.from_head(cap_top=505, chin=1100, x0=330, x1=750)   # measured head (reel coords): nothing on it
 assert HOOK in HOOKS, f'unknown hook {HOOK}: {sorted(HOOKS)}'
 SUB = 0.0
 def _cont(fn):
@@ -478,7 +480,9 @@ def render_frame(f, subj):
         for d_ in behind: d_()
         over(c, sl, 0, 0)
         for d_ in front: d_()
+    pre = None if cut else c.copy()               # face-clear: overlay FX never paint over his face
     for d_ in fxl: d_()
+    if pre is not None: protect_face(c, pre, FACE_ZONE)
     for kind, j in post:
         if kind == 'smear' and 0 <= j < 3: vertical_smear(c, j)
         if kind == 'radial' and 0 <= j < 3: radial_blur(c, CX, 900, amt=[0.06, 0.04, 0.02][j])

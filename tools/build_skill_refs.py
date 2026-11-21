@@ -10,7 +10,7 @@ import os, re, sys
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 SKILL = os.path.join(ROOT, 'skill', 'aiwithrakshith-kinetic-reel-editor')
 SRC = os.path.join(SKILL, 'SKILL.md'); OUT = os.path.join(SKILL, 'references')
-KEEP = {'hook_log.md'}   # hand-maintained files in references/
+KEEP = {'hook_log.md', 'instagram_reels_guidelines.md'}   # hand-maintained files in references/
 NOTE = '<!-- Generated from SKILL.md by tools/build_skill_refs.py. Edit SKILL.md, not this file. -->\n\n'
 
 
@@ -35,6 +35,7 @@ def build():
     idx = NOTE + '# Skill references — AI with Rakshith kinetic reel editor\n\nOne file per topic, split from `../SKILL.md`.\n\n'
     idx += '| File | Topic |\n|---|---|\n' + ''.join(f'| [`{k}`]({k}) | {v.splitlines()[2][2:]} |\n' for k, v in sorted(files.items()))
     idx += '| [`hook_log.md`](hook_log.md) | Hooks used per reel (hand-maintained; check before picking a hook) |\n'
+    idx += '| [`instagram_reels_guidelines.md`](instagram_reels_guidelines.md) | Full Instagram & Reels guidelines + face-clear rule (hand-maintained) |\n'
     files['README.md'] = idx
     return files
 

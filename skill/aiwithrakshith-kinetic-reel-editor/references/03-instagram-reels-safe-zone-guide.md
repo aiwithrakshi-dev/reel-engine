@@ -16,3 +16,7 @@
 - Full-bleed backgrounds/B-roll fill may extend outside the box; anything readable or meaningful may not.
 - Profile-grid crop is a 3:4 centre crop (1080×1440, y 240–1680): the cover headline + face must read inside it.
 - QC overlay: draw the box (green) on every preview/audit sheet; any element pixel outside it = fail.
+- **Text coverage:** Instagram recommends fewer Reels that are mostly covered by text. Big type, labels and captions
+  stay under ~35 % of the frame area on talking-head shots; cutaways show one headline, never paragraphs.
+- Full Instagram & Reels rulebook (specs, length, recommendations, originality, music, hashtags, labels, privacy,
+  posting checklist): `references/instagram_reels_guidelines.md`.
