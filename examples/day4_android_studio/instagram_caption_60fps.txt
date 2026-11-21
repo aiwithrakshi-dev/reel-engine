@@ -1,0 +1,19 @@
+INSTAGRAM CAPTION — aiwithrakshith.global (Day 4)
+
+Claude and Codex now run inside Android Studio 🤯
+Bring Your Own Agent is stable in Android Studio Rabbit 2: pick from 40+ agents and sign in with the plan you already pay for.
+The agent sees your whole project, build setup and Compose previews, runs the app on the emulator and checks its own work.
+Comment "BUILD" for my setup guide + 5 app prompts 👇 Screens: Android Developers Blog · not sponsored
+
+#androidstudio #claudecode #codex #aiagents #aiwithrakshith
+
+
+BEFORE POSTING (Instagram rules)
+- AI info label: turn it ON if the talking head is AI-generated (the Day 4 A-roll shows AI cap artifacts).
+- Paid Partnership label: OFF (not sponsored). Turn it on only if Google/Anthropic/OpenAI paid for the post.
+- Music: Black_Asphalt from your Drive music library. Confirm its licence allows commercial Instagram use,
+  or post the no-music version and add Instagram's in-app audio.
+- B-roll is official Android Developers material used editorially and credited in line 4. No private people or data appear.
+- Every on-screen claim is in facts_and_qc.md with its source.
+- CTA: comment-to-DM ("BUILD") is allowed. Reply with the guide in DMs; no giveaway, so no rules needed.
+- Cover: cover_v2.png reads inside the 3:4 profile-grid crop.

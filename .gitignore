@@ -30,3 +30,6 @@ __pycache__/
 # secrets
 .env
 *.key
+
+# allow the compressed sample reels
+!samples/*.mp4

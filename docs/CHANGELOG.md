@@ -13,3 +13,9 @@
 ## v1 — 19–21 Nov 2026 (Kling 4.0, Kannada)
 - First approved build: ORIGINAL room background, DY 230 layout, kinetic device library, Black_Asphalt 129 BPM bed,
   synthesised SFX, −14 LUFS master. Timeline: `examples/kling40/render_kling40.py`.
+
+## 21 Nov 2026 — 60 fps + samples
+- `examples/day4_android_studio/render_day4_60.py`: true 60 fps render (effects keep 30-fps timing; rings, streaks,
+  swooshes, push-ins and grain get in-between frames).
+- README hero image, workflow flowchart, Day 4 contact sheet, compressed sample reels in `samples/`.
+- `docs/WORKFLOW_GUIDE.md`: shareable step-by-step guide with the flowchart, Instagram safe zone and rules checklist.

@@ -4,10 +4,27 @@
 > Rakshith uploads one raw talking-head video (Kannada or English); any capable LLM agent with a shell and this repo
 > turns it into a finished **1080×1920, 60 fps** Instagram Reel.
 
+![AI with Rakshith kinetic reel — Day 4 "Claude & Codex inside Android Studio" (cover + key frames)](docs/images/readme_hero.jpg)
+
 The style is "kinetic type behind the head": giant red 3D words type on *behind* Rakshith while his real room stays
 in the background. On top of that come pixel-block glitches, neon squiggle streaks, halftone ring bursts,
 red-framed screen cutaways, a chest row of tiles/pills, synced captions, a topic-matched music bed and an SFX on
 every visual event. Everything stays inside the Instagram safe zone and nothing ever covers his face.
+
+---
+
+## Sample videos
+
+| Video | What it shows |
+|---|---|
+| [`samples/day4_android_studio_byoa_60fps_preview.mp4`](samples/day4_android_studio_byoa_60fps_preview.mp4) | Day 4 reel built with this engine: English, 1080×1920 **60 fps**, 40 s, safe-zone layout v3 |
+| [`samples/sample_reel_chatgpt_gif_update.mp4`](samples/sample_reel_chatgpt_gif_update.mp4) | Sample reel from Rakshith ("ChatGPT GIF update", 26.5 s) |
+
+These are compressed web previews so they fit in git. Full-quality masters (134–138 MB) are kept in Drive, not in the repo.
+
+Every frame of the Day 4 reel at 1.5 fps, with the Instagram safe box drawn in green:
+
+![Day 4 contact sheet with safe zone](docs/images/contact_sheet_day4.jpg)
 
 ---
 
@@ -23,7 +40,8 @@ aiwithrakshith-reel-engine/
 ├── engine/                       ← reusable Python engine (NumPy / OpenCV / Pillow + ffmpeg)
 ├── examples/
 │   ├── kling40/                  ← approved Kling 4.0 Kannada reel timeline (v1 layout)
-│   └── day4_android_studio/      ← approved Day 4 English reel (v3 safe-zone layout) + facts + post text
+│   └── day4_android_studio/      ← approved Day 4 English reel (v3 safe-zone layout, 30 + 60 fps renders) + facts + post text
+├── samples/                      ← compressed sample reels (web previews)
 ├── tools/safe_zone_check.py      ← Instagram safe-zone audit sheets for any reel
 ├── docs/                         ← layout notes and change history
 └── requirements.txt
@@ -48,6 +66,10 @@ The render script (timeline) is per reel. Copy `examples/day4_android_studio/ren
 ---
 
 ## The flow (every reel)
+
+![Reel workflow flowchart: 9 steps with an audit loop](docs/images/workflow_flowchart.png)
+
+The full written guide for editors and agents is [`docs/WORKFLOW_GUIDE.md`](docs/WORKFLOW_GUIDE.md).
 
 ```
 1 Upload raw video (KN / EN)
@@ -133,6 +155,8 @@ curl -L -o work/rvm_resnet50_fp32.onnx \
 > search-and-replace the path constants at the top of each script before running.
 
 ### Render commands
+For a true 60 fps render use `examples/day4_android_studio/render_day4_60.py`. Its frame numbers are 60 fps frames. Every
+effect keeps its 30-fps timing, while rings, neon streaks, swooshes, screen push-ins and grain get real in-between frames.
 ```bash
 # test frames first (PNG), look at them
 python3 render.py 0 0 test_frames 4,36,100,230,400
