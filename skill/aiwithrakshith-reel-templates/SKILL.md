@@ -1,6 +1,6 @@
 ---
 name: aiwithrakshith-reel-templates
-description: Edit Rakshith's talking-head video into a 60 fps Instagram Reel in one of 16 templates chosen with /temp-1 … /temp-16, with face-clear safe-grid alignment, then file video, thumbnail, caption and timeline Google Docs into Drive Social Media/month/day.
+description: "Edit Rakshith's talking-head video into a 60 fps Instagram Reel in one of 16 templates chosen with /temp-1 … /temp-16 (face-clear, safe-grid aligned), then file video, thumbnail, caption and timeline Google Docs into Drive Social Media/month/day."
 ---
 
 # AI with Rakshith — Reel Templates (/temp-1 … /temp-16)
@@ -12,8 +12,8 @@ The engine is the GitHub repo **rakshithgowdams/reel-engine** (private). The hou
 
 ## 0. Before anything: load memory
 1. Clone/pull the repo; run `./setup.sh --no-model` (fonts, pip, doctor). `python3 tools/doctor.py` must print READY.
-2. Read `memory/CONTEXT.md` (recent reels, blocked hooks, template rotation, lessons). Never repeat a hook from the
-   last 5 reels. If Rakshith corrects something, add it: `python3 tools/memory.py lesson "<his words>"`.
+2. Read `memory/CONTEXT.md` (recent reels, blocked hooks, template rotation, Drive folder IDs, lessons). Never repeat a
+   hook from the last 5 reels. If Rakshith corrects something, add it: `python3 tools/memory.py lesson "<his words>"`.
 
 ## 1. Templates
 | command | name | reference | use it for | hook default |
@@ -34,8 +34,9 @@ The engine is the GitHub repo **rakshithgowdams/reel-engine** (private). The hou
 | `/temp-14` | Glass Dock | t-14 | "N free AI tools" roundups | `halftone_iris` |
 | `/temp-15` | Clean White Split | t-15 | cost comparisons, tool tours | `red_wipe` |
 | `/temp-16` | Lime Polaroid | sezz0283 | agency / founder intros, results | `letterbox_open` |
+
 Full specs: `templates/temp-N/TEMPLATE.md` (generated from `engine/templates.py`, the single source of truth).
-Styles 2-7 live in `engine/template_render.py`, 8-16 in `engine/template_styles_b.py`. Template-specific job keys:
+Styles 2–7 live in `engine/template_render.py`, 8–16 in `engine/template_styles_b.py`. Template-specific job keys:
 `banner` (4), `flash` (7), `hook_until` (2), `tiles` (9), `brand` (10), `stamp` on a headline (11), `stat` scene (11),
 `dock` (14), `rows`/`total`/`result` table scene (15), `polaroid`/`name`/`badge`/`items` scene (16). Always pass `glossary`.
 If the default hook is blocked by memory, pick another from `python3 tools/memory.py suggest --energy <energy>`.
@@ -45,10 +46,12 @@ No `/temp-N` given → suggest one from the topic + `memory.py suggest`, say whi
 - **Canvas** 1080×1920, 60 fps. **Safe box** x 65–960, y 270–1250 for every readable element; centre line x 512.
 - **Bands:** HEAD y 280–430 (labels/headlines above the cap) · FACE cap→chin (nothing, ever) · CAPTION chin+24 → 1245.
 - **Face-clear:** `FaceZone.from_head(cap_top, chin, x0, x1)` + 24 px margin. `Reel.check()` stops the render if any
-  text/card/chip box touches it. Only whole-frame transitions ≤ 0.2 s may pass over the face.
+  text/card/chip box touches it. Only whole-frame transitions ≤ 0.2 s may pass over the face. A guard error is a layout
+  bug: resize/move the element (size it for its PEAK pop scale), never disable the check.
 - **Character:** A-roll moved down `dy` (60 px for his room framing) so cap ≥ 505 and chin ≤ 1100. Split layouts scale him
-  (`fit`: 7 = 0.92, 12/13 = 0.8, 14 = 0.56, 15 = 0.58) or crop him into a card (8 PiP, 10 card/dome, 11 facecam, 16 polaroid);
-  each layout passes its own face zone to the guard. Never crop his face; hands may leave the frame.
+  (`fit`: 7 = 0.92, 12/13 = 0.8, 14 = 0.56, 15 = 0.58) or crop him into a card (8 PiP, 10 card/dome, 11 facecam,
+  16 polaroid); each layout passes its own face zone to the guard. Never crop his face; hands may leave the frame.
+- **Every text layer goes through `self.check()`** — `tools/lint_guard.py` (run by `doctor.py`) fails otherwise.
 - **Text:** max 30 chars per caption line, auto-shrink to 860 px wide; captions appear on the word's start frame,
   never early; one keyword per beat; English video → English, Kannada video → Kanglish headline + English captions.
 - **Pace:** an event every 0.3–0.6 s; scene length per template (/temp-3 fastest ~1.7 s, /temp-4 chapters ~8 s);
@@ -66,27 +69,28 @@ No `/temp-N` given → suggest one from the topic + `memory.py suggest`, say whi
    vo, music (different bed per template), banner (/temp-4), flash (/temp-7), hook_until (/temp-2).
    /temp-1 uses `examples/day4_android_studio/render_day4_60.py` with `HOOK=<name>`.
 5. **Test frames** — `python3 engine/template_render.py job.json 0 0 test/ 6,180,…` and LOOK at them (hook, each scene,
-   each headline, a transition). Fix before the full render.
+   each headline, a transition). Also run every 3rd frame through the guard before the full render.
 6. **Render** — `python3 engine/template_render.py job.json --full reel.mp4` (2 parallel halves + mix + mux).
 7. **QC** — `python3 tools/qc_audit.py reel.mp4 --hook <hook> --out qc_report.md` must PASS (60 fps, codecs,
    −14 LUFS ±1, ≤ −1 dBTP, hook unique). Then `tools/safe_zone_check.py` sheet for a visual pass.
 8. **Package** — `python3 tools/reel_package.py --video reel.mp4 --job job.json --title "<Reel title>" --caption caption.txt
-   --qc qc_report.md --brand <brand> --out pkg/` → video, thumbnail (+ 3:4 grid crop), caption.html, timeline.html.
-   Caption: 4 lines + exactly 5 lowercase hashtags; English for .global, Kannada-English mix for @AIwithRakshith.
+   --qc qc_report.md --brand <brand> --out pkg/` → video, thumbnail (+ 3:4 grid crop), caption.html, timeline.html
+   (timeline includes the QC table). Caption file = only the 4 lines + exactly 5 lowercase hashtags; English for
+   .global, Kannada-English mix for @AIwithRakshith.
 9. **Drive** — `Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / <Reel title> /`
    - Local machine: `python3 tools/drive_publish.py pkg/` (OAuth once; finds-or-creates folders, Docs conversion).
    - Inside Claude (Google Drive connector): folder IDs are cached in `memory/drive_index.json`; otherwise search each
-     folder by exact title + parent first, create it only if
-     missing (`create_file`, contentMimeType `application/vnd.google-apps.folder`); upload video/thumbnail with
-     `base64Content = sha256:<hex>:<abs path>`; upload caption.html / timeline.html (QC table is inside the timeline) with
-     a file reference (or `textContent`) and contentMimeType `text/html` so they become **Google Docs** — never .txt.
+     folder by exact title + parent first, create it only if missing (`create_file`, contentMimeType
+     `application/vnd.google-apps.folder`); upload video/thumbnail with `base64Content = sha256:<hex>:<abs path>`;
+     upload caption.html / timeline.html with a file reference (or `textContent`) and contentMimeType `text/html` so
+     they become **Google Docs** — never .txt.
    - Connector limits: ~3.1 MB of file per call → thumbnails and Docs fit; the 60 fps video does not. Upload images with
      `disableConversionToGoogleType: true` (otherwise they turn into empty Docs). Send calls one at a time (parallel
      calls hit "Resource has been exhausted"; wait ~20 s and retry). For the video: run `drive_publish.py` on his
      machine, or ask him — never silently upload a downscaled copy instead.
 10. **Memory** — `python3 tools/memory.py log pkg/manifest.json` (drive_publish does it) → rebuilds `memory/CONTEXT.md`;
     commit `memory/` to the repo so every device and every LLM starts with it. Mirror CONTEXT.md to Drive
-    (`drive_publish.py --sync-memory` or the connector) as "Reel Engine — Memory".
+    (`drive_publish.py --sync-memory` or the connector) as the "Reel Engine — Memory" Doc in Social Media.
 11. **Deliver** — send the video + thumbnail, give the Drive folder link and the caption; one line per QC result.
 
 ## 4. Don'ts
@@ -94,4 +98,5 @@ No `/temp-N` given → suggest one from the topic + `memory.py suggest`, say whi
 - Don't reuse a hook from the last 5 reels; don't reuse the same music bed two reels in a row.
 - Don't save captions/timelines as .txt in Drive; don't create a second "Social Media" or month folder.
 - Don't burn the Instagram caption into the video; don't exceed 5 hashtags.
-- Don't ship ASR spellings: pass the reel's `glossary` (verified names) in every job.
+- Don't ship ASR spellings: pass the reel's verified `glossary` in every job (fix_words also merges hyphen splits,
+  e.g. Juni → Junie, Anti -Gravity → Antigravity).
