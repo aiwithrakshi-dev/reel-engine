@@ -4,7 +4,7 @@
 
 | Device | Frames (30 fps units) | Use |
 |---|---|---|
-| Hook opener | 6–9 (12–18 at 60 fps) — one of the 10 hooks in §9b, never repeated within 5 reels | frame 0 |
+| Hook opener | 6–9 (12–18 at 60 fps) — one of the 11 hooks in §9b, never repeated within 5 reels | frame 0 |
 | Big word type-on | **1 letter per frame**; newest letter 1.22× ghost → 1.06× → lock; each part starts on its own spoken word | every keyword |
 | Label scatter-in | words stagger 2, snap home in 2-frame steps | small labels |
 | Pixel blocks | 2–5 each, 18–42 px on a 6 px grid, reds/pinks | on the letter being revealed / dissolves |
