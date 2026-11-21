@@ -1,0 +1,32 @@
+# media & heavy assets — keep in Drive, never in git
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.gif
+*.webp
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.flac
+*.npy
+*.npz
+*.onnx
+*.pt
+*.ttf
+*.otf
+*.zip
+work/
+d4/
+qc/
+test_frames/
+frames/
+*.tlog.json
+# python
+__pycache__/
+*.pyc
+.venv/
+# secrets
+.env
+*.key

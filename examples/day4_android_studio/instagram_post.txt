@@ -1,0 +1,18 @@
+CAPTION (aiwithrakshith.global)
+Google just let Claude and Codex inside Android Studio 🤯
+
+Bring Your Own Agent is now STABLE in Android Studio Rabbit 2. Pick from 40+ agents (Claude Agent, Codex, Junie, Antigravity) and sign in with the plan you already pay for.
+
+The big difference: the agent gets your whole project, your build setup and your Compose previews, and it can run the app on the emulator and check its own work.
+
+Where: Settings › Tools › AI › Agents
+
+For freelancers, that's small client apps in days, not weeks.
+
+👉 Comment "BUILD" and I'll send my setup guide + 5 app prompts.
+📌 Save this for your next client build.
+
+#AndroidStudio #ClaudeCode #Codex #AIAgents #AndroidDev #AIcoding #Freelancer #BuildWithAI #aiwithrakshith
+
+STORY LINE
+Claude + Codex now run INSIDE Android Studio 🤯 40+ agents · stable · comment "BUILD" for my setup guide

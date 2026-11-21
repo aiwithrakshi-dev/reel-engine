@@ -1,0 +1,10 @@
+numpy
+opencv-python-headless
+Pillow>=10.0
+onnxruntime
+librosa
+soundfile
+pyloudnorm
+faster-whisper
+regex
+scipy
