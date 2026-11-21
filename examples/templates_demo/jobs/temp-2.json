@@ -1,0 +1,82 @@
+{
+ "template": 2,
+ "aroll": "/home/claude/d4/aroll_patched30.mp4",
+ "src_fps": 30,
+ "dy": 60,
+ "duration": 15.5,
+ "face": {
+  "cap_top": 505,
+  "chin": 1100,
+  "x0": 330,
+  "x1": 750
+ },
+ "words": "/home/claude/d4/words_reel.json",
+ "headlines": [
+  {
+   "label": "claude and codex inside",
+   "big": "ANDROID STUDIO",
+   "label_t": 0.0,
+   "big_t": 2.26,
+   "until": 3.24
+  },
+  {
+   "label": "and they can",
+   "big": "TEST",
+   "label_t": 3.24,
+   "big_t": 4.4,
+   "until": 6.08
+  },
+  {
+   "label": "bring your own",
+   "big": "AGENT",
+   "label_t": 6.08,
+   "big_t": 6.76,
+   "until": 8.96
+  },
+  {
+   "label": "not a",
+   "big": "BETA",
+   "label_t": 8.96,
+   "big_t": 9.5,
+   "until": 10.02
+  },
+  {
+   "label": "pick from more than",
+   "big": "40 AGENTS",
+   "label_t": 10.02,
+   "big_t": 10.9,
+   "until": 12.26
+  },
+  {
+   "label": "your pick",
+   "big": "ANY AGENT",
+   "label_t": 12.26,
+   "big_t": 12.26,
+   "until": 15.5
+  }
+ ],
+ "scenes": [
+  {
+   "t0": 2.15,
+   "t1": 6.12,
+   "title": "Agents inside Android Studio",
+   "sub": "Claude and Codex, side by side",
+   "items": [
+    "Claude",
+    "Codex"
+   ]
+  },
+  {
+   "t0": 10.04,
+   "t1": 12.1,
+   "title": "40+ agents",
+   "sub": "pick the one you trust",
+   "image": "/home/claude/d4/web/agent_registry.png"
+  }
+ ],
+ "hook": "letterbox_open",
+ "vo": "/home/claude/d4/vo_proc.wav",
+ "music": "/home/claude/d4/music/Night_Run_Sequence.mp3",
+ "music_db": -16,
+ "hook_until": 2.15
+}

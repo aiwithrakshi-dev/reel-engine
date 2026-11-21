@@ -1,0 +1,11 @@
+- Keep his real room as the background; never matte him onto a studio/plain background unless asked for that one video.
+- Never translate, re-voice, speed up or pitch-shift his voice; only tighten pauses.
+- Labels on the room must be white with a soft shadow (dark red vanishes on the wood wall).
+- Streaks, swooshes and rings must never cross his face (Day 4 v3 broke this at 15.8 s / 21.6 s / 35.4 s → face_guard added).
+- Every reel at 60 fps HD; every reel a different hook; captions never appear before the word is spoken.
+- On-screen numbers must match the official source exactly, even when the voice is loose ("15 REFERENCES", not "15 images").
+- Grain makes x264 explode: grain amount 3.5 and VBV cap (maxrate 25-35M).
+- Kannada Whisper word times drift up to 0.3 s: verify keyword onsets on the waveform.
+- Deliver into Drive: Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / <reel> with caption + timeline as Google Docs.
+- 2026-11-21: Drive connector inside Claude carries max ~3.1 MB per file: thumbnails + Docs go through it, the 60 fps videos go up with tools/drive_publish.py (local OAuth) or by hand. Images need disableConversionToGoogleType=true or they become empty Docs.
+- 2026-11-21: Alignment guard: size every popped/scaled element for its PEAK scale (e.g. maxw 720 for a 1.18x pop); two-line captions under the chin need 30-34 px + 62 px with a 68 px step.

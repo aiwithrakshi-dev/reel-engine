@@ -27,3 +27,12 @@ You are editing Instagram Reels for Rakshith (@AIwithRakshith, Kannada / aiwithr
    `python3 tools/safe_zone_check.py <reel>.mp4 --fps 12 --out qc/`, and look at every sheet.
 6. Deliver 1080×1920 **60 fps** H.264 (CRF 17) with AAC 320k at −14 LUFS, plus the files in SKILL.md §11.
 7. Never commit media, models, music or client footage to this repo (see `.gitignore`).
+
+## Templates, Drive and memory (added v7)
+- **Read `memory/CONTEXT.md` before anything else.** Never reuse a hook it lists as blocked.
+- `/temp-N` selects a template (`engine/templates.py`, `templates/temp-N/TEMPLATE.md`); route with `skill/aiwithrakshith-reel-templates/SKILL.md`.
+- Render templates 2–7 with `engine/template_render.py job.json --full out.mp4`; test frames first and look at them.
+  A safe-zone or face-zone error is a layout bug: fix the element's size/position, never disable the check.
+- After QC: `tools/reel_package.py` → `tools/drive_publish.py` (Drive: Social Media/YYYY-MM Month/Day DD - YYYY-MM-DD/<title>,
+  caption + timeline as Google Docs) → `tools/memory.py log` → commit `memory/`.
+- New machine: `./setup.sh` then `python3 tools/doctor.py` must print READY.

@@ -1,0 +1,28 @@
+{
+ "social_media_root": {
+  "id": "1JBIU5uDtb8-5eDNs4hDbtGomyTqXzTmt",
+  "url": "https://drive.google.com/drive/folders/1JBIU5uDtb8-5eDNs4hDbtGomyTqXzTmt"
+ },
+ "months": {
+  "2026-11 November": "1jjPyisRuBOBlO1WUWUo41KETIct3Lw7G"
+ },
+ "days": {
+  "2026-11-21": "1FP4073opUPgKV2jep81VwPWFeUDnZX3H"
+ },
+ "note": "Folder IDs cached for connector-based agents (search by exact title + parent if an ID 404s). drive_publish.py finds by name.",
+ "memory_doc": {
+  "id": "1Mr8ceYUD5t-Uk9ZdJS6W5CF4hPUqWNVBxmq9IBGYs4s",
+  "url": "https://docs.google.com/document/d/1Mr8ceYUD5t-Uk9ZdJS6W5CF4hPUqWNVBxmq9IBGYs4s/edit"
+ },
+ "reel_folders": {
+  "2026-11-21": {
+   "temp-1": "15FlKesmF0_sZeCCGFRnTu3fOKyEUl87X",
+   "temp-2": "1ZvN4Bq3EsEfPbpeblg04xtr37khNypT9",
+   "temp-3": "1ObDHCQ9kZtCbTpq8QXflG3x3aHIpKF1k",
+   "temp-4": "1ldBgBQ01zdor6hN4KEM4fpIkzMLc50m2",
+   "temp-5": "1Y9YXlIy-xQsvOg76iK-UFqo5ICikaFGP",
+   "temp-6": "1FXaHfldsjJi3oW_Jn6py8urqj3BRlW4P",
+   "temp-7": "1PAxt3oj3gr25mNoe7Q_NUJCE5BzClRL8"
+  }
+ }
+}

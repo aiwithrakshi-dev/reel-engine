@@ -22,6 +22,10 @@ Engine code: this repository (`engine/`, `examples/`) — also mirrored in the c
 
 ---
 
+> **Templates:** this skill is the house style = `/temp-1`. For `/temp-2` … `/temp-7` (six other styles) use the
+> `aiwithrakshith-reel-templates` skill; every rule below (face-clear, safe zone, 60 fps, unique hook) still applies.
+> Read `memory/CONTEXT.md` in the repo before every edit, and deliver to Drive `Social Media/YYYY-MM Month/Day DD - date/`.
+
 ## 0. Non-negotiables
 1. **Never remove his background.** His real room (wood-slat wall, portrait, bookshelf, gold unicorn, pink lamp,
    red/black chair) stays behind him: darkened 20 %, desaturated 20 %, Gaussian σ 3 (~6 px). He is matted only so

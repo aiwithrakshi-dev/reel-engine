@@ -5,7 +5,9 @@ import numpy as np, soundfile as sf, librosa
 from scipy import signal
 sys.path.insert(0, os.path.dirname(__file__))
 from islands import snapped
-SR = 48000; WD = '/home/claude/work/'
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+from paths import WORK as _W
+SR = 48000; WD = _os.environ.get('REEL_REEL_DIR', '/home/claude/work') + '/'  # per-reel folder (words_final.json, sfx)
 WK = json.load(open(WD + 'words_final.json')); wt = lambda k: WK[k]
 J = [s[2] for s in snapped()][1:]; VO_END = snapped()[-1][3]; END_T = round(VO_END + 0.82, 2); HIT_T = VO_END + 0.28
 N = int(END_T * SR) + SR // 10

@@ -1,5 +1,20 @@
 # Changelog
 
+## v7 — 21 Nov 2026 (7 templates, Drive delivery, memory, portable setup)
+- **7 templates** selectable with `/temp-1` … `/temp-7`: house Red Kinetic + six styles deconstructed frame by frame from
+  reference reels (@tahacreate, @ahmadjamilofficial1, @weblyfe, @artzenmedia, @hammadkhalid8, @marcel_grauu).
+  Specs in `engine/templates.py`, renderer `engine/template_render.py` (60 fps, grade, scenes, transitions, hooks tinted
+  with the template accent, per-template music + SFX mix), docs generated into `templates/`.
+- **Alignment enforced while rendering:** every text/card/chip box is checked against the safe box and the face oval;
+  a violation stops the render with the element and time. Bands: HEAD 280–430, FACE (nothing), CAPTION chin+24…1245.
+- **Drive delivery:** `tools/reel_package.py` (video, thumbnail + 3:4 grid crop, caption.html, timeline.html with QC) and
+  `tools/drive_publish.py` (Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / title; caption + timeline as Google Docs).
+- **Memory:** `memory/content_log.json`, `memory/lessons.md`, generated `memory/CONTEXT.md`, `memory/drive_index.json`;
+  `tools/memory.py suggest` picks the next template + an unused hook.
+- **Portable:** `./setup.sh` (deps, 11 OFL fonts, model) + `tools/doctor.py`; every path via `engine/paths.py` + env vars
+  (no hard-coded /home/claude paths needed).
+- New skill `skill/aiwithrakshith-reel-templates/` (the /temp-N router). Demo jobs: `examples/templates_demo/`.
+
 ## v3 — 21 Nov 2026 (Day 4 "Claude & Codex in Android Studio", English)
 - Instagram safe zone mandatory: x 65–960, y 270–1250 (was x 80–1000, y 160–1450). `tools/safe_zone_check.py` added.
 - Responsive layout: head measured from the matte, `stack()` headline built upward from the cap, label 20 px above the

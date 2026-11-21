@@ -3,7 +3,9 @@
 > **Private.** House-style editing system for **@AIwithRakshith** (Kannada) and **aiwithrakshith.global** (English).
 > Rakshith uploads one raw talking-head video (Kannada or English); any capable LLM agent with a shell and this repo
 > turns it into a finished **1080×1920, 60 fps HD** Instagram Reel. Every reel is 60 fps, and every reel opens with its own
-> **unique hook animation**.
+> **unique hook animation**. Pick one of **7 templates** with `/temp-1` … `/temp-7`; every finished reel is filed in
+> Google Drive (`Social Media / month / day`) with its thumbnail, caption Doc and timeline Doc, and logged to `memory/`
+> so the next run knows what was already used.
 
 ![AI with Rakshith kinetic reel — Day 4 "Claude & Codex inside Android Studio" (cover + key frames)](docs/images/readme_hero.jpg)
 
@@ -32,6 +34,49 @@ Real output on the Day 4 transcript: [`examples/day4_android_studio/plan/plan.md
 The gap audit behind these tools: [`docs/AUDIT_2026-11-21.md`](docs/AUDIT_2026-11-21.md) · skill score 8.0/10:
 [`docs/SKILL_SCORECARD.md`](docs/SKILL_SCORECARD.md) · full Instagram & Reels rulebook:
 [`docs/INSTAGRAM_REELS_GUIDELINES.md`](docs/INSTAGRAM_REELS_GUIDELINES.md).
+
+## 7 templates: `/temp-1` … `/temp-7`
+
+![The 7 templates on the same Day 4 footage](docs/images/templates_strip.jpg)
+
+| command | template | style reference | use it for |
+|---|---|---|---|
+| `/temp-1` | **Red Kinetic** (house) | his Kling 4.0 + Day 4 reels | AI tool launches, news, hype |
+| `/temp-2` | **Minimal Cinematic** | @tahacreate | calm tutorials, design/process |
+| `/temp-3` | **Editorial Script** | @ahmadjamilofficial1 | mindset, creativity, stories |
+| `/temp-4` | **Listicle Chapters** | @weblyfe | "N tips / steps / tools" |
+| `/temp-5` | **Bold Yellow Creator** | @artzenmedia | creator tips, app walkthroughs |
+| `/temp-6` | **Orange Explainer** | @hammadkhalid8 | business, money, frameworks |
+| `/temp-7` | **SaaS Split-Screen** | @marcel_grauu | product / SaaS demos |
+
+Each template is a spec in `engine/templates.py` (grade, fonts, palette, headline + caption zones, scene types,
+transitions, hook, pace, music) rendered by `engine/template_render.py` at 60 fps; `/temp-1` uses the house renderer.
+Full specs and the alignment grid: [`templates/`](templates/README.md). Claude skill: `skill/aiwithrakshith-reel-templates/`.
+
+```bash
+python3 examples/templates_demo/make_jobs.py                                   # demo job files (Day 4 footage)
+python3 engine/template_render.py examples/templates_demo/jobs/temp-4.json 0 0 test/ 6,180,600   # test frames
+python3 engine/template_render.py examples/templates_demo/jobs/temp-4.json --full reel.mp4        # 60 fps reel
+```
+
+**Alignment is enforced, not hoped for.** Every text/card/chip box is checked while rendering: leaving the safe box
+(x 65–960, y 270–1250) or touching the face oval stops the render with the time and the element. Layout bands:
+HEAD y 280–430 above the cap · FACE (nothing) · CAPTION chin+24 … 1245. Captions appear on the word's first frame.
+
+## Drive delivery + memory
+
+```bash
+python3 tools/reel_package.py --video reel.mp4 --job job.json --title "Android Studio BYOA" \
+    --caption caption.txt --qc qc_report.md --brand aiwithrakshith.global --out pkg/      # video, thumbnail, caption.html, timeline.html
+python3 tools/drive_publish.py pkg/          # Social Media / 2026-11 November / Day 21 - 2026-11-21 / <title>/
+python3 tools/memory.py suggest --energy high  # next template + hooks not used in the last 5 reels
+```
+- Caption and timeline are uploaded as **Google Docs** (HTML → Docs conversion), never .txt. The timeline Doc holds
+  every event, the spoken words by second, the rules applied and the QC table.
+- `drive_publish.py` finds-or-creates each folder by exact name (no duplicate months/days) and updates files in place.
+  Auth once per machine: OAuth desktop client at `~/.reel_engine/credentials.json`, or `REEL_DRIVE_SA=key.json`.
+- `memory/CONTEXT.md` (generated) is what every agent reads first: rules, recent reels, blocked hooks, template
+  rotation, Rakshith's lessons. `memory/` is committed, so every device and every LLM starts from the same context.
 
 ## Hook library: a unique opener for every reel
 
@@ -186,10 +231,11 @@ This draws the green safe box, red margins and the cyan 3:4 profile-grid crop on
 ## Using it with any LLM
 
 The rulebook is plain Markdown and the engine is plain Python + ffmpeg, so no single vendor is required.
+Every agent reads `memory/CONTEXT.md` first (recent reels, blocked hooks, lessons).
 
 | You are using | Do this |
 |---|---|
-| **Claude** (claude.ai skill, Claude Code) | Install `skill/aiwithrakshith-kinetic-reel-editor/SKILL.md` as a skill, or open the repo in Claude Code (reads `CLAUDE.md`). |
+| **Claude** (claude.ai skill, Claude Code) | Install `skill/aiwithrakshith-kinetic-reel-editor/SKILL.md` and `skill/aiwithrakshith-reel-templates/SKILL.md` (the `/temp-N` router) as skills, or open the repo in Claude Code (reads `CLAUDE.md`). |
 | **OpenAI Codex / ChatGPT agent, Cursor, GitHub Copilot agent, Gemini CLI, Aider, Windsurf, Cline** | Open the repo. Agents read `AGENTS.md`, which points to `SKILL.md` and the engine. |
 | **Chat-only LLMs** (ChatGPT, Gemini, DeepSeek, Grok, Mistral, Llama… without a shell) | Paste `prompts/universal_system_prompt.md` as the system/custom instructions and attach `SKILL.md`. The model plans the EDL, captions, facts and post text; run the engine locally to render. |
 
@@ -204,24 +250,15 @@ Models without these can still produce the plan, the facts, the captions/SRT and
 ```bash
 git clone https://github.com/rakshithgowdams/aiwithrakshith-reel-engine.git
 cd aiwithrakshith-reel-engine
-pip install -r requirements.txt            # add --break-system-packages on Debian/Ubuntu system Python
-sudo apt-get install -y ffmpeg             # or: brew install ffmpeg
-
-# fonts (OFL)
-mkdir -p work/fonts && cd work/fonts
-curl -LO "https://raw.githubusercontent.com/google/fonts/main/ofl/intertight/InterTight%5Bwght%5D.ttf"
-curl -LO "https://raw.githubusercontent.com/google/fonts/main/ofl/intertight/InterTight-Italic%5Bwght%5D.ttf"
-curl -LO "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanskannada/NotoSansKannada%5Bwdth%2Cwght%5D.ttf"
-cd ../..
-
-# matting model
-curl -L -o work/rvm_resnet50_fp32.onnx \
-  https://github.com/PeterL1n/RobustVideoMatting/releases/download/v1.0.0/rvm_resnet50_fp32.onnx
+./setup.sh              # pip deps, 11 OFL fonts, RVM matte model, then tools/doctor.py (must print READY)
+./setup.sh --no-model   # templates 2-7 only (no matting needed)
 ```
+Needs Python 3.9+ and ffmpeg with libx264 (`apt install ffmpeg` / `brew install ffmpeg`). Works on Linux, macOS and WSL.
 
-> **Paths:** the scripts were written in a cloud workspace and use absolute paths: `/home/claude/work/` for the engine
-> and `/home/claude/d4/` for the Day 4 example. Either create those folders (or symlink them to `./work`), or
-> search-and-replace the path constants at the top of each script before running.
+> **Paths:** every path comes from `engine/paths.py`. Defaults live inside the repo (`work/`, `work/fonts`,
+> `work/models`); override with `REEL_WORK`, `REEL_FONTS`, `REEL_MODELS`, `REEL_D4` (Day 4 example media) or
+> `REEL_REEL_DIR` (the current reel's folder for the house-style scripts). Media is never committed: put the raw video and
+> B-roll in `work/<reel>/` on each machine.
 
 ### Render commands
 Every reel renders at 60 fps from the template `examples/day4_android_studio/render_day4_60.py`, with the hook set by `HOOK=<name>`. Its frame numbers are 60 fps frames. Every

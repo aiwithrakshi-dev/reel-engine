@@ -1,5 +1,5 @@
 import cv2, numpy as np
-CHAIR=cv2.imread('/home/claude/work/chair_mask.png',0).astype(np.float32)/255
+import os as _os; CHAIR=cv2.imread(_os.path.join(_os.environ.get('REEL_REEL_DIR') or _os.environ.get('REEL_WORK','/home/claude/work'),'chair_mask.png'),0).astype(np.float32)/255
 CHAIR_D=cv2.dilate((CHAIR>0.5).astype(np.uint8),np.ones((5,5),np.uint8)).astype(np.float32)
 EXCL=np.ones((1920,1080),np.float32); cv2.fillPoly(EXCL,[np.array([(0,640),(165,640),(165,860),(120,995),(0,995)],np.int32)],0); EXCL=cv2.GaussianBlur(EXCL,(0,0),3)
 K45=cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(45,45)); K35=cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(35,35))

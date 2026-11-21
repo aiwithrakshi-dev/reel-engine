@@ -3,8 +3,10 @@
 import numpy as np, cv2, math, random
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 W, H, FPS = 1080, 1920, 30
-FONT_IT = '/home/claude/work/fonts/InterTight-Italic%5Bwght%5D.ttf'
-FONT_UP = '/home/claude/work/fonts/InterTight%5Bwght%5D.ttf'
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+from paths import font_path as _fp
+FONT_IT = _fp('InterTight-Italic%5Bwght%5D.ttf')
+FONT_UP = _fp('InterTight%5Bwght%5D.ttf')
 
 RED = (0xE3, 0x12, 0x1B); RED_MID = (0xAA, 0, 0); RED_DK = (0x5A, 0x02, 0x04); RED_BOT = (0x7A, 0x03, 0x06)
 PINK1 = (0xF0, 0x6A, 0x72); PINK2 = (0xF7, 0xB9, 0xBE); LABEL = (0x8A, 0x0A, 0x0A); WHITE = (255, 255, 255)

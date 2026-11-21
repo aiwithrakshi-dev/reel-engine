@@ -17,7 +17,9 @@ except ImportError:  # pip install regex
     regex = None
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-FONT_DIRS = [os.environ.get('REEL_FONTS', ''), os.path.join(_HERE, '..', 'work', 'fonts'), '/home/claude/work/fonts', '/home/claude/d4/fonts']
+import sys as _s; _s.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sys as _s; _s.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from paths import FONT_DIRS
 KN = re.compile(r'[ಀ-೿‌‍]')
 RAQM = ImageFont.Layout.RAQM if features.check('raqm') else ImageFont.Layout.BASIC
 

@@ -6,6 +6,7 @@ librosa
 soundfile
 pyloudnorm
 faster-whisper
-regex
 scipy
 regex
+google-api-python-client
+google-auth-oauthlib

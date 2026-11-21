@@ -1,0 +1,30 @@
+{
+ "reels": [
+  {
+   "date": "2026-11-21",
+   "title": "Day 4 — Claude & Codex inside Android Studio (BYOA)",
+   "brand": "aiwithrakshith.global",
+   "lang": "en",
+   "template": 1,
+   "hook": "neg_flash",
+   "duration": 39.95,
+   "drive": null,
+   "qc": null,
+   "notes": "60 fps face-clear re-render; QC PASS",
+   "headlines": null
+  },
+  {
+   "date": "2026-11-19",
+   "title": "Kling 4.0 — 10 prompts / keyframe method",
+   "brand": "@AIwithRakshith",
+   "lang": "kn",
+   "template": 1,
+   "hook": "neg_flash",
+   "duration": null,
+   "drive": null,
+   "qc": null,
+   "notes": "first approved build",
+   "headlines": null
+  }
+ ]
+}

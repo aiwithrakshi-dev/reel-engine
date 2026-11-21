@@ -1,0 +1,52 @@
+# Reel engine memory (generated — read this before every edit)
+
+Updated 2026-11-21 13:57. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
+
+## Non-negotiables
+- 1080x1920, **60 fps**, H.264 High + AAC 48 kHz, -14 LUFS, true peak <= -1 dBTP.
+- Instagram safe zone x 65-960, y 270-1250 for anything readable. 4-line caption + exactly 5 lowercase hashtags.
+- **Face-clear**: no text / component / effect layer on his face (engine/face_guard.py). Whole-frame transitions <= 0.2 s only.
+- Text follows speech. English video -> English headline + captions; Kannada video -> Kanglish headline + English captions.
+- No AI generation by the editor. Fact-check every on-screen claim on the official source.
+- Unique hook every reel: never one from the 5 most recent reels below.
+
+## Templates
+| /temp | name | best for | energy |
+|---|---|---|---|
+| /temp-1 | Red Kinetic (house style) | AI tool launches, news drops, hype explainers | high |
+| /temp-2 | Minimal Cinematic | calm tutorials, design/process explainers, "how to" talks | calm |
+| /temp-3 | Editorial Script | mindset, creativity, storytelling, motivational takes | medium |
+| /temp-4 | Listicle Chapters | "N tips/steps/tools" lists, book or course summaries | medium |
+| /temp-5 | Bold Yellow Creator | creator tips, tool walkthroughs, Canva/app tutorials | high |
+| /temp-6 | Orange Explainer | business, money, book lessons, frameworks | high |
+| /temp-7 | SaaS Split-Screen | product demos, SaaS / app features, before-after workflows | medium |
+
+## Google Drive
+- Social Media root: https://drive.google.com/drive/folders/1JBIU5uDtb8-5eDNs4hDbtGomyTqXzTmt (id `1JBIU5uDtb8-5eDNs4hDbtGomyTqXzTmt`)
+- Months: 2026-11 November `1jjPyisRuBOBlO1WUWUo41KETIct3Lw7G`
+- Days: 2026-11-21 `1FP4073opUPgKV2jep81VwPWFeUDnZX3H`
+- Layout: Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / <reel title> / video, thumbnail, Caption (Doc), Timeline (Doc)
+
+## Recent reels (newest first)
+| date | title | brand | template | hook | Drive |
+|---|---|---|---|---|---|
+| 2026-11-21 | Day 4 — Claude & Codex inside Android Studio (BYOA) | aiwithrakshith.global | 1 | `neg_flash` |  |
+| 2026-11-19 | Kling 4.0 — 10 prompts / keyframe method | @AIwithRakshith | 1 | `neg_flash` |  |
+
+## Next reel
+- Blocked hooks (last 5): `neg_flash`
+- Least-used templates lately: /temp-2, /temp-3, /temp-4
+- Free hooks: `pixel_assemble`, `strip_slam`, `red_wipe`, `zoom_punch` (run `tools/memory.py suggest --energy high|medium|calm`)
+
+## Lessons (from Rakshith — keep applying)
+- Keep his real room as the background; never matte him onto a studio/plain background unless asked for that one video.
+- Never translate, re-voice, speed up or pitch-shift his voice; only tighten pauses.
+- Labels on the room must be white with a soft shadow (dark red vanishes on the wood wall).
+- Streaks, swooshes and rings must never cross his face (Day 4 v3 broke this at 15.8 s / 21.6 s / 35.4 s → face_guard added).
+- Every reel at 60 fps HD; every reel a different hook; captions never appear before the word is spoken.
+- On-screen numbers must match the official source exactly, even when the voice is loose ("15 REFERENCES", not "15 images").
+- Grain makes x264 explode: grain amount 3.5 and VBV cap (maxrate 25-35M).
+- Kannada Whisper word times drift up to 0.3 s: verify keyword onsets on the waveform.
+- Deliver into Drive: Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / <reel> with caption + timeline as Google Docs.
+- 2026-11-21: Drive connector inside Claude carries max ~3.1 MB per file: thumbnails + Docs go through it, the 60 fps videos go up with tools/drive_publish.py (local OAuth) or by hand. Images need disableConversionToGoogleType=true or they become empty Docs.
+- 2026-11-21: Alignment guard: size every popped/scaled element for its PEAK scale (e.g. maxw 720 for a 1.18x pop); two-line captions under the chin need 30-34 px + 62 px with a 68 px step.

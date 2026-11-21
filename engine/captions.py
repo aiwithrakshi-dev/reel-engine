@@ -20,8 +20,8 @@ W, H = 1080, 1920
 SAFE = (65, 270, 960, 1250)
 RED = (0xE3, 0x12, 0x1B)
 _HERE = os.path.dirname(os.path.abspath(__file__))
-FONT_DIRS = [os.environ.get('REEL_FONTS', ''), os.path.join(_HERE, '..', 'work', 'fonts'), '/home/claude/work/fonts',
-             '/home/claude/d4/fonts']
+import sys as _s; _s.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from paths import FONT_DIRS
 
 
 def _find(name):
