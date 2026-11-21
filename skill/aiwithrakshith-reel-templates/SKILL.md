@@ -7,7 +7,7 @@ description: Edit Rakshith's talking-head video into a 60 fps Instagram Reel in 
 
 Router skill. Rakshith types `/temp-N` (+ a video, or "same video as before") and gets a finished 60 fps reel in that
 template's style, plus a Drive day folder with the video, thumbnail, caption Doc and timeline Doc.
-The engine is the GitHub repo **rakshithgowdams/aiwithrakshith-reel-engine** (private). The house style rules
+The engine is the GitHub repo **rakshithgowdams/reel-engine** (private). The house style rules
 (/temp-1) are in the sibling skill **aiwithrakshith-kinetic-reel-editor** — they apply to every template.
 
 ## 0. Before anything: load memory

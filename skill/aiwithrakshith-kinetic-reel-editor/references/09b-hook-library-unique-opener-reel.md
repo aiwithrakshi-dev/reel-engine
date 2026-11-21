@@ -20,7 +20,7 @@ The first 0.2–0.3 s decides the scroll-stop, so no two recent reels may open t
 
 Rules:
 - Read `references/hook_log.md` first. Never use a hook from the last 5 reels; never the same energy hook 3 times in a row.
-  The log lives in the private GitHub repo `rakshithgowdams/aiwithrakshith-reel-engine` (skill/…/references/hook_log.md).
+  The log lives in the private GitHub repo `rakshithgowdams/reel-engine` (skill/…/references/hook_log.md).
   As of 21 Nov 2026 the Kling 4.0 and Day 4 reels both used `neg_flash`, so it is blocked for the next reels.
 - Match energy to the topic (news/launch → high, tutorial → medium, story → calm); `pick_hook(energy, recent)` does it.
 - The first headline still types on its first spoken word; the hook only frames the opening.

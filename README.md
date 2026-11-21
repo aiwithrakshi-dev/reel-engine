@@ -130,7 +130,7 @@ Every frame of the Day 4 reel at 1.5 fps, with the Instagram safe box drawn in g
 ## What's inside
 
 ```
-aiwithrakshith-reel-engine/
+reel-engine/
 ├── README.md                     ← you are here
 ├── AGENTS.md                     ← instructions for ANY coding agent (Codex, Cursor, Gemini CLI, Copilot, Aider…)
 ├── CLAUDE.md                     ← pointer for Claude Code / Claude
@@ -248,8 +248,8 @@ Models without these can still produce the plan, the facts, the captions/SRT and
 ## Setup
 
 ```bash
-git clone https://github.com/rakshithgowdams/aiwithrakshith-reel-engine.git
-cd aiwithrakshith-reel-engine
+git clone https://github.com/rakshithgowdams/reel-engine.git
+cd reel-engine
 ./setup.sh              # pip deps, 11 OFL fonts, RVM matte model, then tools/doctor.py (must print READY)
 ./setup.sh --no-model   # templates 2-7 only (no matting needed)
 ```
