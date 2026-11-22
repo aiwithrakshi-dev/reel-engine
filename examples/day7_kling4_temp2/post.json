@@ -1,0 +1,183 @@
+{
+ "slug": "day7_kling4",
+ "keyword": "PROMPT",
+ "seo_keywords": [
+  "Kling 4.0"
+ ],
+ "caption": [
+  "Kling 4.0 makes a 30-second AI video in one shot — no cuts, no stitched clips.",
+  "Up to 10 keyframes and 15 references keep your character's face the same.",
+  "Comment PROMPT and I'll DM you my 5-beat sheet + keyframe prompts."
+ ],
+ "hashtags": [
+  "#kling4",
+  "#klingai",
+  "#aivideo",
+  "#aifilmmaking",
+  "#aiwithrakshith"
+ ],
+ "thumb_title": "One AI shot",
+ "thumb_sub": "Kling 4.0 · 30 seconds · no cuts",
+ "alt_text": "Rakshith explains how Kling 4.0 makes a 30-second AI video in one generation using up to 10 keyframes, a character sheet with up to 15 references, one camera move and a short test first.",
+ "pinned_comment": "Comment PROMPT and I'll DM you the free Kling 4.0 5-beat sheet with ready keyframe prompts for a 30-second one-shot video.",
+ "dm_message": "Hey! Here's your free Kling 4.0 5-Beat Sheet + Keyframe Prompts: {link}\nStart with steps 1 to 3, then test beats 1 and 2 before you spend on the full 30 seconds.\nFollow @aiwithrakshith.global for more AI video tips like this.",
+ "dm_doc": {
+  "title": "Kling 4.0 5-Beat Sheet + Keyframe Prompts",
+  "subtitle": "Make one 30-second AI shot with a face that stays the same",
+  "checked": "Kling 4.0 limits checked on 22 November 2026 against Kling's official guides.",
+  "brand": "AI with Rakshith",
+  "handle": "@aiwithrakshith.global",
+  "watermark": "AI with Rakshith",
+  "intro": [
+   "Most AI films are short clips glued together, so the face, light and outfit drift at every cut. **Kling 4.0 generates up to 30 seconds in one pass**, and **up to 10 keyframes** plus **up to 15 references** let you plan the whole take like one shot.",
+   "This sheet gives you the limits, a 5-beat plan for 30 seconds, copy-paste keyframe prompts and a cheap way to test before you spend credits."
+  ],
+  "sections": [
+   {
+    "heading": "Kling 4.0 limits you plan around",
+    "table": {
+     "header": [
+      "Setting",
+      "Kling 4.0",
+      "Note"
+     ],
+     "widths": [
+      2638,
+      2900,
+      4100
+     ],
+     "rows": [
+      [
+       "Video length",
+       "3–30 s per generation",
+       "1-second steps; default 10 s. Kling 3.0 stopped at 15 s."
+      ],
+      [
+       "Keyframes",
+       "up to 10",
+       "each one is a moment the video must reach"
+      ],
+      [
+       "References (Omni Reference)",
+       "up to 15 in total",
+       "≤ 10 images, ≤ 5 videos (≤ 30 s combined), ≤ 7 subjects"
+      ],
+      [
+       "Resolution",
+       "720p / 1080p / 4K",
+       "aspect 21:9, 16:9, 1:1, 9:16 or Auto"
+      ],
+      [
+       "Voice",
+       "up to 3 voice profiles",
+       "5–30 s of audio per profile"
+      ]
+     ]
+    },
+    "note": "\"15 references\" is one shared budget, not 15 images plus 15 videos."
+   },
+   {
+    "heading": "The 5-beat sheet (30 seconds)",
+    "table": {
+     "header": [
+      "Beat",
+      "Time",
+      "What happens",
+      "Keyframe?"
+     ],
+     "widths": [
+      1300,
+      1500,
+      4838,
+      2000
+     ],
+     "rows": [
+      [
+       "1. Hook",
+       "0–6 s",
+       "Who and where: establish the character and the place in one strong image",
+       "Keyframe 1 at 0 s"
+      ],
+      [
+       "2. Want",
+       "6–12 s",
+       "The character starts doing something; show what they want",
+       "Keyframe 2 at 6 s"
+      ],
+      [
+       "3. Turn",
+       "12–18 s",
+       "Something changes: a reveal, an object, a new person, the weather",
+       "Keyframe 3 at 12 s"
+      ],
+      [
+       "4. Peak",
+       "18–24 s",
+       "The biggest action or emotion of the take",
+       "Keyframe 4 at 18 s"
+      ],
+      [
+       "5. Payoff",
+       "24–30 s",
+       "The final state the viewer remembers; end on a clean frame",
+       "Keyframe 5 at 30 s"
+      ]
+     ]
+    },
+    "note": "Five keyframes leave room for up to five more if a beat needs a mid-point. Add keyframes only where something changes."
+   },
+   {
+    "heading": "Step by step",
+    "checklist": [
+     "**Write the story in five lines**, one per beat. If a beat needs two sentences, it's two beats — cut something.",
+     "**Build a character sheet.** One clean face photo (front, even light) plus 2–4 angles and one full-body shot of the same outfit. Add them as image references and keep the rest of your 15-reference budget for the location or a product.",
+     "**Make one keyframe image per beat** with the SAME character and outfit as the references, so the reference and the keyframe never disagree. If they disagree, Kling has to guess which one wins.",
+     "**Pick ONE camera move for the whole take** — a slow push-in, a pan or an orbit — and write it in every beat prompt. Changing the move mid-take is what breaks a one-shot look.",
+     "**Test cheap first.** Generate only beats 1–2 (about 10 seconds) at 720p. Check the face, outfit and camera. Fix the prompt, then generate the full 30 seconds at 1080p or 4K.",
+     "**Keep the audio simple.** One voice profile per character, and say who speaks in which beat."
+    ]
+   },
+   {
+    "heading": "Copy-paste keyframe prompts",
+    "paragraphs": [
+     "Replace the words in [brackets]. Keep the camera line identical in all five.",
+     "**Master prompt:** One continuous 30-second shot, no cuts. [CHARACTER] from @Image1 keeps the same face, hair and outfit in every frame. Location: [PLACE], [TIME OF DAY], [LIGHT]. Camera: one slow [push-in / pan left / orbit] for the whole take. Style: cinematic, natural skin, 9:16.",
+     "**Beat 1 (0 s):** Wide shot. [CHARACTER] stands in [PLACE], [ACTION THAT SHOWS WHO THEY ARE]. Calm, establishing.",
+     "**Beat 2 (6 s):** [CHARACTER] starts to [GOAL ACTION]; we see what they want. Same light, same outfit.",
+     "**Beat 3 (12 s):** [CHANGE] happens — [reveal / object appears / someone enters]. [CHARACTER] reacts with [EMOTION].",
+     "**Beat 4 (18 s):** The peak: [BIGGEST ACTION]. Energy rises, camera keeps the same slow move.",
+     "**Beat 5 (30 s):** Payoff: [FINAL STATE]. Hold on a clean final frame for 1 second.",
+     "**Worked example:** Master — One continuous 30-second shot. A young chai seller from @Image1 in a busy Bengaluru street at golden hour, warm side light; camera: one slow push-in. Beat 1: he pours chai from a height, steam rising. Beat 2: he looks up at a rain cloud and pulls the tarp. Beat 3: rain starts; office workers rush under his stall. Beat 4: he hands out cups to the crowd, laughing. Beat 5: the rain stops, sun breaks through, he raises a cup to the camera."
+    ]
+   },
+   {
+    "heading": "Mistakes that change the face",
+    "bullets": [
+     "Different outfits in the reference and the keyframes.",
+     "Too many people in one take for a first test — start with one character.",
+     "A new camera move in every beat.",
+     "Spending on 30 seconds before the first two beats look right."
+    ]
+   }
+  ],
+  "sources": [
+   {
+    "title": "Kling AI — Kling 4.0 Release Overview (duration, resolution, limits)",
+    "url": "https://kling.ai/quickstart/kling-4-model-user-guide"
+   },
+   {
+    "title": "Kling AI — Kling 4.0 Multiple Keyframes guide",
+    "url": "https://kling.ai/blog/kling-4-multiple-keyframes-guide"
+   },
+   {
+    "title": "Kling AI — Kling 4.0 vs Kling 3.0",
+    "url": "https://kling.ai/blog/kling-4-vs-3"
+   },
+   {
+    "title": "Kling AI — Inside Kling 4.0 (references and video inputs)",
+    "url": "https://kling.ai/blog/kling-4-ai-video-model"
+   }
+  ],
+  "disclaimer": "Limits are from Kling's official guides as of 22 Nov 2026 and can change by plan or region. Credits and prices are not covered here."
+ }
+}

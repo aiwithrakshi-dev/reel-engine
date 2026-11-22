@@ -1,5 +1,12 @@
 # Changelog
 
+## v11 — 22 Nov 2026 (/temp-2 audit + Day 7 sample)
+- /temp-2 audit fixes (docs/AUDIT_temp-2_2026-11-22.md): tree diagram on the centre line with 2–3 fitted branches,
+  centred explainer page, faster build, checked image card, hook page holds its last line, hard button ending
+  (`end_hit`), dialogue-safe music default.
+- `post.json` `thumb_title` / `thumb_sub` → cover title for clean-talk templates (`reel_outputs.title_overlay`).
+- Day 7 Kling 4.0 reel (`examples/day7_kling4_temp2/`) with README preview, DM doc "Kling 4.0 5-Beat Sheet + Keyframe Prompts".
+
 ## v10 — 22 Nov 2026 (final outputs for every reel + dialogue-first mix)
 - Every reel/template now ends with five outputs: Instagram thumbnail, 4K 60 fps video (2160×3840 Lanczos master +
   1080p 60 fps), short SEO caption (keyword in line 1 ≤ 125 chars, comment-keyword CTA, 3–5 hashtags) with alt text and

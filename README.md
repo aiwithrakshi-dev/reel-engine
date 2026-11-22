@@ -24,6 +24,17 @@ every visual event. Everything stays inside the Instagram safe zone and nothing 
 (37.5 s, 60 fps web preview at 720×1280). Built from `examples/day24_gemini4/`. English, house style /temp-1,
 captions word-synced, music ~21 dB under the voice. The full 1080p and 4K 60 fps masters are kept in Drive.
 
+## /temp-2 preview — Day 7 "Kling 4.0: one 30-second AI shot"
+
+| Opening (letterbox hook + abstract word page) | White explainer page (tree diagram) | Instagram thumbnail |
+|---|---|---|
+| [![temp-2 opening](docs/images/temp2_day7_preview.gif)](samples/day7_kling4_temp2_60fps_preview.mp4) | [![temp-2 scene](docs/images/temp2_day7_scene.gif)](samples/day7_kling4_temp2_60fps_preview.mp4) | [![temp-2 thumbnail](docs/images/temp2_day7_thumbnail.jpg)](samples/day7_kling4_temp2_60fps_preview.mp4) |
+
+▶ **Watch the full reel:** [`samples/day7_kling4_temp2_60fps_preview.mp4`](samples/day7_kling4_temp2_60fps_preview.mp4)
+(35.2 s, 60 fps web preview at 720×1280). Built with `engine/template_render.py` from `examples/day7_kling4_temp2/`:
+Minimal Cinematic grade, minimal word-by-word captions with Playfair keywords, white explainer pages, slow soft music
+~21 dB under the voice.
+
 ---
 
 ## Quick start: raw video → edit script → reel
@@ -169,6 +180,7 @@ Pick one with `HOOK=<name>` when rendering, or preview them on a new reel with
 
 | Video | What it shows |
 |---|---|
+| [`samples/day7_kling4_temp2_60fps_preview.mp4`](samples/day7_kling4_temp2_60fps_preview.mp4) | **/temp-2** Day 7 reel (Kling 4.0): English, 60 fps, 35.2 s, letterbox_open hook, white explainer pages, minimal captions |
 | [`samples/day24_gemini4_temp1_60fps_preview.mp4`](samples/day24_gemini4_temp1_60fps_preview.mp4) | **/temp-1** Day 24 reel (Gemini 4): English, 60 fps, 37.5 s, strip_slam hook, captions, dialogue-first mix |
 | [`samples/day4_android_studio_byoa_60fps_preview.mp4`](samples/day4_android_studio_byoa_60fps_preview.mp4) | Day 4 reel built with this engine: English, 1080×1920 **60 fps**, 40 s, safe-zone layout v3 |
 | [`samples/hooks_preview_60fps.mp4`](samples/hooks_preview_60fps.mp4) | All 10 hook openers on Day 4 frames, 60 fps |

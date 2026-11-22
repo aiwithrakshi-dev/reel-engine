@@ -1,6 +1,6 @@
 # Reel engine memory (generated — read this before every edit)
 
-Updated 2026-11-22 07:16. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
+Updated 2026-11-22 08:40. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
 
 ## Non-negotiables
 - 1080x1920, **60 fps**, H.264 High + AAC 48 kHz, -14 LUFS, true peak <= -1 dBTP.
@@ -40,13 +40,14 @@ Updated 2026-11-22 07:16. Source: memory/content_log.json + memory/lessons.md. R
 ## Recent reels (newest first)
 | date | title | brand | template | hook | Drive |
 |---|---|---|---|---|---|
+| 2026-11-22 | Day 7 — Kling 4.0: one 30-second AI shot | aiwithrakshith.global | 2 | `letterbox_open` |  |
 | 2026-11-22 | Day 24 — There is no Gemini 4 Pro (price doubles Dec 1) | aiwithrakshith.global | 1 | `strip_slam` |  |
 | 2026-11-21 | Day 4 — Claude & Codex inside Android Studio (BYOA) | aiwithrakshith.global | 1 | `neg_flash` |  |
 | 2026-11-19 | Kling 4.0 — 10 prompts / keyframe method | @AIwithRakshith | 1 | `neg_flash` |  |
 
 ## Next reel
-- Blocked hooks (last 5): `neg_flash`, `strip_slam`
-- Least-used templates lately: /temp-2, /temp-3, /temp-4
+- Blocked hooks (last 5): `letterbox_open`, `neg_flash`, `strip_slam`
+- Least-used templates lately: /temp-3, /temp-4, /temp-5
 - Free hooks: `pixel_assemble`, `red_wipe`, `zoom_punch`, `rgb_converge` (run `tools/memory.py suggest --energy high|medium|calm`)
 
 ## Lessons (from Rakshith — keep applying)
@@ -69,3 +70,4 @@ Updated 2026-11-22 07:16. Source: memory/content_log.json + memory/lessons.md. R
 - 2026-11-22: Streaks/rings/swooshes must be clipped to the safe zone with a feathered mask (render_d24_60.py SAFE_OUT) and rings kept to r1 ~520-560 so the clip isn't visible.
 - 2026-11-22: Music was too loud on Day 24 and Instagram's auto-translate could not hear the dialogue. Rakshith wants slow, soft background music: bed ~20 dB under the voice, vocal-band EQ dip, SFX ~6 dB under; verify with Whisper on the final mix (0 % WER vs the clean voice).
 - 2026-11-22: Every reel must end with five outputs: Instagram thumbnail, 4K 60 fps video, short SEO caption (keyword first, comment-keyword CTA, 3-5 hashtags) with alt text + pinned comment, DM reply text, and a DM document (.docx + .pdf) with the full explanation and an 'AI with Rakshith' watermark (tools/reel_package.py --post).
+- 2026-11-22: Templates that keep the talking head clean (/temp-2) need a cover title on the thumbnail: set thumb_title/thumb_sub in post.json.

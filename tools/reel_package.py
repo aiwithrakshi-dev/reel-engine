@@ -112,6 +112,8 @@ def main():
              dict(path=os.path.basename(tg), kind='thumbnail_grid', mime='image/jpeg'),
              dict(path='caption.html', kind='caption', mime='text/html', doc_title=f'{a.title} — Caption'),
              dict(path='timeline.html', kind='timeline', mime='text/html', doc_title=f'{a.title} — Timeline')]
+    if post and post.get('thumb_title'):
+        import reel_outputs as RO; RO.title_overlay(th, post['thumb_title'], post.get('thumb_sub'), tg)
     if post:   # every reel: 4K 60 fps master, SEO caption + alt text + pinned comment, DM reply, watermarked DM document
         import reel_outputs as RO
         if not a.no_4k:

@@ -207,10 +207,11 @@ def build_audio(job, spec, out_wav):
         if s['t0'] < dur: add('whoosh', max(0, s['t0'] - 0.18), 0.45); add('whoosh', max(0, s['t1'] - 0.18), 0.35)
     for t in job.get('flash', []):
         if t < dur: add('impact', t, 0.4)
+    if job.get('end_hit') and job['end_hit'] < dur: add('impact', job['end_hit'], 0.5)   # hard button ending
     sf_path = out_wav + '.sfx.wav'
     import soundfile as sf; sf.write(sf_path, np.stack([sfx, sfx], 1), sr)
     mdb = job.get('music_db', -27)   # dialogue-safe: bed ~20 dB under the voice (22 Nov 2026)
-    fc = (f"[1:a]atrim=0:{dur},asetpts=PTS-STARTPTS,volume={mdb}dB,highpass=f=60,lowpass=f=9000,equalizer=f=1800:t=q:w=1.2:g=-6,equalizer=f=3500:t=q:w=1.2:g=-4,afade=t=out:st={dur - 0.6}:d=0.6[m];"
+    fc = (f"[1:a]atrim=0:{dur},asetpts=PTS-STARTPTS,volume={mdb}dB,highpass=f=60,lowpass=f=9000,equalizer=f=1800:t=q:w=1.2:g=-6,equalizer=f=3500:t=q:w=1.2:g=-4,afade=t=out:st={dur - 0.04}:d=0.04[m];"
           f"[0:a]atrim=0:{dur},asetpts=PTS-STARTPTS,asplit=2[v][vk];[m][vk]sidechaincompress=threshold=0.02:ratio=6:attack=20:release=450[md];"
           f"[2:a]volume=-13dB[s];[v][md][s]amix=inputs=3:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]")
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', job['vo'], '-stream_loop', '-1', '-i', job['music'], '-i', sf_path,
@@ -381,7 +382,9 @@ class Reel(StylesB):
         fr = self.shifted(t); top = cv2.resize(fr[0:420], (W, H)); c = cv2.GaussianBlur(top, (0, 0), 38)
         m = c.mean(2, keepdims=True); c = m + (c - m) * 0.35; c = c * 0.35 + np.array((236, 242, 242), np.float32) * 0.65
         ch = self.chunk_at(t, 3, 18)
-        if ch: self._t2_words(c, t, ch, cy=900, small=64, big=96, ink='#16211F', check_face=False)
+        if ch is None and hasattr(self, '_chunks'):   # hold the last line on the hook page (no empty frames before the cut)
+            prev = [x for x in self._chunks if x['start'] <= t]; ch = prev[-1] if prev else None
+        if ch: self._t2_words(c, t, ch, cy=900, small=84, big=120, ink='#16211F', check_face=False)
         return c
 
     def _t2_words(self, c, t, ch, cy, small, big, ink, check_face=True):
@@ -406,25 +409,27 @@ class Reel(StylesB):
 
     def t2_scene(self, t, sc, i):
         c = np.full((H, W, 3), rgb(self.pal['bg']), np.float32); a = t - sc['t0']
-        words = sc['title'].split(); y = 520
-        x_tot = text(sc['title'], 'inter:700', 72, fill=self.pal['ink'], maxw=860)
+        words = sc['title'].split(); y = 690          # block centred in the safe box (title 690 -> branch labels ~1040)
+        x_tot = text(sc['title'], 'inter:700', 84, fill=self.pal['ink'], maxw=860)
         box = comp(c, x_tot, 512, y, alpha=ease_out(a / 0.25), blur=int(max(0, 1 - a / 0.25) * 8)); self.check(box, 'title', t, face=False)
         if sc.get('sub'):
-            box = comp(c, text(sc['sub'], 'inter:500', 38, fill='#3A3A3A', maxw=860), 512, y + 70, alpha=ease_out((a - 0.3) / 0.25)); self.check(box, 'sub', t, face=False)
-        if sc.get('items'):
-            p = ease_out((a - 0.6) / 0.5); stem_y0, stem_y1 = y + 110, y + 200
-            cv2.line(c, (540, stem_y0), (540, int(stem_y0 + (stem_y1 - stem_y0) * p)), (25, 25, 25), 8)
+            box = comp(c, text(sc['sub'], 'inter:500', 42, fill='#3A3A3A', maxw=860), 512, y + 78, alpha=ease_out((a - 0.3) / 0.25)); self.check(box, 'sub', t, face=False)
+        if sc.get('items'):   # tree diagram on the safe-zone centre line (x 512); 2 or 3 branches, labels fit their column
+            items = sc['items'][:3]; xs = (252, 772) if len(items) == 2 else (222, 512, 802); colw = 400 if len(items) == 2 else 270
+            p = ease_out((a - 0.35) / 0.3); stem_y0, stem_y1 = y + 110, y + 200   # tree builds in ~1.2 s (event every 0.3 s)
+            cv2.line(c, (512, stem_y0), (512, int(stem_y0 + (stem_y1 - stem_y0) * p)), (25, 25, 25), 8)
             if p >= 1:
-                q = ease_out((a - 1.1) / 0.45); half = int(300 * q)
-                cv2.line(c, (540 - half, stem_y1), (540 + half, stem_y1), (25, 25, 25), 8)
+                q = ease_out((a - 0.65) / 0.3); half = int((xs[-1] - 512) * q)
+                cv2.line(c, (512 - half, stem_y1), (512 + half, stem_y1), (25, 25, 25), 8)
                 if q >= 1:
-                    for k, (it, xx) in enumerate(zip(sc['items'][:2], (240, 840))):
-                        r = ease_out((a - 1.6 - 0.25 * k) / 0.3)
+                    for k, (it, xx) in enumerate(zip(items, xs)):
+                        r = ease_out((a - 0.95 - 0.15 * k) / 0.25)
                         cv2.line(c, (xx, stem_y1), (xx, int(stem_y1 + 90 * r)), (25, 25, 25), 8)
-                        box = comp(c, text(it, 'inter:600', 54, fill=self.pal['ink']), xx, stem_y1 + 150, alpha=r); self.check(box, 'item', t, face=False)
+                        box = comp(c, text(it, 'inter:600', 50, fill=self.pal['ink'], maxw=colw), xx, stem_y1 + 150, alpha=r); self.check(box, 'item', t, face=False)
         elif sc.get('image'):
             card = rounded_card(self.img(sc['image']), 780, 560, r=30)
-            s = 0.94 + 0.06 * ease_out((a - 0.2) / 0.5) + 0.01 * a; box = comp(c, card, 540, 930, scale=s, alpha=ease_out((a - 0.2) / 0.3))
+            s = 0.94 + 0.06 * ease_out((a - 0.2) / 0.5) + 0.01 * a; box = comp(c, card, 512, 930, scale=s, alpha=ease_out((a - 0.2) / 0.3))
+            self.check(box, 'image card', t, face=False)
         return c
 
     # ---------------------------------------------------------------- temp-3 Editorial Script

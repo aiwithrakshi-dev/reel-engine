@@ -14,6 +14,7 @@ post.json:
   { "slug": "day24_gemini4", "keyword": "MODEL",
     "caption": ["hook line with the main keyword", "one fact", "Comment MODEL ... CTA"], "hashtags": ["#gemini4", ...],
     "alt_text": "...", "pinned_comment": "...", "dm_message": "... {link} ...",
+    "thumb_title": "optional cover title (templates without an on-screen headline)", "thumb_sub": "optional line",
     "dm_doc": { ...spec for tools/dm_doc.js... } }
 """
 import argparse, json, os, re, shutil, subprocess, sys
@@ -29,6 +30,27 @@ def thumbnail(video, out_jpg, out_grid, t=None, src=None):
     if src: sh(['ffmpeg', '-v', 'error', '-y', '-i', src, '-q:v', '2', out_jpg])
     else: sh(['ffmpeg', '-v', 'error', '-y', '-ss', str(t), '-i', video, '-frames:v', '1', '-q:v', '2', out_jpg])
     sh(['ffmpeg', '-v', 'error', '-y', '-i', out_jpg, '-vf', 'crop=1080:1440:0:240', '-q:v', '2', out_grid])
+
+
+def title_overlay(jpg, title, sub=None, grid=None, y=250, serif=True):
+    """Cover title above the cap for templates that keep the talking head clean (e.g. /temp-2): white type with a soft
+    shadow, centred on the safe-zone centre line x 512, kept inside y 250-460 so the face and the 3:4 grid crop stay clear."""
+    from PIL import ImageFilter
+    im = Image.open(jpg).convert('RGBA'); lay = Image.new('RGBA', im.size, (0, 0, 0, 0)); sh = Image.new('RGBA', im.size, (0, 0, 0, 0))
+    d, ds = ImageDraw.Draw(lay), ImageDraw.Draw(sh)
+    def F(name, size, w):
+        f = ImageFont.truetype(font_path(name), size)
+        try: f.set_variation_by_axes([w])
+        except Exception: pass
+        return f
+    fa = F('PlayfairDisplay-Italic%5Bwght%5D.ttf' if serif else 'InterTight%5Bwght%5D.ttf', 132, 600 if serif else 900)
+    while d.textlength(title, font=fa) > 860: fa = F('PlayfairDisplay-Italic%5Bwght%5D.ttf' if serif else 'InterTight%5Bwght%5D.ttf', fa.size - 6, 600 if serif else 900)
+    rows = [(title, fa, y)] + ([(sub, F('Inter%5Bopsz,wght%5D.ttf', 46, 600), y + fa.size + 16)] if sub else [])
+    for t, f, yy in rows:
+        w = d.textlength(t, font=f); ds.text((512 - w / 2 + 3, yy + 6), t, font=f, fill=(0, 0, 0, 160)); d.text((512 - w / 2, yy), t, font=f, fill=(255, 255, 255, 255))
+    out = Image.alpha_composite(Image.alpha_composite(im, sh.filter(ImageFilter.GaussianBlur(6))), lay).convert('RGB')
+    out.save(jpg, quality=92)
+    if grid: out.crop((0, 240, 1080, 1680)).save(grid, quality=92)
 
 
 def master_4k(video, out):
@@ -80,6 +102,7 @@ def main():
     post = json.load(open(a.post)); os.makedirs(a.out, exist_ok=True); slug = post['slug']; res = {}
     th, tg = (os.path.join(a.out, f'{slug}_thumbnail.jpg'), os.path.join(a.out, f'{slug}_thumbnail_grid.jpg'))
     thumbnail(a.video, th, tg, a.thumb_t, a.thumb); res['thumbnail'] = th
+    if post.get('thumb_title'): title_overlay(th, post['thumb_title'], post.get('thumb_sub'), tg)
     v1080 = os.path.join(a.out, f'{slug}_1080p_60fps.mp4')
     if os.path.abspath(a.video) != os.path.abspath(v1080): shutil.copy(a.video, v1080)
     res['video_1080p'] = v1080

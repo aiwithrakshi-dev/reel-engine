@@ -1,0 +1,150 @@
+{
+ "template": 2,
+ "aroll": "<tight A-roll from islands_d7.py>",
+ "src_fps": 30,
+ "dy": 0,
+ "duration": 35.26,
+ "face": {
+  "cap_top": 472,
+  "chin": 1070,
+  "x0": 340,
+  "x1": 840
+ },
+ "words": "words_reel.json",
+ "headlines": [
+  {
+   "label": "no cuts, no edit",
+   "big": "SHOT",
+   "label_t": 0.09,
+   "big_t": 4.22,
+   "until": 2.12
+  },
+  {
+   "label": "most AI films are",
+   "big": "SHORT CLIPS",
+   "label_t": 4.97,
+   "big_t": 6.66,
+   "until": 8.48
+  },
+  {
+   "label": "that's why",
+   "big": "FACES CHANGE",
+   "label_t": 8.48,
+   "big_t": 8.85,
+   "until": 10.12
+  },
+  {
+   "label": "Kling 4.0 makes up to",
+   "big": "30 SECONDS",
+   "label_t": 10.22,
+   "big_t": 11.75,
+   "until": 13.88
+  },
+  {
+   "label": "the trick is",
+   "big": "KEYFRAMES",
+   "label_t": 24.81,
+   "big_t": 14.68,
+   "until": 16.8
+  },
+  {
+   "label": "treat each one as a",
+   "big": "STORY BEAT",
+   "label_t": 16.88,
+   "big_t": 18.16,
+   "until": 19.32
+  },
+  {
+   "label": "lock your actor with a",
+   "big": "CHARACTER SHEET",
+   "label_t": 19.32,
+   "big_t": 20.36,
+   "until": 23.1
+  },
+  {
+   "label": "use one",
+   "big": "CAMERA MOVE",
+   "label_t": 23.22,
+   "big_t": 23.87,
+   "until": 26.48
+  },
+  {
+   "label": "test the first",
+   "big": "TWO BEATS",
+   "label_t": 26.6,
+   "big_t": 27.09,
+   "until": 29.4
+  },
+  {
+   "label": "comment",
+   "big": "PROMPT",
+   "label_t": 30.72,
+   "big_t": 31.28,
+   "until": 35.26
+  }
+ ],
+ "scenes": [
+  {
+   "t0": 4.88,
+   "t1": 7.95,
+   "title": "Most AI films",
+   "sub": "short clips glued together",
+   "items": [
+    "clip 1",
+    "clip 2",
+    "clip 3"
+   ]
+  },
+  {
+   "t0": 10.12,
+   "t1": 13.88,
+   "title": "Kling 4.0",
+   "sub": "up to 30 seconds in one generation",
+   "items": [
+    "Kling 3.0: 15 s",
+    "Kling 4.0: 30 s"
+   ]
+  },
+  {
+   "t0": 13.88,
+   "t1": 16.8,
+   "title": "Keyframes",
+   "sub": "up to 10 in one video",
+   "items": [
+    "start",
+    "story beats",
+    "end"
+   ]
+  },
+  {
+   "t0": 19.2,
+   "t1": 23.1,
+   "title": "Character sheet",
+   "sub": "up to 15 references in one video",
+   "items": [
+    "\u2264 10 images",
+    "\u2264 5 videos",
+    "\u2264 7 elements"
+   ]
+  },
+  {
+   "t0": 26.48,
+   "t1": 29.4,
+   "title": "Test first",
+   "sub": "two beats, short and cheap",
+   "items": [
+    "beat 1",
+    "beat 2"
+   ]
+  }
+ ],
+ "hook": "letterbox_open",
+ "hook_until": 2.12,
+ "vo": "<vo_proc.wav>",
+ "music": "Rainframe (Drive Editing Pack / Background music)",
+ "glossary": {
+  "prompt": "PROMPT"
+ },
+ "end_hit": 34.5,
+ "music_db": -23
+}
