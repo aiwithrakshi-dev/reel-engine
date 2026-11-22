@@ -20,5 +20,9 @@ get notosanskannada 'NotoSansKannada%5Bwdth,wght%5D.ttf'
 if [ "${1:-}" != "--no-model" ] && [ ! -s "$MODELS/rvm_resnet50_fp32.onnx" ]; then
   curl -fsSL https://github.com/PeterL1n/RobustVideoMatting/releases/download/v1.0.0/rvm_resnet50_fp32.onnx -o "$MODELS/rvm_resnet50_fp32.onnx"
 fi
+# DM documents (tools/dm_doc.js): Node + docx, LibreOffice for the PDF copy
+if command -v node >/dev/null; then node -e "require('docx')" 2>/dev/null || npm install --no-save --silent docx || echo "!! npm install docx failed"
+else echo "!! install Node.js for DM documents (tools/dm_doc.js)"; fi
+command -v soffice >/dev/null || echo "!! install LibreOffice (soffice) for the DM document PDF"
 [ -f memory/content_log.json ] || echo '{"reels": []}' > memory/content_log.json
 python3 tools/doctor.py

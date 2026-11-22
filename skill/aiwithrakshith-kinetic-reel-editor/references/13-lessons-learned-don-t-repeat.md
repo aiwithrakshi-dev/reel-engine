@@ -1,6 +1,6 @@
 <!-- Generated from SKILL.md by tools/build_skill_refs.py. Edit SKILL.md, not this file. -->
 
-# 12. Lessons learned (don't repeat)
+# 13. Lessons learned (don't repeat)
 
 STUDIO (plain background) was rejected — keep his room. Dark-red labels vanish on wood → white labels.
 - Fixed layout let text touch his cap and left a huge label→word gap → responsive `stack()` measured from the head.

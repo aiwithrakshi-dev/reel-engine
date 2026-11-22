@@ -33,4 +33,7 @@ try:
     import assets; av = assets.available()
     print('  OK  asset library: ' + ', '.join(f"{k} {sum(v.values())}" for k, v in av.items()) if av else '  --  asset library empty: python3 tools/magnific_library.py pull (Drive) — templates still render without it')
 except Exception as e: print(f'  --  asset library: {e}')
+import shutil as _sh
+print('  OK  DM documents: node + docx + soffice' if _sh.which('node') and _sh.which('soffice') and subprocess.run(['node','-e',"require('docx')"],capture_output=True).returncode==0
+      else '  --  DM documents need Node + docx + LibreOffice (./setup.sh)')
 print('READY' if ok else 'NOT READY: fix the !! lines (./setup.sh installs fonts + modules)'); sys.exit(0 if ok else 1)

@@ -1,0 +1,72 @@
+{
+ "slug": "day24_gemini4",
+ "keyword": "MODEL",
+ "seo_keywords": ["Gemini 4"],
+ "caption": [
+  "Gemini 4 Pro doesn't exist — and the Gemini 4 API price doubles on Dec 1.",
+  "Argon and Carbon go from $2/$10 to $4/$20 per 1M tokens. Hydrogen is the cheaper fast model.",
+  "Comment MODEL and I'll DM you my free Gemini 4 cost-saving checklist."
+ ],
+ "hashtags": ["#gemini4", "#googlegemini", "#aitools", "#aiupdates", "#aiwithrakshith"],
+ "alt_text": "Rakshith explains the real Gemini 4 models (Argon, Carbon and Hydrogen), why 'Gemini 4 Pro' is not a real model, and the Gemini API price increase on December 1, 2026.",
+ "pinned_comment": "Comment MODEL and I'll DM you the free Gemini 4 cost-saving checklist: new prices, Batch, Flex, caching and Hydrogen tips.",
+ "dm_message": "Hey! Here's your free Gemini 4 Cost-Saving Checklist: {link}\nArgon and Carbon API prices double on Dec 1, so start with steps 2 to 5 today.\nFollow @aiwithrakshith.global for more AI updates like this.",
+ "dm_doc": {
+  "title": "Gemini 4 Cost-Saving Checklist",
+  "subtitle": "Cut your Gemini API bill before the 1 December 2026 price change",
+  "checked": "Prices checked on 22 November 2026 against Google's pricing and docs pages.",
+  "brand": "AI with Rakshith",
+  "handle": "@aiwithrakshith.global",
+  "watermark": "AI with Rakshith",
+  "intro": [
+   "There is **no model called \"Gemini 4 Pro\"**. That name came from leaks in September. Google shipped Gemini 4 as three models: **Argon** (30 Sep), **Carbon** (28 Oct) and **Hydrogen** (12 Nov).",
+   "On **1 December 2026** the API price of Argon and Carbon doubles. This checklist shows what changes and the nine steps that keep your bill down."
+  ],
+  "sections": [
+   {"heading": "What changes on 1 December",
+    "table": {"header": ["Model (per 1M tokens)", "Input", "Output", "Cached input", "Batch / Flex"],
+              "widths": [2838, 1600, 1600, 1800, 1800],
+              "rows": [["Argon / Carbon, to 30 Nov", "$2", "$10", "$0.10", "$1 / $5"],
+                       ["Argon / Carbon, from 1 Dec", "**$4**", "**$20**", "**$0.20**", "**$2 / $10**"],
+                       ["Hydrogen (flat, no change)", "$1.50", "$7.50", "$0.075", "half price"]]},
+    "note": "Output prices include thinking tokens. Priority tier costs 75–100% more than Standard."},
+   {"heading": "The checklist",
+    "checklist": [
+     "**Find every Argon and Carbon call.** Search your code for gemini-4-argon and gemini-4-carbon, then multiply last month's tokens by the new price so you know the real bill for December.",
+     "**Run big one-off jobs before 30 November.** Backfills, evaluations and bulk document runs cost half as much this week as they will next month.",
+     "**Move anything that isn't real-time to the Batch API.** Batch costs 50% of the Standard price. Results come back asynchronously, so use it for reports, tagging, summaries and data pipelines.",
+     "**Use Flex for work that can wait a little.** Flex inference is also 50% off, using off-peak capacity. Keep Standard only for chats and live features.",
+     "**Put the repeated part of your prompt first.** Gemini 4 uses implicit caching only (explicit caching is not supported). Keep your system prompt, instructions and shared documents at the start of every request so they hit the cache. Argon needs at least 4,096 tokens in the prompt for caching to apply. Cached input costs $0.10 instead of $2 now, and $0.20 instead of $4 from 1 December.",
+     "**Send everyday tasks to Hydrogen.** At $1.50 / $7.50 it costs 37.5% of the new Argon/Carbon price. Keep Argon and Carbon for hard reasoning, long agent runs and security work.",
+     "**Cap output and thinking.** Thinking tokens are billed as output. Set maxOutputTokens and a lower thinking level for simple tasks such as classification or short answers.",
+     "**Avoid the Priority tier unless you need it.** It costs 75–100% more than Standard.",
+     "**Set a budget alert.** Add a monthly budget with alerts in Google Cloud Billing before 1 December so a price jump can't surprise you."
+    ]},
+   {"heading": "Quick example: 10M input + 2M output tokens a month",
+    "table": {"header": ["Setup", "Monthly cost", "vs Argon from 1 Dec"],
+              "widths": [4238, 2700, 2700],
+              "rows": [["Argon Standard, to 30 Nov", "$40", "−50%"],
+                       ["Argon Standard, from 1 Dec", "**$80**", "—"],
+                       ["Argon Batch, from 1 Dec", "$40", "−50%"],
+                       ["Hydrogen Standard", "$30", "−62.5%"],
+                       ["Hydrogen Batch", "$15", "−81%"]]},
+    "note": "Maths: 10M × input price + 2M × output price. Caching lowers these further when your prompts share a long prefix."},
+   {"heading": "Which model for which job",
+    "bullets": [
+     "**Hydrogen:** everyday coding, debugging, summaries, agent steps, high volume. Cheapest Gemini 4 model, flat price across the 1M-token window.",
+     "**Argon:** deep reasoning and long, multi-step work at a lower token use than Carbon. Available on the paid API and in the Gemini app on AI Pro and Ultra.",
+     "**Carbon:** Google's strongest model, for the hardest long-horizon and cybersecurity tasks. Paid API and AI Ultra since 10 November."
+    ]}
+  ],
+  "sources": [
+   {"title": "Google — Gemini API optimization (Batch, Flex, Priority, caching)", "url": "https://ai.google.dev/gemini-api/docs/optimization"},
+   {"title": "Google — Gemini API context caching (implicit only for Gemini 4)", "url": "https://ai.google.dev/gemini-api/docs/caching?lang=rest"},
+   {"title": "Google Cloud — Vertex AI generative AI pricing (Argon to 30 Nov / from 1 Dec)", "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing"},
+   {"title": "Google — Gemini 4 Carbon now available for developers", "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-4-carbon-developers/"},
+   {"title": "Google DeepMind — Gemini 4 Hydrogen model card", "url": "https://deepmind.google/models/model-cards/gemini-4-hydrogen/"},
+   {"title": "Computing for Geeks — Argon Standard / Batch / Flex / Priority rates", "url": "https://computingforgeeks.com/?p=173962"},
+   {"title": "Apidog — Gemini 4 Hydrogen pricing ($1.50 / $7.50 flat)", "url": "https://apidog.com/blog/gemini-4-hydrogen-pricing/"}
+  ],
+  "disclaimer": "Prices are Google's published USD rates for the Gemini Developer API as of 22 Nov 2026 and can change. Check ai.google.dev/pricing before you budget. This is general information, not financial advice."
+ }
+}

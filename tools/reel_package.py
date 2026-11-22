@@ -36,8 +36,9 @@ def caption_html(title, caption, meta):
     lines = [l for l in caption.strip().splitlines()]
     body = ''.join(f'<p>{html.escape(l) if l.strip() else "&nbsp;"}</p>' for l in lines)
     tags = re.findall(r'#\w+', caption)
-    checks = [('4-line caption', len([l for l in lines if l.strip() and not l.strip().startswith('#')]) <= 4),
-              ('exactly 5 hashtags', len(tags) == 5), ('hashtags lowercase', all(t == t.lower() for t in tags))]
+    text = [l for l in lines if l.strip() and not l.strip().startswith('#') and not l.startswith('---')]
+    checks = [('short caption: 2-4 lines', 2 <= len(text) <= 4), ('first line <= 125 chars', bool(text) and len(text[0]) <= 125),
+              ('3-5 hashtags', 3 <= len(tags) <= 5), ('hashtags lowercase', all(t == t.lower() for t in tags))]
     rows = ''.join(f'<tr><td>{k}</td><td>{"PASS" if v else "CHECK"}</td></tr>' for k, v in checks)
     mrows = ''.join(f'<tr><th>{html.escape(k)}</th><td>{html.escape(str(v))}</td></tr>' for k, v in meta.items())
     return (f'<html><head><meta charset="utf-8"><style>{CSS}</style></head><body><h1>{html.escape(title)} — Instagram caption</h1>'
@@ -85,7 +86,9 @@ def qc_html(md):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--video', required=True); ap.add_argument('--job'); ap.add_argument('--template', type=int)
-    ap.add_argument('--title', required=True); ap.add_argument('--caption', required=True); ap.add_argument('--qc')
+    ap.add_argument('--title', required=True); ap.add_argument('--caption'); ap.add_argument('--qc')
+    ap.add_argument('--post', help='post.json: SEO caption, alt text, pinned comment, DM message + DM document spec (tools/reel_outputs.py)')
+    ap.add_argument('--no-4k', action='store_true')
     ap.add_argument('--thumb-t', type=float); ap.add_argument('--thumb'); ap.add_argument('--date', default=datetime.date.today().isoformat())
     ap.add_argument('--brand', default='global'); ap.add_argument('--out', required=True); a = ap.parse_args()
     job = json.load(open(a.job)) if a.job else dict(template=a.template or 1, headlines=[], scenes=[], words=[], duration=0, hook='?')
@@ -100,13 +103,31 @@ def main():
         thumbnail(vid, min(t, dur - 0.1), th, tg)
     meta = {'date': a.date, 'brand': a.brand, 'template': f"/temp-{n} {spec['name']}", 'hook': job.get('hook'), 'duration': f'{dur:.2f} s',
             'video': os.path.basename(vid), 'reference style': spec['ref']}
-    cap = open(a.caption).read()
+    post = json.load(open(a.post)) if a.post else None
+    if post: cap = '\n'.join(post['caption']) + '\n\n' + ' '.join(post['hashtags'])
+    else: cap = open(a.caption).read()
     open(os.path.join(a.out, 'caption.html'), 'w').write(caption_html(a.title, cap, meta))
     open(os.path.join(a.out, 'timeline.html'), 'w').write(timeline_html(a.title, job, spec, meta, open(a.qc).read() if a.qc else None))
     files = [dict(path=os.path.basename(vid), kind='video', mime='video/mp4'), dict(path=os.path.basename(th), kind='thumbnail', mime='image/jpeg'),
              dict(path=os.path.basename(tg), kind='thumbnail_grid', mime='image/jpeg'),
              dict(path='caption.html', kind='caption', mime='text/html', doc_title=f'{a.title} — Caption'),
              dict(path='timeline.html', kind='timeline', mime='text/html', doc_title=f'{a.title} — Timeline')]
+    if post:   # every reel: 4K 60 fps master, SEO caption + alt text + pinned comment, DM reply, watermarked DM document
+        import reel_outputs as RO
+        if not a.no_4k:
+            v4k = os.path.join(a.out, f'{slug}_4k_60fps.mp4'); RO.master_4k(vid, v4k)
+            files.insert(1, dict(path=os.path.basename(v4k), kind='video_4k', mime='video/mp4'))
+        extra = f"\n\n---\nAlt text:\n{post['alt_text']}\n\nPinned comment:\n{post['pinned_comment']}\n\nDM reply (comment {post['keyword']}):\n{post['dm_message']}\n"
+        open(os.path.join(a.out, 'caption.txt'), 'w').write(cap + extra); open(os.path.join(a.out, 'dm_message.txt'), 'w').write(post['dm_message'] + '\n')
+        files.append(dict(path='dm_message.txt', kind='dm_message', mime='text/plain', doc_title=f'{a.title} — DM reply'))
+        if post.get('dm_doc'):
+            import re as _re
+            name = _re.sub(r'[^a-z0-9]+', '_', post['dm_doc']['title'].lower()).strip('_')[:40]
+            dx, pdf = RO.dm_doc(post['dm_doc'], os.path.join(a.out, f'{slug}_dm_{name}'), a.out)
+            files += [dict(path=os.path.basename(pdf), kind='dm_doc_pdf', mime='application/pdf'),
+                      dict(path=os.path.basename(dx), kind='dm_doc_docx', mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')]
+        bad = [k for k, v in RO.caption_checks(post) if not v]
+        print('caption checks:', 'PASS' if not bad else 'FIX ' + '; '.join(bad))
     if a.qc:
         shutil.copy(a.qc, os.path.join(a.out, 'qc_report.md'))
         pass  # QC table is inside the timeline Doc; qc_report.md stays in the package folder

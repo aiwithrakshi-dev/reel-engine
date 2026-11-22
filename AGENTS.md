@@ -42,3 +42,8 @@ You are editing Instagram Reels for Rakshith (@AIwithRakshith, Kannada / aiwithr
   `work/assets` via `tools/magnific_library.py pull`). Use the Magnific connector only for missing items.
 - Only official download files; never preview/thumbnail URLs or watermarked images; never remove a watermark.
 - Never commit library files (work/ is gitignored) or share them publicly.
+
+## Final outputs (added v10)
+- Every reel ends with: thumbnail, 4K 60 fps video, short SEO caption (+ alt text, pinned comment), DM reply, and the
+  watermarked DM document the CTA promises. Build them with `tools/reel_package.py --post post.json`.
+- Music sits ~20 dB under the voice; the final mix must transcribe as cleanly as the raw voice.

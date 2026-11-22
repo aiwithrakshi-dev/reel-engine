@@ -1,5 +1,15 @@
 # Changelog
 
+## v10 — 22 Nov 2026 (final outputs for every reel + dialogue-first mix)
+- Every reel/template now ends with five outputs: Instagram thumbnail, 4K 60 fps video (2160×3840 Lanczos master +
+  1080p 60 fps), short SEO caption (keyword in line 1 ≤ 125 chars, comment-keyword CTA, 3–5 hashtags) with alt text and
+  pinned comment, DM reply text, and a watermarked DM document (.docx + .pdf, "AI with Rakshith" on every page).
+- New `tools/reel_outputs.py` + `tools/dm_doc.js`; `reel_package.py --post post.json` builds them and adds them to the
+  Drive manifest (PDF/.docx uploaded unconverted so the watermark survives). setup.sh / doctor check Node, docx, LibreOffice.
+- Mix: music ~21 dB under the voice (slow, soft bed, vocal-band dip), SFX −11 dB; Whisper on the final mix must match
+  the clean voice so Instagram's auto-translate hears every word.
+- Day 24 (Gemini 4) example: render, audio, post.json with the Gemini 4 Cost-Saving Checklist.
+
 ## v9 — 21 Nov 2026 (Magnific asset library)
 - Private asset library in Drive `Editing Pack › Magnific Asset Library`: 98 licensed icons (AI, code, app, money,
   social-outline; SVG + PNG 512), 2 vectors, contact sheet, "Asset Index" Google Sheet. The account's stock download

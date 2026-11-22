@@ -22,6 +22,7 @@ One file per topic, split from `../SKILL.md`.
 | [`09e-reference-reel-devices-engine-ref_devices-py.md`](09e-reference-reel-devices-engine-ref_devices-py.md) | 9e. Reference-reel devices (`engine/ref_devices.py`) |
 | [`10-audit-loop-repeat-until-zero.md`](10-audit-loop-repeat-until-zero.md) | 10. Audit loop (repeat until zero failures) |
 | [`11-deliverables.md`](11-deliverables.md) | 11. Deliverables |
-| [`12-lessons-learned-don-t-repeat.md`](12-lessons-learned-don-t-repeat.md) | 12. Lessons learned (don't repeat) |
+| [`12-final-outputs-reel-template-rakshith.md`](12-final-outputs-reel-template-rakshith.md) | 12. Final outputs — every reel, every template (Rakshith, 22 Nov 2026) |
+| [`13-lessons-learned-don-t-repeat.md`](13-lessons-learned-don-t-repeat.md) | 13. Lessons learned (don't repeat) |
 | [`hook_log.md`](hook_log.md) | Hooks used per reel (hand-maintained; check before picking a hook) |
 | [`instagram_reels_guidelines.md`](instagram_reels_guidelines.md) | Full Instagram & Reels guidelines + face-clear rule (hand-maintained) |

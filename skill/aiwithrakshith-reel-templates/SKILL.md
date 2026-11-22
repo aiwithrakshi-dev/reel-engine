@@ -1,6 +1,6 @@
 ---
 name: aiwithrakshith-reel-templates
-description: "Edit Rakshith's talking-head video into a 60 fps Instagram Reel in one of 16 templates chosen with /temp-1 … /temp-16 (face-clear, safe-grid aligned), then file video, thumbnail, caption and timeline Google Docs into Drive Social Media/month/day."
+description: "Edit Rakshith's talking-head video into a 60 fps Instagram Reel in one of 16 templates (/temp-1 … /temp-16), face-clear and safe-grid aligned, then deliver thumbnail, 4K 60 fps video, SEO caption, DM reply and a watermarked DM document, filed in Drive Social Media/month/day."
 ---
 
 # AI with Rakshith — Reel Templates (/temp-1 … /temp-16)
@@ -97,10 +97,14 @@ Two sources. **Use the Drive library first — it is the recommended default.**
 6. **Render** — `python3 engine/template_render.py job.json --full reel.mp4` (2 parallel halves + mix + mux).
 7. **QC** — `python3 tools/qc_audit.py reel.mp4 --hook <hook> --out qc_report.md` must PASS (60 fps, codecs,
    −14 LUFS ±1, ≤ −1 dBTP, hook unique). Then `tools/safe_zone_check.py` sheet for a visual pass.
-8. **Package** — `python3 tools/reel_package.py --video reel.mp4 --job job.json --title "<Reel title>" --caption caption.txt
-   --qc qc_report.md --brand <brand> --out pkg/` → video, thumbnail (+ 3:4 grid crop), caption.html, timeline.html
-   (timeline includes the QC table). Caption file = only the 4 lines + exactly 5 lowercase hashtags; English for
-   .global, Kannada-English mix for @AIwithRakshith.
+8. **Package** — `python3 tools/reel_package.py --video reel.mp4 --job job.json --post post.json --title "<Reel title>"
+   --qc qc_report.md --brand <brand> --out pkg/` → the **five final outputs for every template**: Instagram thumbnail
+   (+ 3:4 grid crop), **4K 60 fps** video (2160×3840) + the 1080p 60 fps file, **short SEO caption** (2–4 lines, keyword in
+   line 1 ≤ 125 chars, comment-keyword CTA, 3–5 lowercase hashtags ending #aiwithrakshith) with alt text + pinned comment,
+   **DM reply** text, and the **DM document** the CTA promises (.docx + .pdf, full explanation, sourced numbers,
+   "AI with Rakshith" watermark on every page) — plus caption.html and timeline.html (with the QC table). Format of
+   post.json: `examples/day24_gemini4/post.json`; rules in the kinetic skill §12. English for .global, Kannada-English
+   mix for @AIwithRakshith.
 9. **Drive** — `Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / <Reel title> /`
    - Local machine: `python3 tools/drive_publish.py pkg/` (OAuth once; finds-or-creates folders, Docs conversion).
    - Inside Claude (Google Drive connector): folder IDs are cached in `memory/drive_index.json`; otherwise search each
@@ -115,13 +119,14 @@ Two sources. **Use the Drive library first — it is the recommended default.**
 10. **Memory** — `python3 tools/memory.py log pkg/manifest.json` (drive_publish does it) → rebuilds `memory/CONTEXT.md`;
     commit `memory/` to the repo so every device and every LLM starts with it. Mirror CONTEXT.md to Drive
     (`drive_publish.py --sync-memory` or the connector) as the "Reel Engine — Memory" Doc in Social Media.
-11. **Deliver** — send the video + thumbnail, give the Drive folder link and the caption; one line per QC result.
+11. **Deliver** — send the 4K + 1080p videos, thumbnail, caption (with alt text + pinned comment), DM reply and DM document;
+    upload the DM .pdf/.docx unconverted and the caption + DM text as a Google Doc; give the Drive folder link; one line per QC result.
 
 ## 4. Don'ts
 - Don't put anything on his face, don't remove his room background, don't speed/pitch his voice.
 - Don't reuse a hook from the last 5 reels; don't reuse the same music bed two reels in a row.
 - Don't save captions/timelines as .txt in Drive; don't create a second "Social Media" or month folder.
-- Don't burn the Instagram caption into the video; don't exceed 5 hashtags.
+- Don't burn the Instagram caption into the video; don't exceed 5 hashtags; don't promise a DM resource you haven't made.
 - Don't use watermarked previews or remove a watermark; don't commit library files to GitHub.
 - Don't ship ASR spellings: pass the reel's verified `glossary` in every job (fix_words also merges hyphen splits,
   e.g. Juni → Junie, Anti -Gravity → Antigravity).

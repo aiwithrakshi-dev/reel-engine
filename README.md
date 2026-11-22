@@ -75,6 +75,21 @@ python3 engine/template_render.py examples/templates_demo/jobs/temp-4.json --ful
 (x 65–960, y 270–1250) or touching the face oval stops the render with the time and the element. Layout bands:
 HEAD y 280–430 above the cap · FACE (nothing) · CAPTION chin+24 … 1245. Captions appear on the word's first frame.
 
+## Final outputs — every reel, every template
+
+Every reel ends with five outputs (`tools/reel_package.py --post post.json`, or `tools/reel_outputs.py`):
+
+| # | Output | File |
+|---|---|---|
+| 1 | Instagram thumbnail + 3:4 grid crop | `*_thumbnail.jpg`, `*_thumbnail_grid.jpg` |
+| 2 | 4K 60 fps video (2160×3840) + 1080p 60 fps | `*_4k_60fps.mp4`, `*_60fps.mp4` |
+| 3 | Short SEO caption + alt text + pinned comment | `caption.txt` / "Instagram Caption + DM" Google Doc |
+| 4 | DM reply for everyone who comments the keyword | `dm_message.txt` |
+| 5 | DM document (checklist/guide), "AI with Rakshith" watermark on every page | `*_dm_*.docx` + `.pdf` (`tools/dm_doc.js`) |
+
+`post.json` holds the caption lines, hashtags, alt text, pinned comment, DM text and the DM document content —
+see `examples/day24_gemini4/post.json`. Needs Node + `docx` and LibreOffice (`./setup.sh` checks).
+
 ## Asset library (Magnific / Freepik) — Drive first
 
 Pick a template, then pull its assets from the **private Drive library** (`Editing Pack › Magnific Asset Library`):
