@@ -1,0 +1,9 @@
+item,type,source,licence / note
+A-roll Day-24_1080p,video,Rakshith (own recording),own
+Drop_Point (drop section 15.53-24.82 s re-sequenced),music,Drive Editing Pack / Background music,Rakshith's music library — confirm the generator plan allows commercial Instagram use
+All SFX (impacts, slams, sub, zaps, whooshes, risers, pops, ticks, glitches),sfx,synthesised in scripts/audio_d24.py,original
+Icon: AI brain (Argon card),icon,Magnific stock 4801755 via Drive asset library,Magnific Premium licence (private library)
+Icon: AI chip brain (Carbon card),icon,Magnific stock 9830311 via Drive asset library,Magnific Premium licence (private library)
+Icon: money growth (price card),icon,Magnific stock 15760186 via Drive asset library,Magnific Premium licence (private library)
+Model cards / leaked-chart mock / price table,graphics,built in render_d24_60.py from verified facts (facts.md),original; the leaked-chart panel is a labelled illustration with no real numbers
+Fonts Inter Tight,font,Google Fonts,OFL

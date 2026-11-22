@@ -1,6 +1,6 @@
 # Reel engine memory (generated — read this before every edit)
 
-Updated 2026-11-21 15:39. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
+Updated 2026-11-22 06:40. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
 
 ## Non-negotiables
 - 1080x1920, **60 fps**, H.264 High + AAC 48 kHz, -14 LUFS, true peak <= -1 dBTP.
@@ -33,20 +33,21 @@ Updated 2026-11-21 15:39. Source: memory/content_log.json + memory/lessons.md. R
 ## Google Drive
 - Social Media root: https://drive.google.com/drive/folders/1JBIU5uDtb8-5eDNs4hDbtGomyTqXzTmt (id `1JBIU5uDtb8-5eDNs4hDbtGomyTqXzTmt`)
 - Months: 2026-11 November `1jjPyisRuBOBlO1WUWUo41KETIct3Lw7G`
-- Days: 2026-11-21 `1FP4073opUPgKV2jep81VwPWFeUDnZX3H`
+- Days: 2026-11-21 `1FP4073opUPgKV2jep81VwPWFeUDnZX3H`, 2026-11-22 `1fGd3_QsMjWXREu18j51KieSfUR4JWQ8T`
 - Layout: Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / <reel title> / video, thumbnail, Caption (Doc), Timeline (Doc)
 - Asset library (use FIRST, before the Magnific connector): https://drive.google.com/drive/folders/1w8JfNSj9YE5CduUC8q6NzJ2uqe-FMMXK — 98 icons (ai 26, code 18, app 18, money 18 lineal-color; social 18 outline) + 2 vectors (tech-bg, dev-scenes)
 
 ## Recent reels (newest first)
 | date | title | brand | template | hook | Drive |
 |---|---|---|---|---|---|
+| 2026-11-22 | Day 24 — There is no Gemini 4 Pro (price doubles Dec 1) | aiwithrakshith.global | 1 | `strip_slam` |  |
 | 2026-11-21 | Day 4 — Claude & Codex inside Android Studio (BYOA) | aiwithrakshith.global | 1 | `neg_flash` |  |
 | 2026-11-19 | Kling 4.0 — 10 prompts / keyframe method | @AIwithRakshith | 1 | `neg_flash` |  |
 
 ## Next reel
-- Blocked hooks (last 5): `neg_flash`
+- Blocked hooks (last 5): `neg_flash`, `strip_slam`
 - Least-used templates lately: /temp-2, /temp-3, /temp-4
-- Free hooks: `pixel_assemble`, `strip_slam`, `red_wipe`, `zoom_punch` (run `tools/memory.py suggest --energy high|medium|calm`)
+- Free hooks: `pixel_assemble`, `red_wipe`, `zoom_punch`, `rgb_converge` (run `tools/memory.py suggest --energy high|medium|calm`)
 
 ## Lessons (from Rakshith — keep applying)
 - Keep his real room as the background; never matte him onto a studio/plain background unless asked for that one video.
@@ -63,3 +64,6 @@ Updated 2026-11-21 15:39. Source: memory/content_log.json + memory/lessons.md. R
 - 2026-11-21: Always pass the reel glossary in template jobs: raw ASR showed 'Juni' and 'Anti -Gravity' in captions until fix_words() merged hyphen splits and applied the glossary.
 - 2026-11-21: Magnific stock downloads did not use credits on the Plus plan, but the account hit a stock download cap after ~100 files (21 Nov 2026) and the tool says not to retry in that conversation. Build the 1,000-3,000 library in ~95-file runs with tools/magnific_library.py (API key) or across days.
 - 2026-11-21: Assets: Drive library first (Editing Pack / Magnific Asset Library), Magnific connector only for missing items. Only official download files — never preview URLs or anything watermarked. Library stays private: never in GitHub.
+- 2026-11-22: Day 24: fx.py inserts engine/ at sys.path[0], so a reel's own islands.py gets shadowed by engine/islands.py (Day 4 cuts!). Name per-reel modules uniquely (islands_d24.py) and print J before rendering.
+- 2026-11-22: Script facts can go stale between recording and editing (Day 24: Carbon opened to all paid devs Nov 10, Hydrogen shipped Nov 12). Keep his voice, correct on screen, and tell him before the render.
+- 2026-11-22: Streaks/rings/swooshes must be clipped to the safe zone with a feathered mask (render_d24_60.py SAFE_OUT) and rings kept to r1 ~520-560 so the clip isn't visible.

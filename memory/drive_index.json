@@ -7,7 +7,8 @@
   "2026-11 November": "1jjPyisRuBOBlO1WUWUo41KETIct3Lw7G"
  },
  "days": {
-  "2026-11-21": "1FP4073opUPgKV2jep81VwPWFeUDnZX3H"
+  "2026-11-21": "1FP4073opUPgKV2jep81VwPWFeUDnZX3H",
+  "2026-11-22": "1fGd3_QsMjWXREu18j51KieSfUR4JWQ8T"
  },
  "note": "Folder IDs cached for connector-based agents (search by exact title + parent if an ID 404s). drive_publish.py finds by name.",
  "memory_doc": {

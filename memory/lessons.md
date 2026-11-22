@@ -12,3 +12,6 @@
 - 2026-11-21: Always pass the reel glossary in template jobs: raw ASR showed 'Juni' and 'Anti -Gravity' in captions until fix_words() merged hyphen splits and applied the glossary.
 - 2026-11-21: Magnific stock downloads did not use credits on the Plus plan, but the account hit a stock download cap after ~100 files (21 Nov 2026) and the tool says not to retry in that conversation. Build the 1,000-3,000 library in ~95-file runs with tools/magnific_library.py (API key) or across days.
 - 2026-11-21: Assets: Drive library first (Editing Pack / Magnific Asset Library), Magnific connector only for missing items. Only official download files — never preview URLs or anything watermarked. Library stays private: never in GitHub.
+- 2026-11-22: Day 24: fx.py inserts engine/ at sys.path[0], so a reel's own islands.py gets shadowed by engine/islands.py (Day 4 cuts!). Name per-reel modules uniquely (islands_d24.py) and print J before rendering.
+- 2026-11-22: Script facts can go stale between recording and editing (Day 24: Carbon opened to all paid devs Nov 10, Hydrogen shipped Nov 12). Keep his voice, correct on screen, and tell him before the render.
+- 2026-11-22: Streaks/rings/swooshes must be clipped to the safe zone with a feathered mask (render_d24_60.py SAFE_OUT) and rings kept to r1 ~520-560 so the clip isn't visible.

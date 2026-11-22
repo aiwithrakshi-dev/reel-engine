@@ -1,6 +1,19 @@
 {
  "reels": [
   {
+   "date": "2026-11-22",
+   "title": "Day 24 — There is no Gemini 4 Pro (price doubles Dec 1)",
+   "brand": "aiwithrakshith.global",
+   "lang": null,
+   "template": 1,
+   "hook": "strip_slam",
+   "duration": 37.53,
+   "drive": null,
+   "qc": null,
+   "notes": null,
+   "headlines": null
+  },
+  {
    "date": "2026-11-21",
    "title": "Day 4 — Claude & Codex inside Android Studio (BYOA)",
    "brand": "aiwithrakshith.global",

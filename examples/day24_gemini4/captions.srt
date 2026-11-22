@@ -1,0 +1,100 @@
+1
+00:00:00,150 --> 00:00:02,200
+There is no Gemini 4 Pro
+
+2
+00:00:02,200 --> 00:00:03,070
+and the one you
+
+3
+00:00:03,070 --> 00:00:04,760
+can use doubles in price
+
+4
+00:00:04,760 --> 00:00:05,600
+next week.
+
+5
+00:00:05,600 --> 00:00:08,470
+Gemini 4 has two real models
+
+6
+00:00:08,470 --> 00:00:09,980
+Argon and Carbon.
+
+7
+00:00:09,980 --> 00:00:10,850
+Argon is the one you
+
+8
+00:00:10,850 --> 00:00:11,700
+can use today
+
+9
+00:00:11,700 --> 00:00:12,550
+in the app
+
+10
+00:00:12,550 --> 00:00:13,890
+and the API.
+
+11
+00:00:13,890 --> 00:00:14,830
+Carbon scores higher
+
+12
+00:00:14,830 --> 00:00:16,220
+on Google's tests
+
+13
+00:00:16,220 --> 00:00:17,660
+but only some cybersecurity
+
+14
+00:00:17,660 --> 00:00:19,180
+teams can use it.
+
+15
+00:00:19,180 --> 00:00:21,480
+If a video shows Gemini 4 Pro
+
+16
+00:00:21,480 --> 00:00:22,390
+benchmarks
+
+17
+00:00:22,390 --> 00:00:24,500
+that name doesn't exist!
+
+18
+00:00:24,500 --> 00:00:24,950
+Reports
+
+19
+00:00:24,950 --> 00:00:27,070
+say Argon's API price doubles
+
+20
+00:00:27,070 --> 00:00:28,220
+on December 1st.
+
+21
+00:00:28,220 --> 00:00:30,210
+So run your big batch jobs
+
+22
+00:00:30,210 --> 00:00:32,180
+this week or set up caching
+
+23
+00:00:32,180 --> 00:00:34,240
+now comment MODEL and I'll
+
+24
+00:00:34,240 --> 00:00:35,990
+send my Gemini 4 cost-saving
+
+25
+00:00:35,990 --> 00:00:36,620
+checklist
+

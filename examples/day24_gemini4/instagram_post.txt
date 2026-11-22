@@ -1,0 +1,13 @@
+There is no "Gemini 4 Pro" — and Gemini 4's API price doubles on Dec 1.
+The real Gemini 4 models are Argon, Carbon and the new fast Hydrogen; Argon and Carbon go from $2/$10 to $4/$20 per 1M tokens.
+Run big batch jobs before Nov 30 (Batch API is half price) and turn on caching (cached input is 95% cheaper). Source: Google Gemini API pricing.
+Comment MODEL and I'll send you my Gemini 4 cost-saving checklist.
+#gemini4 #googleai #aitools #aiupdates #aiwithrakshith
+
+Story line: Gemini 4 API prices double on Dec 1 — comment MODEL on the reel for my cost-saving checklist.
+
+Before posting:
+- Turn Instagram auto-captions OFF (captions are burned in).
+- AI info label: turn it ON only if this talking-head clip was AI-generated or AI-altered (the edit itself uses no AI generation).
+- Not a paid post → no Paid Partnership label needed.
+- Credits: pricing and model facts from Google's Gemini API pricing page and Google DeepMind model cards (see facts.md).
