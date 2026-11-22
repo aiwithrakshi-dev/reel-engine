@@ -2,7 +2,7 @@
  "reels": [
   {
    "date": "2026-11-22",
-   "title": "Day 24 — There is no Gemini 4 Pro (price doubles Dec 1)",
+   "title": "Day 24 \u2014 There is no Gemini 4 Pro (price doubles Dec 1)",
    "brand": "aiwithrakshith.global",
    "lang": null,
    "template": 1,
@@ -11,11 +11,12 @@
    "drive": null,
    "qc": null,
    "notes": null,
-   "headlines": null
+   "headlines": null,
+   "music": "Pressure_Line"
   },
   {
    "date": "2026-11-21",
-   "title": "Day 4 — Claude & Codex inside Android Studio (BYOA)",
+   "title": "Day 4 \u2014 Claude & Codex inside Android Studio (BYOA)",
    "brand": "aiwithrakshith.global",
    "lang": "en",
    "template": 1,
@@ -28,7 +29,7 @@
   },
   {
    "date": "2026-11-19",
-   "title": "Kling 4.0 — 10 prompts / keyframe method",
+   "title": "Kling 4.0 \u2014 10 prompts / keyframe method",
    "brand": "@AIwithRakshith",
    "lang": "kn",
    "template": 1,

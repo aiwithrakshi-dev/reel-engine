@@ -209,10 +209,10 @@ def build_audio(job, spec, out_wav):
         if t < dur: add('impact', t, 0.4)
     sf_path = out_wav + '.sfx.wav'
     import soundfile as sf; sf.write(sf_path, np.stack([sfx, sfx], 1), sr)
-    mdb = job.get('music_db', -17)
-    fc = (f"[1:a]atrim=0:{dur},asetpts=PTS-STARTPTS,volume={mdb}dB,afade=t=out:st={dur - 0.6}:d=0.6[m];"
-          f"[0:a]atrim=0:{dur},asetpts=PTS-STARTPTS,asplit=2[v][vk];[m][vk]sidechaincompress=threshold=0.04:ratio=6:attack=15:release=260[md];"
-          f"[2:a]volume=-9dB[s];[v][md][s]amix=inputs=3:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]")
+    mdb = job.get('music_db', -27)   # dialogue-safe: bed ~20 dB under the voice (22 Nov 2026)
+    fc = (f"[1:a]atrim=0:{dur},asetpts=PTS-STARTPTS,volume={mdb}dB,highpass=f=60,lowpass=f=9000,equalizer=f=1800:t=q:w=1.2:g=-6,equalizer=f=3500:t=q:w=1.2:g=-4,afade=t=out:st={dur - 0.6}:d=0.6[m];"
+          f"[0:a]atrim=0:{dur},asetpts=PTS-STARTPTS,asplit=2[v][vk];[m][vk]sidechaincompress=threshold=0.02:ratio=6:attack=20:release=450[md];"
+          f"[2:a]volume=-13dB[s];[v][md][s]amix=inputs=3:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]")
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', job['vo'], '-stream_loop', '-1', '-i', job['music'], '-i', sf_path,
                     '-filter_complex', fc, '-map', '[a]', '-ac', '2', '-t', str(dur), out_wav], check=True)
     os.remove(sf_path)

@@ -158,8 +158,9 @@ sf.write(WD + 'sfx.wav', sfx, SR, subtype='PCM_24')
 # ---------------------------------------------------------------- VO chain + mix (ffmpeg)
 vo = WD + 'vo_tight_raw.wav'
 sh(f"ffmpeg -v error -y -i {vo} -af \"highpass=f=80,deesser=i=0.4:m=0.5:f=0.5,acompressor=threshold=-20dB:ratio=3:attack=8:release=120:makeup=4dB,apad=whole_dur={END_T}\" -ar {SR} {WD}vo_proc.wav")
-fc = ("[1]volume=-14dB[mus];[0]asplit=2[vo][sc];[mus][sc]sidechaincompress=threshold=0.04:ratio=5:attack=15:release=260:makeup=1[duck];"
-      "[2]volume=0dB[sfx];[3]volume=-14dB[br];[vo][duck][sfx][br]amix=inputs=4:normalize=0:duration=first[m]")
+# dialogue-safe mix (22 Nov 2026): music ~21 dB under the voice, vocal-band dip, SFX ~6 dB under (Instagram auto-translate must hear him)
+fc = ("[1]volume=-17dB,highpass=f=60,lowpass=f=9000,equalizer=f=1800:t=q:w=1.2:g=-6,equalizer=f=3500:t=q:w=1.2:g=-4[mus];[0]asplit=2[vo][sc];[mus][sc]sidechaincompress=threshold=0.02:ratio=6:attack=20:release=450:makeup=1[duck];"
+      "[2]volume=-11dB[sfx];[3]volume=-14dB[br];[vo][duck][sfx][br]amix=inputs=4:normalize=0:duration=first[m]")
 sh(f"ffmpeg -v error -y -i {WD}vo_proc.wav -i {WD}music_bed.wav -i {WD}sfx.wav -i {WD}broll_pan.wav -filter_complex \"{fc}\" -map \"[m]\" -t {END_T} -ar {SR} -c:a pcm_s24le {WD}mix_pre.wav")
 sh(f'python3 {WD}scripts/master.py')
 print('events', len(EV), 'END_T', END_T)

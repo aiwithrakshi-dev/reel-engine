@@ -1,6 +1,6 @@
 # Reel engine memory (generated — read this before every edit)
 
-Updated 2026-11-22 06:40. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
+Updated 2026-11-22 06:45. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
 
 ## Non-negotiables
 - 1080x1920, **60 fps**, H.264 High + AAC 48 kHz, -14 LUFS, true peak <= -1 dBTP.
@@ -67,3 +67,4 @@ Updated 2026-11-22 06:40. Source: memory/content_log.json + memory/lessons.md. R
 - 2026-11-22: Day 24: fx.py inserts engine/ at sys.path[0], so a reel's own islands.py gets shadowed by engine/islands.py (Day 4 cuts!). Name per-reel modules uniquely (islands_d24.py) and print J before rendering.
 - 2026-11-22: Script facts can go stale between recording and editing (Day 24: Carbon opened to all paid devs Nov 10, Hydrogen shipped Nov 12). Keep his voice, correct on screen, and tell him before the render.
 - 2026-11-22: Streaks/rings/swooshes must be clipped to the safe zone with a feathered mask (render_d24_60.py SAFE_OUT) and rings kept to r1 ~520-560 so the clip isn't visible.
+- 2026-11-22: Music was too loud on Day 24 and Instagram's auto-translate could not hear the dialogue. Rakshith wants slow, soft background music: bed ~20 dB under the voice, vocal-band EQ dip, SFX ~6 dB under; verify with Whisper on the final mix (0 % WER vs the clean voice).

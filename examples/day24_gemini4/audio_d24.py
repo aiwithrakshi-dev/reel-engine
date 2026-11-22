@@ -105,8 +105,8 @@ sfx = np.zeros((N, 2))
 for t, x, db, pan in EV: place(sfx, t, x, db, pan)
 
 # music: Drop_Point (129.2 BPM) — the drop section re-sequenced on bar lines, drop-out 0.17 s before each slam
-m, _ = librosa.load('/home/claude/work/music/Drop_Point.mp3', sr=SR, mono=False); m = m.T
-BEAT = 60 / 129.2; BAR = 4 * BEAT; B0 = 15.534; NB = 5
+m, _ = librosa.load('/home/claude/work/music/Pressure_Line.mp3', sr=SR, mono=False); m = m.T
+BEAT = 60 / 99.4; BAR = 4 * BEAT; B0 = 6.06; NB = 8              # slower, calmer bed (Rakshith, 22 Nov: music far under the voice)
 body = m[int(B0 * SR):int((B0 + NB * BAR) * SR)]
 loop = np.concatenate([body] * 6)
 SLAMS = [0.0, C1a, C1b, C2a, C3a, C3b, J[8]]; DROP = 0.17
@@ -121,11 +121,11 @@ sf.write(WD + 'music_bed.wav', music, SR, subtype='PCM_24'); sf.write(WD + 'sfx.
 
 vo = WD + 'vo_tight_raw.wav'
 sh(f"ffmpeg -v error -y -i {vo} -af \"highpass=f=80,deesser=i=0.4:m=0.5:f=0.5,acompressor=threshold=-20dB:ratio=3:attack=8:release=120:makeup=4dB,apad=whole_dur={END_T}\" -ar {SR} {WD}vo_proc.wav")
-fc = ("[1]volume=-14dB[mus];[0]asplit=2[vo][sc];[mus][sc]sidechaincompress=threshold=0.04:ratio=5:attack=15:release=260:makeup=1[duck];"
-      "[2]volume=0dB[sfx];[vo][duck][sfx]amix=inputs=3:normalize=0:duration=first[m]")
+fc = ("[1]volume=-17dB,highpass=f=60,lowpass=f=9000,equalizer=f=1800:t=q:w=1.2:g=-6,equalizer=f=3500:t=q:w=1.2:g=-4[mus];[0]asplit=2[vo][sc];"
+      "[mus][sc]sidechaincompress=threshold=0.02:ratio=6:attack=20:release=450:makeup=1[duck];[2]volume=-11dB[sfx];[vo][duck][sfx]amix=inputs=3:normalize=0:duration=first[m]")
 sh(f"ffmpeg -v error -y -i {WD}vo_proc.wav -i {WD}music_bed.wav -i {WD}sfx.wav -filter_complex \"{fc}\" -map \"[m]\" -t {END_T} -ar {SR} -c:a pcm_s24le {WD}mix_pre.wav")
 sh(f'python3 /home/claude/reel-engine/engine/master.py {WD}mix_pre.wav {WD}mix_final.wav')
 # no-music version (optional deliverable)
-sh(f"ffmpeg -v error -y -i {WD}vo_proc.wav -i {WD}sfx.wav -filter_complex \"[0][1]amix=inputs=2:normalize=0:duration=first[m]\" -map \"[m]\" -t {END_T} -ar {SR} -c:a pcm_s24le {WD}mix_pre_nomusic.wav")
+sh(f"ffmpeg -v error -y -i {WD}vo_proc.wav -i {WD}sfx.wav -filter_complex \"[1]volume=-11dB[s];[0][s]amix=inputs=2:normalize=0:duration=first[m]\" -map \"[m]\" -t {END_T} -ar {SR} -c:a pcm_s24le {WD}mix_pre_nomusic.wav")
 sh(f'python3 /home/claude/reel-engine/engine/master.py {WD}mix_pre_nomusic.wav {WD}mix_final_nomusic.wav')
 print('events', len(EV), 'END_T', END_T)
