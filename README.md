@@ -1,6 +1,6 @@
 # AI with Rakshith — Kinetic Reel Engine
 
-> **Private.** House-style editing system for **@AIwithRakshith** (Kannada) and **aiwithrakshith.global** (English).
+> House-style editing system for **@AIwithRakshith** (Kannada) and **aiwithrakshith.global** (English).
 > Rakshith uploads one raw talking-head video (Kannada or English); any capable LLM agent with a shell and this repo
 > turns it into a finished **1080×1920, 60 fps HD** Instagram Reel. Every reel is 60 fps, and every reel opens with its own
 > **unique hook animation**. Pick one of **16 templates** with `/temp-1` … `/temp-16`; every finished reel is filed in
@@ -13,6 +13,16 @@ The style is "kinetic type behind the head": giant red 3D words type on *behind*
 in the background. On top of that come pixel-block glitches, neon squiggle streaks, halftone ring bursts,
 red-framed screen cutaways, a chest row of tiles/pills, synced captions, a topic-matched music bed and an SFX on
 every visual event. Everything stays inside the Instagram safe zone and nothing ever covers his face.
+
+## /temp-1 preview — Day 24 "There is no Gemini 4 Pro"
+
+| Opening (strip_slam hook + typed headline) | Cutaway (fact card + stamp) | Instagram thumbnail |
+|---|---|---|
+| [![temp-1 opening](docs/images/temp1_day24_preview.gif)](samples/day24_gemini4_temp1_60fps_preview.mp4) | [![temp-1 cutaway](docs/images/temp1_day24_cutaway.gif)](samples/day24_gemini4_temp1_60fps_preview.mp4) | [![temp-1 thumbnail](docs/images/temp1_day24_thumbnail.jpg)](samples/day24_gemini4_temp1_60fps_preview.mp4) |
+
+▶ **Watch the full reel:** [`samples/day24_gemini4_temp1_60fps_preview.mp4`](samples/day24_gemini4_temp1_60fps_preview.mp4)
+(37.5 s, 60 fps web preview at 720×1280). Built from `examples/day24_gemini4/`. English, house style /temp-1,
+captions word-synced, music ~21 dB under the voice. The full 1080p and 4K 60 fps masters are kept in Drive.
 
 ---
 
@@ -159,11 +169,12 @@ Pick one with `HOOK=<name>` when rendering, or preview them on a new reel with
 
 | Video | What it shows |
 |---|---|
+| [`samples/day24_gemini4_temp1_60fps_preview.mp4`](samples/day24_gemini4_temp1_60fps_preview.mp4) | **/temp-1** Day 24 reel (Gemini 4): English, 60 fps, 37.5 s, strip_slam hook, captions, dialogue-first mix |
 | [`samples/day4_android_studio_byoa_60fps_preview.mp4`](samples/day4_android_studio_byoa_60fps_preview.mp4) | Day 4 reel built with this engine: English, 1080×1920 **60 fps**, 40 s, safe-zone layout v3 |
 | [`samples/hooks_preview_60fps.mp4`](samples/hooks_preview_60fps.mp4) | All 10 hook openers on Day 4 frames, 60 fps |
 | [`samples/sample_reel_chatgpt_gif_update.mp4`](samples/sample_reel_chatgpt_gif_update.mp4) | Sample reel from Rakshith ("ChatGPT GIF update", 26.5 s) |
 
-These are compressed web previews so they fit in git. Full-quality masters (134–138 MB) are kept in Drive, not in the repo.
+These are compressed web previews so they fit in git. Full-quality masters (133–363 MB, incl. 4K) are kept in Drive, not in the repo.
 
 Every frame of the Day 4 reel at 1.5 fps, with the Instagram safe box drawn in green:
 
