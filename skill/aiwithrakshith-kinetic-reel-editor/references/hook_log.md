@@ -5,6 +5,9 @@ Add a row when a reel is delivered (newest first). Hooks are listed in `SKILL.md
 
 | Date | Reel | Brand / language | Topic energy | Hook | Notes |
 |---|---|---|---|---|---|
+| 2026-11-24 | n8n 3.0 migration check (take 2) (/temp-1) | aiwithrakshith.global / English | high | `rgb_converge` | music Cold_Pursuit, ~20 dB under the voice |
+| 2026-11-24 | Boson Higgs Realtime handles interruptions (/temp-1) | aiwithrakshith.global / English | high | `halftone_iris` | music Skyward_Return, ~20 dB under the voice |
+| 2026-11-24 | n8n 3.0 is a one-way door (migration check) (/temp-1) | aiwithrakshith.global / English | high | `red_wipe` | music Rain_Timeline, ~20 dB under the voice |
 | 2026-11-24 | Beacon.sh: shared memory for your coding agents (/temp-1) | aiwithrakshith.global / English | high | `pixel_assemble` | music Black_Ledger, ~20 dB under the voice |
 | 2026-11-24 | Google Ads Ask Advisor: ask why your sales dropped (/temp-1) | aiwithrakshith.global / English | high | `strip_slam` | music Clockwork_Resolve, ~20 dB under the voice |
 | 2026-11-24 | Meta's free photo-to-video ads: check before you publish (/temp-1) | aiwithrakshith.global / English | high | `neg_flash` | music Rolling_System, ~20 dB under the voice |

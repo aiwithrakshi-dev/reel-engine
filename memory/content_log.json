@@ -2,6 +2,77 @@
  "reels": [
   {
    "date": "2026-11-24",
+   "title": "n8n 3.0 migration check (take 2)",
+   "brand": "aiwithrakshith.global",
+   "lang": "en",
+   "template": 1,
+   "hook": "rgb_converge",
+   "duration": 39.6,
+   "drive": null,
+   "qc": null,
+   "notes": "music Cold_Pursuit.",
+   "headlines": [
+    "WON'T START",
+    "ONE-WAY DOOR",
+    "BACKUP",
+    "GONE",
+    "DOCKER",
+    "DONE",
+    "1 MINUTE",
+    "DECEMBER",
+    "SELL IT",
+    "AUTOMATE"
+   ]
+  },
+  {
+   "date": "2026-11-24",
+   "title": "Boson Higgs Realtime handles interruptions",
+   "brand": "aiwithrakshith.global",
+   "lang": "en",
+   "template": 1,
+   "hook": "halftone_iris",
+   "duration": 30.32,
+   "drive": null,
+   "qc": null,
+   "notes": "music Skyward_Return.",
+   "headlines": [
+    "MID-SENTENCE",
+    "INTERRUPT",
+    "KEEP TALKING",
+    "ONE MODEL",
+    "LESS DELAY",
+    "TOOLS",
+    "REALTIME API",
+    "INTERRUPTIONS",
+    "AGENT"
+   ]
+  },
+  {
+   "date": "2026-11-24",
+   "title": "n8n 3.0 is a one-way door (migration check)",
+   "brand": "aiwithrakshith.global",
+   "lang": "en",
+   "template": 1,
+   "hook": "red_wipe",
+   "duration": 39.6,
+   "drive": null,
+   "qc": null,
+   "notes": "music Rain_Timeline.",
+   "headlines": [
+    "WON'T START",
+    "ONE-WAY DOOR",
+    "BACKUP",
+    "GONE",
+    "DOCKER",
+    "DONE",
+    "1 MINUTE",
+    "DECEMBER",
+    "SELL IT",
+    "AUTOMATE"
+   ]
+  },
+  {
+   "date": "2026-11-24",
    "title": "Beacon.sh: shared memory for your coding agents",
    "brand": "aiwithrakshith.global",
    "lang": "en",
