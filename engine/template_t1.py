@@ -83,8 +83,9 @@ class StyleT1:
         key = ('cap', txt)
         if key not in self._t1_txt: self._t1_txt[key] = _red3d_text(txt, self._t1()['f_cap'], ext=6)
         lay = self._t1_txt[key]
-        if lay.shape[1] > 880:                                   # standard size; shrink only an over-long line
-            s = 880 / lay.shape[1]; lay = cv2.resize(lay, (880, int(lay.shape[0] * s)), interpolation=cv2.INTER_AREA)
+        MAXW = 820                                               # peak (1.12x) footprint must stay inside x 65-960
+        if lay.shape[1] > MAXW:                                  # standard size; shrink only an over-long line
+            s = MAXW / lay.shape[1]; lay = cv2.resize(lay, (MAXW, int(lay.shape[0] * s)), interpolation=cv2.INTER_AREA)
         a = int(round((t - ch['start']) * FPS)); s = _pop(a)
         from template_render import comp
         # check the PEAK (1.12x) footprint once per line, then draw

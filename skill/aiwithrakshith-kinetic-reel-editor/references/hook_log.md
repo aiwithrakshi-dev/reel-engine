@@ -5,6 +5,10 @@ Add a row when a reel is delivered (newest first). Hooks are listed in `SKILL.md
 
 | Date | Reel | Brand / language | Topic energy | Hook | Notes |
 |---|---|---|---|---|---|
+| 2026-11-24 | Beacon.sh: shared memory for your coding agents (/temp-1) | aiwithrakshith.global / English | high | `pixel_assemble` | music Black_Ledger, ~20 dB under the voice |
+| 2026-11-24 | Google Ads Ask Advisor: ask why your sales dropped (/temp-1) | aiwithrakshith.global / English | high | `strip_slam` | music Clockwork_Resolve, ~20 dB under the voice |
+| 2026-11-24 | Meta's free photo-to-video ads: check before you publish (/temp-1) | aiwithrakshith.global / English | high | `neg_flash` | music Rolling_System, ~20 dB under the voice |
+| 2026-11-24 | TikTok's 7 Black Friday ad updates (/temp-1) | aiwithrakshith.global / English | high | `letterbox_open` | music Warm_Tide_Drive, ~20 dB under the voice |
 | 2026-11-24 | Higgsfield Cinema Studio 4.0: the Director's Panel (/temp-1) | aiwithrakshith.global / English | high | `face_punch` | music Night_Run_Sequence, ~20 dB under the voice |
 | 2026-11-24 | Hera: AI motion designer for launch videos (/temp-1) | aiwithrakshith.global / English | high | `shutter_blinds` | music Boot_Sequence, ~20 dB under the voice |
 | 2026-11-24 | GPT-6.1 Terra: half the price, 3x faster (the catch) (/temp-1) | aiwithrakshith.global / English | high | `slice_glitch` | music Pressure_Line, ~20 dB under the voice |
