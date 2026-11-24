@@ -301,6 +301,42 @@ From the "ChatGPT GIF update" reference (Nov 2026), house palette, inside the sa
 | `prompt_card` | dark-blue prompt bubble typing 2 chars/frame, the @mention inside a red chip |
 | `face_punch` hook | extreme close-up on his eyes snapping back with a red frame flash (§9b) |
 
+## 9f. /temp-1 job-driven style + batch workflow (`engine/template_t1.py`, Nov 2026)
+`template_render.py` now renders /temp-1 from a `job.json` like the other templates (`class Reel(StylesB, StyleT1)`), so a
+whole folder of raw videos can be edited unattended. Look: room background kept, 3D white/red one-line captions in one
+size just under the chin, label pill + giant red 3D keyword in the HEAD band, cutaways as a red-bordered card on a dark
+red-glow backdrop.
+- **New transition `negswoosh`** (template 1 default, 12 frames): a diagonal red light swoosh wipes across; frames at
+  p 0.42–0.58 show the blurred negative of the frame. Whole-frame, ≤ 0.2 s, so it may pass over the face.
+- **New overlays**: `_t1_halftone` (dot band confined to the HEAD band, first 14 frames of a headline), `_t1_glint`
+  (light sweep across the red letters after typing), `_t1_blocks` (pixel blocks for 10 frames on the keyword), red
+  edge glow (vignette ring, opacity 0.33, never on the face), grain 3.
+- **Punch-in jump-cut hiding**: every jump cut toggles a 1.06× scale about the face centre (`job['punch']`,
+  `punch_scale`), with a swoosh SFX. Caption band and face zone are sized for the punched frame.
+- **Auto-fit**: `_fit_pill` shrinks label/title pills until their PEAK pop width ≤ 780 px; big words 84–150 px cap,
+  ≤ 760 px wide; caption centre = face-zone bottom + half caption height (clamped ≤ 1248).
+- **Cutaway scene** keys: `t0, t1, image` (image or video; video plays at its own fps), `title`, `credit`, optional
+  `crop` [x0, y0, x1, y1] fractions. Card ≤ 800×680 at cy 755; never crop away words the title relies on.
+- **SFX from files**: `job['sfx'] = {impact, pop, whoosh, tick, swoosh}` paths (Magnific SFX), else synthesised.
+  Template 1 adds a tick on each label and a swoosh on each punch.
+- **Batch tools**:
+  1. `tools/prep_reel.py raw.mp4 asr.json out/` — speech islands → `aroll_tight.mp4` (source fps), `vo.wav`,
+     `words.json`, face measured with the OpenCV Haar cascade in `models/` (not in git; download
+     `haarcascade_frontalface_default.xml` from opencv/opencv `data/haarcascades`).
+  2. `plan.json` — hook, music, `sfx`, `word_fix` (index → text; "" deletes, use it to merge "3"+".0" → "3.0"),
+     `headlines` [{label, big, label_t, big_t}], `scenes`.
+  3. `tools/make_job.py <reel_dir> plan.json` — builds `job.json` (dy, face zone, punch cuts, typing steps; fails if a
+     big word lands < 0.3 s before the next headline).
+  4. Test sheet (edge frames ±7 around every scene through the guard + a sample sheet) → look at it.
+  5. Render queue: one reel at a time (2 CPUs), then `tools/batch_audit.py <reel_dir>` — captions.srt, qc_audit
+     (--hook --srt), Whisper WER of the final mix vs the words (≤ 0.08), 3 fps safe-box/face-zone sheets and a joins
+     sheet. QC FIX → fix the plan or engine, delete reel.mp4, re-queue.
+  6. `tools/log_delivery.py <reel_dir>` right after a pass, in delivery order, so the next audit sees the hook as used.
+  7. `tools/fetch_media.py <url> <dir>` pulls og:image and page media from an official product page (+ sources.csv);
+     run with `< /dev/null` inside shell loops.
+- B-roll in batches: official product media (credited "Source: <site>") + Magnific stock (credited "Magnific stock").
+  No faces in B-roll unless it is the product UI itself; skip or crop any person's face.
+
 ## 9c. 60 fps render (mandatory for every reel)
 - Template: `examples/day4_android_studio/render_day4_60.py`. Frame numbers are 60 fps frames `g`; the timeline logic runs
   in 30-fps units (`f = g // 2`, `SUB = 0 / 0.5`), so every device keeps its approved timing while continuous motion —
@@ -396,5 +432,9 @@ The caption + alt text + pinned comment + DM reply also go to Drive as one Googl
 - Day 4's layout put the chest row where a caption line now needs to go → reserve the caption band when planning DY.
 - Whisper splits words across jump cuts and drops punctuation late in a take → script_gen splits sentences on cuts,
   conjunctions and length too.
+- Batch (Nov 2026): a transition's negative progress made a negative crop index and an 8.9 GB allocation → clamp p to
+  [0, 1] and test ±7 frames around every scene edge before a full render.
+- Caching the graded base frame per source frame + ultrafast intermediates cut a 40 s reel from ~20 to ~5 min on 2 CPUs.
+- Cropping a product card cut the version number off its headline ("Announcing n8n") → check every crop on the test sheet.
 - Day 4's neon streaks and swooshes crossed his face (15.8 s, 21.6 s, 35.4 s) → face-clear rule + `face_guard.py`;
   effects now pass behind the face oval.

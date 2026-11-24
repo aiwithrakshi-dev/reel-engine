@@ -33,3 +33,6 @@ __pycache__/
 
 # allow the compressed sample reels
 !samples/*.mp4
+
+# local models (download, never commit)
+models/

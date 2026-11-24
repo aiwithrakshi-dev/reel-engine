@@ -20,6 +20,7 @@ One file per topic, split from `../SKILL.md`.
 | [`09c-60-fps-render-mandatory-reel.md`](09c-60-fps-render-mandatory-reel.md) | 9c. 60 fps render (mandatory for every reel) |
 | [`09d-retention-algorithm-rules-2026-research.md`](09d-retention-algorithm-rules-2026-research.md) | 9d. Retention & algorithm rules (2026 research) |
 | [`09e-reference-reel-devices-engine-ref_devices-py.md`](09e-reference-reel-devices-engine-ref_devices-py.md) | 9e. Reference-reel devices (`engine/ref_devices.py`) |
+| [`09f-temp-1-job-driven-style-+-batch.md`](09f-temp-1-job-driven-style-+-batch.md) | 9f. /temp-1 job-driven style + batch workflow (`engine/template_t1.py`, Nov 2026) |
 | [`10-audit-loop-repeat-until-zero.md`](10-audit-loop-repeat-until-zero.md) | 10. Audit loop (repeat until zero failures) |
 | [`11-deliverables.md`](11-deliverables.md) | 11. Deliverables |
 | [`12-final-outputs-reel-template-rakshith.md`](12-final-outputs-reel-template-rakshith.md) | 12. Final outputs — every reel, every template (Rakshith, 22 Nov 2026) |

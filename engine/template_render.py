@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Template renderer for /temp-2 ... /temp-7 (temp-1 = the red kinetic engine, render_day4_60.py).
+"""Template renderer for /temp-1 ... /temp-16 (/temp-1 job-driven style in template_t1.py; the hand-built
+house renders, e.g. examples/day4_android_studio/render_day4_60.py, still work for one-off reels).
 
   python3 engine/template_render.py job.json <g0> <g1> part.mp4        # 60 fps frames g0..g1 (silent video)
   python3 engine/template_render.py job.json 0 0 test_dir g1,g2,...    # test PNGs
@@ -21,6 +22,7 @@ from templates import TEMPLATES, SAFE
 from face_guard import FaceZone
 import hooks as HK
 from template_styles_b import StylesB
+from template_t1 import StyleT1
 
 W, H, FPS = 1080, 1920, 60
 from paths import FONT_DIRS
@@ -195,10 +197,21 @@ def synth(kind, sr=48000):
     return (y / (np.abs(y).max() + 1e-9)).astype(np.float32)
 
 
+_smp = {}
+def _sample(path, sr=48000):
+    if path not in _smp:
+        import soundfile as sf_
+        tmp = '/tmp/_sfx_' + os.path.basename(path) + '.wav'
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', path, '-ac', '1', '-ar', str(sr), tmp], check=True)
+        y, _ = sf_.read(tmp, dtype='float32'); _smp[path] = y / (np.abs(y).max() + 1e-9)
+    return _smp[path]
+
+
 def build_audio(job, spec, out_wav):
     sr = 48000; dur = job['duration']; n = int(sr * dur); sfx = np.zeros(n, np.float32)
+    lib = job.get('sfx', {})     # e.g. {'impact': '/path/impact.mp3', 'pop': ..., 'whoosh': ...} (Magnific SFX)
     def add(kind, t, gain):
-        y = synth(kind) * gain; i = int(t * sr); j = min(n, i + len(y))
+        y = (_sample(lib[kind]) if kind in lib else synth(kind)) * gain; i = int(t * sr); j = min(n, i + len(y))
         if 0 <= i < n: sfx[i:j] += y[:j - i]
     add('impact', 0.0, 0.55)
     for h in job.get('headlines', []):
@@ -207,6 +220,10 @@ def build_audio(job, spec, out_wav):
         if s['t0'] < dur: add('whoosh', max(0, s['t0'] - 0.18), 0.45); add('whoosh', max(0, s['t1'] - 0.18), 0.35)
     for t in job.get('flash', []):
         if t < dur: add('impact', t, 0.4)
+    for h in job.get('headlines', []):            # label pop + per-letter ticks are part of the /temp-1 grammar
+        if int(job['template']) == 1 and h.get('label') and h['label_t'] < dur: add('tick', h['label_t'], 0.25)
+    for t in job.get('punch', []):
+        if int(job['template']) == 1 and t < dur: add('swoosh' if 'swoosh' in lib else 'tick', t, 0.12)
     if job.get('end_hit') and job['end_hit'] < dur: add('impact', job['end_hit'], 0.5)   # hard button ending
     sf_path = out_wav + '.sfx.wav'
     import soundfile as sf; sf.write(sf_path, np.stack([sfx, sfx], 1), sr)
@@ -227,7 +244,7 @@ def build_audio(job, spec, out_wav):
 
 
 # ------------------------------------------------------------------ the template engine
-class Reel(StylesB):
+class Reel(StylesB, StyleT1):
     def __init__(self, job):
         self.job = job; self.n = int(job['template']); self.spec = TEMPLATES[self.n]; self.pal = self.spec['palette']
         self.src = Source(job['aroll'], job.get('src_fps', 30)); self.dur = job['duration']
@@ -237,7 +254,7 @@ class Reel(StylesB):
         self.heads = job.get('headlines', []); self.scenes = job.get('scenes', [])
         self.bigset = {w.lower() for h in self.heads for w in re.findall(r'[\w+]+', h['big'])}
         self.imgs = {}; self.boxes = []
-        self.trans = {2: ('blur', 10), 3: ('wash', 8), 4: ('whip', 8), 5: ('zoom', 8), 6: ('swoosh', 10), 7: ('scale', 6),
+        self.trans = {1: ('negswoosh', 12), 2: ('blur', 10), 3: ('wash', 8), 4: ('whip', 8), 5: ('zoom', 8), 6: ('swoosh', 10), 7: ('scale', 6),
                       8: ('leak', 12), 9: ('blur', 10), 10: ('scale', 8), 11: ('glitch', 6), 12: ('blur', 8), 13: ('bend', 12),
                       14: ('zoom', 8), 15: ('cut', 2), 16: ('scale', 8)}[self.n]
         if self.n == 7: self.face = self._t7_face()
@@ -286,6 +303,13 @@ class Reel(StylesB):
     def shifted(self, t):
         """A-roll moved down by job['dy'] (same framing as the house render); the opened strip is the room's top rows stretched."""
         src = self.src.at(t); dy = int(self.job.get('dy', 0))
+        cuts = self.job.get('punch')
+        if cuts:   # hide each jump cut: alternate framing 1.0 / punch_scale about the face centre (face stays put)
+            k = sum(1 for x in cuts if x <= t)
+            if k % 2:
+                s_ = self.job.get('punch_scale', 1.06); fx_, fy_ = self.job['face_src_c']
+                M = np.float32([[s_, 0, fx_ * (1 - s_)], [0, s_, fy_ * (1 - s_)]])
+                src = cv2.warpAffine(src, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
         if not dy: return src
         out = np.empty_like(src); out[dy:] = src[:H - dy]; ext = cv2.resize(src[0:70], (W, dy + 60), interpolation=cv2.INTER_LINEAR)
         out[:dy] = ext[:dy]; k = np.linspace(1, 0, 60)[:, None, None]; out[dy:dy + 60] = ext[dy:] * k + out[dy:dy + 60] * (1 - k)
@@ -343,6 +367,13 @@ class Reel(StylesB):
             dst = np.float32([[ins, dy], [W - ins * 0.4, dy * 0.6], [W, H], [0, H]]); M = cv2.getPerspectiveTransform(src, dst)
             wb = cv2.warpPerspective(b, M, (W, H), borderValue=(0, 0, 0)); m = cv2.warpPerspective(np.ones((H, W), np.float32), M, (W, H))[..., None]
             return a * (1 - m) * (0.6 + 0.4 * (1 - e)) + wb * m
+        if kind == 'negswoosh':   # /temp-1: red light swoosh wipe with a 2-frame negative flash at the switch (<= 0.2 s)
+            xx = np.arange(W)[None, :] + np.arange(H)[:, None] * 0.35; edge = -700 + (W + 1400) * ease_out(p)
+            m = (xx < edge).astype(np.float32)[..., None]; band = np.clip(1 - np.abs(xx - edge) / 150, 0, 1)[..., None]
+            out = a * (1 - m) + b * m
+            out = out * (1 - band) + (np.array((255, 40, 50), np.float32) * 0.7 + 255 * 0.3 * band) * band
+            if 0.42 <= p < 0.58: out = cv2.GaussianBlur(255 - out, (0, 0), 6) * 0.6
+            return out
         if kind == 'cut': return b if p >= 0.5 else a
         if kind == 'blur':
             k = math.sin(math.pi * p) * 22 + 0.1; return cv2.GaussianBlur(a, (0, 0), k) * (1 - p) + cv2.GaussianBlur(b, (0, 0), k) * p
@@ -659,7 +690,7 @@ class Reel(StylesB):
 def render_range(job, g0, g1, out):
     r = Reel(job); g1 = min(g1, int(job['duration'] * FPS))
     ff = subprocess.Popen(['ffmpeg', '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-',
-                           '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '12', '-pix_fmt', 'yuv420p', out], stdin=subprocess.PIPE)
+                           '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '10', '-pix_fmt', 'yuv420p', out], stdin=subprocess.PIPE)   # intermediate part: the final mux re-encodes
     for g in range(g0, g1):
         ff.stdin.write(r.frame(g).tobytes())
         if g % 120 == 0: print(f'temp-{r.n} frame {g}', flush=True)
