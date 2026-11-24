@@ -1,6 +1,6 @@
 # Reel engine memory (generated — read this before every edit)
 
-Updated 2026-11-24 19:05. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
+Updated 2026-11-24 19:50. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
 
 ## Non-negotiables
 - 1080x1920, **60 fps**, H.264 High + AAC 48 kHz, -14 LUFS, true peak <= -1 dBTP.
@@ -40,26 +40,15 @@ Updated 2026-11-24 19:05. Source: memory/content_log.json + memory/lessons.md. R
 ## Recent reels (newest first)
 | date | title | brand | template | hook | Drive |
 |---|---|---|---|---|---|
-| 2026-11-24 | n8n 3.0 migration check (take 2) | aiwithrakshith.global | 1 | `rgb_converge` |  |
-| 2026-11-24 | Boson Higgs Realtime handles interruptions | aiwithrakshith.global | 1 | `halftone_iris` |  |
-| 2026-11-24 | n8n 3.0 is a one-way door (migration check) | aiwithrakshith.global | 1 | `red_wipe` |  |
-| 2026-11-24 | Beacon.sh: shared memory for your coding agents | aiwithrakshith.global | 1 | `pixel_assemble` |  |
-| 2026-11-24 | Google Ads Ask Advisor: ask why your sales dropped | aiwithrakshith.global | 1 | `strip_slam` |  |
-| 2026-11-24 | Meta's free photo-to-video ads: check before you publish | aiwithrakshith.global | 1 | `neg_flash` |  |
-| 2026-11-24 | TikTok's 7 Black Friday ad updates | aiwithrakshith.global | 1 | `letterbox_open` |  |
-| 2026-11-24 | Higgsfield Cinema Studio 4.0: the Director's Panel | aiwithrakshith.global | 1 | `face_punch` |  |
-| 2026-11-24 | Hera: AI motion designer for launch videos | aiwithrakshith.global | 1 | `shutter_blinds` |  |
-| 2026-11-24 | GPT-6.1 Terra: half the price, 3x faster (the catch) | aiwithrakshith.global | 1 | `slice_glitch` |  |
-| 2026-11-24 | Wizshot 1.0: 9 references, same face every shot | aiwithrakshith.global | 1 | `halftone_iris` |  |
-| 2026-11-24 | Kling 4.0: one 30-second AI shot with keyframes | aiwithrakshith.global | 1 | `rgb_converge` |  |
-| 2026-11-24 | Perplexity Computer works inside Slack | aiwithrakshith.global | 1 | `zoom_punch` |  |
-| 2026-11-24 | Riverside Agents: 4 AI agents for your podcast | aiwithrakshith.global | 1 | `red_wipe` |  |
-| 2026-11-24 | Zapier AI steps now cost up to 20 tasks a run | aiwithrakshith.global | 1 | `pixel_assemble` |  |
+| 2026-11-22 | Day 7 — Kling 4.0: one 30-second AI shot | aiwithrakshith.global | 2 | `letterbox_open` |  |
+| 2026-11-22 | Day 24 — There is no Gemini 4 Pro (price doubles Dec 1) | aiwithrakshith.global | 1 | `strip_slam` |  |
+| 2026-11-21 | Day 4 — Claude & Codex inside Android Studio (BYOA) | aiwithrakshith.global | 1 | `neg_flash` |  |
+| 2026-11-19 | Kling 4.0 — 10 prompts / keyframe method | @AIwithRakshith | 1 | `neg_flash` |  |
 
 ## Next reel
-- Blocked hooks (last 5): `halftone_iris`, `pixel_assemble`, `red_wipe`, `rgb_converge`, `strip_slam`
-- Least-used templates lately: /temp-2, /temp-3, /temp-4
-- Free hooks: `neg_flash`, `zoom_punch`, `slice_glitch`, `letterbox_open` (run `tools/memory.py suggest --energy high|medium|calm`)
+- Blocked hooks (last 5): `letterbox_open`, `neg_flash`, `strip_slam`
+- Least-used templates lately: /temp-3, /temp-4, /temp-5
+- Free hooks: `pixel_assemble`, `red_wipe`, `zoom_punch`, `rgb_converge` (run `tools/memory.py suggest --energy high|medium|calm`)
 
 ## Lessons (from Rakshith — keep applying)
 - Keep his real room as the background; never matte him onto a studio/plain background unless asked for that one video.

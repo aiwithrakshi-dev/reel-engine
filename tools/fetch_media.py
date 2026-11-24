@@ -11,7 +11,8 @@ import sys, os, re, csv, argparse, html, urllib.parse, subprocess
 import numpy as np, cv2
 
 ap = argparse.ArgumentParser(); ap.add_argument('url'); ap.add_argument('out'); ap.add_argument('--max', type=int, default=12)
-ap.add_argument('--minw', type=int, default=700); a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)
+ap.add_argument('--minw', type=int, default=700); ap.add_argument('--videos', action='store_true', help='videos only')
+ap.add_argument('--start', type=int, default=0, help='first file index (append to an existing folder)'); a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)
 UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36'
 
 def get(url, path):
@@ -28,6 +29,11 @@ for m in re.finditer(r'(?:src|data-src|poster)=["\']([^"\']+\.(?:png|jpe?g|webp|
 for m in re.finditer(r'srcset=["\']([^"\']+)["\']', src, re.I):
     parts = [p.strip().split(' ')[0] for p in m.group(1).split(',') if p.strip()]
     if parts: cands.append(parts[-1])                       # largest rendition
+# videos referenced from scripts / JSON (escaped slashes), e.g. Next.js data or CMS payloads
+txt = src.replace('\\/', '/').replace('\\u002F', '/').replace('\\u0026', '&')
+for m in re.finditer(r'((?:https?:)?//[^"\'\s<>()]+?\.(?:mp4|webm|mov)(?:\?[^"\'\s<>()]*)?)["\'\s<>)]', txt, re.I): cands.insert(0, m.group(1))
+for m in re.finditer(r'["\'](/[^"\'\s<>]+?\.(?:mp4|webm|mov))["\']', txt, re.I): cands.insert(0, m.group(1))
+if a.videos: cands = [c for c in cands if re.search(r'\.(mp4|webm|mov)', c, re.I)]
 seen = set(); urls = []
 for c in cands:
     u = urllib.parse.urljoin(a.url, html.unescape(c))
@@ -39,10 +45,12 @@ rows = []; thumbs = []
 for i, u in enumerate(urls):
     if len(rows) >= a.max: break
     ext = os.path.splitext(urllib.parse.urlparse(u).path)[1].lower() or '.jpg'
-    if ext not in ('.png', '.jpg', '.jpeg', '.webp', '.gif', '.mp4', '.webm'): ext = '.jpg'
-    p = os.path.join(a.out, f'm{i:02d}{ext}')
+    if ext not in ('.png', '.jpg', '.jpeg', '.webp', '.gif', '.mp4', '.webm', '.mov'): ext = '.jpg'
+    if u.startswith('//'): u = 'https:' + u
+    p = os.path.join(a.out, f'm{a.start + i:02d}{ext}')
+    if os.path.exists(p): continue
     if not get(u, p): continue
-    if ext in ('.mp4', '.webm', '.gif'):
+    if ext in ('.mp4', '.webm', '.gif', '.mov'):
         cap = cv2.VideoCapture(p); n = cap.get(cv2.CAP_PROP_FRAME_COUNT); cap.set(cv2.CAP_PROP_POS_FRAMES, int(n // 3)); ok, im = cap.read()
     else:
         if ext == '.webp' or ext == '.gif':
@@ -55,7 +63,7 @@ for i, u in enumerate(urls):
     t = cv2.copyMakeBorder(t, 0, 300 - t.shape[0], 0, 0, cv2.BORDER_CONSTANT); cv2.putText(t, os.path.basename(p), (8, 28), 0, 0.8, (0, 255, 255), 2)
     thumbs.append(t)
 with open(os.path.join(a.out, 'sources.csv'), 'a', newline='') as f: csv.writer(f).writerows(rows)
-if thumbs:
+if thumbs and not a.start:
     while len(thumbs) % 3: thumbs.append(np.zeros_like(thumbs[0]))
     sheet = np.vstack([np.hstack(thumbs[i:i + 3]) for i in range(0, len(thumbs), 3)]); cv2.imwrite(os.path.join(a.out, 'sheet.jpg'), sheet)
 print(len(rows), 'files ->', a.out)

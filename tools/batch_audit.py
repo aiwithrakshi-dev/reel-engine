@@ -59,15 +59,24 @@ for i in range(0, len(gs), 24):
     ims = [t for t in (tile(g) for g in gs[i:i + 24]) if t is not None]
     while len(ims) % 8: ims.append(np.zeros_like(ims[0]))
     cv2.imwrite(os.path.join(qc, f'sheet_{k:02d}.jpg'), np.vstack([np.hstack(ims[j:j + 8]) for j in range(0, len(ims), 8)]), [cv2.IMWRITE_JPEG_QUALITY, 70]); k += 1
-edges = sorted(set([s['t0'] for s in job['scenes']] + [s['t1'] for s in job['scenes']] + job.get('punch', [])))
+sub = []
+for s_ in job['scenes']:
+    acc = s_['t0']
+    for c_ in s_.get('clips', [])[:-1]: acc += c_['dur']; sub.append(acc)
+edges = sorted(set([s['t0'] for s in job['scenes']] + [s['t1'] for s in job['scenes']] + job.get('punch', []) + sub))
 rows = []
 for e in edges:
     ims = [tile(max(0, int(e * fps) + o)) for o in (-6, -3, -1, 0, 1, 3, 6, 9)]
     rows.append(np.hstack([i if i is not None else np.zeros((480, 270, 3), np.uint8) for i in ims]))
 if rows: cv2.imwrite(os.path.join(qc, 'joins.jpg'), np.vstack(rows), [cv2.IMWRITE_JPEG_QUALITY, 70])
 
-ok = not fails and wer_ok
+ra = subprocess.run([sys.executable, os.path.join(HERE, 'audio_audit.py'), rd], capture_output=True, text=True)
+audio_ok = ra.returncode == 0
+ok = not fails and wer_ok and audio_ok
 print('QC', 'PASS' if ok else 'FIX')
+print('  audio audit:', 'PASS' if audio_ok else 'FIX', '(qc/audio_report.md)')
+for l in ra.stdout.splitlines():
+    if '| FAIL |' in l or '| WARN |' in l: print('   ', l)
 for l in fails: print('  ', l)
 print(f'  dialogue WER on final mix: {wer:.3f} ({"ok" if wer_ok else "FIX: music/SFX masking the voice"})')
 print(f'  sheets: {k} + joins ({len(edges)} edges) in {qc}')

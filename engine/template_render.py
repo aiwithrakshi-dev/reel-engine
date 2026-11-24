@@ -207,17 +207,21 @@ def _sample(path, sr=48000):
     return _smp[path]
 
 
-def build_audio(job, spec, out_wav):
+def build_audio(job, spec, out_wav, stems_dir=None):
     sr = 48000; dur = job['duration']; n = int(sr * dur); sfx = np.zeros(n, np.float32)
     lib = job.get('sfx', {})     # e.g. {'impact': '/path/impact.mp3', 'pop': ..., 'whoosh': ...} (Magnific SFX)
     def add(kind, t, gain):
         y = (_sample(lib[kind]) if kind in lib else synth(kind)) * gain; i = int(t * sr); j = min(n, i + len(y))
         if 0 <= i < n: sfx[i:j] += y[:j - i]
-    add('impact', 0.0, 0.55)
+    add('impact', 0.0, 0.42)
     for h in job.get('headlines', []):
         if h['big_t'] < dur: add('pop' if spec['energy'] != 'calm' else 'tick', h['big_t'], 0.35)
     for s in job.get('scenes', []):
-        if s['t0'] < dur: add('whoosh', max(0, s['t0'] - 0.18), 0.45); add('whoosh', max(0, s['t1'] - 0.18), 0.35)
+        if s['t0'] < dur: add('whoosh', max(0, s['t0'] - 0.18), 0.36); add('whoosh', max(0, s['t1'] - 0.18), 0.3)
+        acc = s['t0']
+        for c in s.get('clips', [])[:-1]:          # quick cuts inside a multi-shot scene
+            acc += c['dur']
+            if acc < min(dur, s['t1']): add('tick' if 'tick' in lib else 'pop', acc, 0.22)
     for t in job.get('flash', []):
         if t < dur: add('impact', t, 0.4)
     for h in job.get('headlines', []):            # label pop + per-letter ticks are part of the /temp-1 grammar
@@ -227,12 +231,20 @@ def build_audio(job, spec, out_wav):
     if job.get('end_hit') and job['end_hit'] < dur: add('impact', job['end_hit'], 0.5)   # hard button ending
     sf_path = out_wav + '.sfx.wav'
     import soundfile as sf; sf.write(sf_path, np.stack([sfx, sfx], 1), sr)
-    mdb = job.get('music_db', -27)   # dialogue-safe: bed ~20 dB under the voice (22 Nov 2026)
+    mdb = job.get('music_db', -29)   # dialogue-safe: bed ~20 dB under the voice (22 Nov 2026)
     fc = (f"[1:a]atrim=0:{dur},asetpts=PTS-STARTPTS,volume={mdb}dB,highpass=f=60,lowpass=f=9000,equalizer=f=1800:t=q:w=1.2:g=-6,equalizer=f=3500:t=q:w=1.2:g=-4,afade=t=out:st={dur - 0.04}:d=0.04[m];"
-          f"[0:a]atrim=0:{dur},asetpts=PTS-STARTPTS,asplit=2[v][vk];[m][vk]sidechaincompress=threshold=0.02:ratio=6:attack=20:release=450[md];"
-          f"[2:a]volume=-13dB[s];[v][md][s]amix=inputs=3:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]")
+          f"[0:a]atrim=0:{dur},asetpts=PTS-STARTPTS,asplit=3[v][vk][vk2];[m][vk]sidechaincompress=threshold=0.02:ratio=6:attack=20:release=450[md];"
+          f"[2:a]volume={job.get('sfx_db', -15)}dB[s0];[s0][vk2]sidechaincompress=threshold=0.03:ratio=4:attack=4:release=220:makeup=1[s];"   # SFX duck under words (audio audit 25 Nov 2026)
+          f"[v][md][s]amix=inputs=3:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]")
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', job['vo'], '-stream_loop', '-1', '-i', job['music'], '-i', sf_path,
                     '-filter_complex', fc, '-map', '[a]', '-ac', '2', '-t', str(dur), out_wav], check=True)
+    if stems_dir:   # pre-loudnorm stems for tools/audio_audit.py (same chain, same relative levels)
+        os.makedirs(stems_dir, exist_ok=True)
+        fs = fc.split('[v][md][s]amix')[0] + '[v]anull[vo_];[md]anull[mu_];[s]anull[sx_]'
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', job['vo'], '-stream_loop', '-1', '-i', job['music'], '-i', sf_path,
+                        '-filter_complex', fs, '-map', '[vo_]', '-ac', '2', '-t', str(dur), os.path.join(stems_dir, 'vo.wav'),
+                        '-map', '[mu_]', '-ac', '2', '-t', str(dur), os.path.join(stems_dir, 'music.wav'),
+                        '-map', '[sx_]', '-ac', '2', '-t', str(dur), os.path.join(stems_dir, 'sfx.wav')], check=True)
     os.remove(sf_path)
     # second pass: measure and correct to -14 LUFS (single-pass loudnorm can land ~1 dB low), keep true peak <= -1.5 dBTP
     import soundfile as sf, pyloudnorm as pyln
@@ -713,7 +725,7 @@ def full(job, out):
 
 if __name__ == '__main__':
     job = json.load(open(sys.argv[1]))
-    if sys.argv[2] == '--audio': build_audio(job, TEMPLATES[int(job['template'])], sys.argv[3])
+    if sys.argv[2] == '--audio': build_audio(job, TEMPLATES[int(job['template'])], sys.argv[3], stems_dir=(sys.argv[4] if len(sys.argv) > 4 else None))
     elif sys.argv[2] == '--full': full(job, sys.argv[3])
     elif sys.argv[4].endswith('.mp4'): render_range(job, int(sys.argv[2]), int(sys.argv[3]), sys.argv[4])
     else:

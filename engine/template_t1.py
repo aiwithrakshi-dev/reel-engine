@@ -190,12 +190,26 @@ class StyleT1:
             return s.at(min(t_in, dur - 0.05))
         return self.img(path).astype(np.float32)
 
+    def _t1_shot(self, t, sc):
+        """Multi-shot scenes: sc['clips'] = [{image, in, dur, crop, fill, fx}] cut in order; else the scene itself."""
+        if not sc.get('clips'): return dict(sc), 0, sc['t0']
+        acc = sc['t0']
+        for k, c in enumerate(sc['clips']):
+            last = k == len(sc['clips']) - 1
+            if last or t < acc + c['dur']:
+                sh = dict(sc); sh.update(c); sh['dur'] = c.get('dur', sc['t1'] - acc) if not last else sc['t1'] - acc
+                return sh, k, acc
+            acc += c['dur']
+
     def t1_scene(self, t, sc, i):
         from template_render import comp, rounded_card
-        C = self._t1(); m = self._media(sc['image'], (t - sc['t0']) + sc.get('in', 0))
-        mkey = (i, -1 if not sc['image'].endswith(('.mp4', '.mov', '.webm')) else int(((t - sc['t0']) + sc.get('in', 0)) * 30))
-        if sc.get('crop'):   # [x0, y0, x1, y1] fractions: zoom the card onto the UI element being named
-            x0_, y0_, x1_, y1_ = sc['crop']; hh_, ww_ = m.shape[:2]
+        sh, k, s0 = self._t1_shot(t, sc)
+        if sh.get('fill'): return self._t1_fill(t, sc, sh, i, k, s0)
+        C = self._t1(); is_vid = sh['image'].endswith(('.mp4', '.mov', '.webm'))
+        m = self._media(sh['image'], max(0.0, t - s0) + sh.get('in', 0))
+        mkey = (i, k, -1 if not is_vid else int((max(0.0, t - s0) + sh.get('in', 0)) * 30))
+        if sh.get('crop'):   # [x0, y0, x1, y1] fractions: zoom the card onto the UI element being named
+            x0_, y0_, x1_, y1_ = sh['crop']; hh_, ww_ = m.shape[:2]
             m = m[int(y0_ * hh_):int(y1_ * hh_), int(x0_ * ww_):int(x1_ * ww_)]
         mh, mw = m.shape[:2]
         # backdrop: cover-fit, heavy blur, darkened
@@ -212,30 +226,90 @@ class StyleT1:
         p = min(1.0, max(0.0, (t - sc['t0']) / max(0.1, sc['t1'] - sc['t0'])))   # transitions sample outside [t0, t1]
         cw_max, ch_max = 800, 680; ar = mw / mh
         cw, chh = (cw_max, int(cw_max / ar)) if cw_max / ar <= ch_max else (int(ch_max * ar), ch_max)
-        z = 1.0 + 0.06 * p; crop_w, crop_h = int(mw / z), int(mh / z)
-        mc = m[(mh - crop_h) // 2:(mh - crop_h) // 2 + crop_h, (mw - crop_w) // 2:(mw - crop_w) // 2 + crop_w]
+        ps_ = min(1.0, max(0.0, (t - s0) / max(0.1, (sh['dur'] if 'dur' in sh and sc.get('clips') else sc['t1'] - sc['t0']))))
+        if is_vid: z = 1.0 + 0.06 * ps_; dx = 0.0
+        else:      # stills get a Ken Burns move: push-in + slow lateral drift (direction alternates per scene)
+            z = 1.0 + 0.14 * ps_; dx = (0.5 - ps_) * 0.06 * (1 if (i + k) % 2 else -1)
+        crop_w, crop_h = int(mw / z), int(mh / z)
+        ox_ = int(np.clip((mw - crop_w) / 2 + dx * mw, 0, mw - crop_w))
+        mc = m[(mh - crop_h) // 2:(mh - crop_h) // 2 + crop_h, ox_:ox_ + crop_w]
         key = None
         card = rounded_card(mc, cw, chh, r=30, border=6, border_col='#E3121B', shadow=True)
         a = max(0, int(round((t - sc['t0']) * FPS))); ps = [0.0, 0.62, 1.06, 1.0][min(a, 3)] if a < 4 else 1.0
+        if k > 0:   # quick cut inside the scene: 3-frame scale kick instead of a re-pop
+            b = int(round((t - s0) * FPS)); ps = [1.04, 1.02, 1.01][b] if 0 <= b < 3 else 1.0
         cy = 755
         pk = (int(CXS - cw * 1.06 / 2 - 6), int(cy - chh * 1.06 / 2 - 6), int(CXS + cw * 1.06 / 2 + 6), int(cy + chh * 1.06 / 2 + 6))
         self.check(pk, 'cutaway card', t, face=False)
         comp(c, card, CXS, cy, scale=ps)
         # title pill (HEAD band) + kicker
-        if sc.get('title'):
-            k2 = ('ttl', sc['title'])
-            if k2 not in self._t1_txt: self._t1_txt[k2] = _fit_pill(sc['title'], 'intertight-i:800', 44, padx=30, pady=14)
+        if sh.get('title'):
+            k2 = ('ttl', sh['title'])
+            if k2 not in self._t1_txt: self._t1_txt[k2] = _fit_pill(sh['title'], 'intertight-i:800', 44, padx=30, pady=14)
             pl = self._t1_txt[k2]; tcy = max(330, cy - chh / 2 - 20 - (pl.shape[0] - 28) / 2)
-            s2 = _pop(a - 2)
+            same = k > 0 and sc['clips'][k - 1].get('title', sc.get('title')) == sh['title']
+            s2 = 1.0 if same else _pop((a - 2) if k == 0 else int(round((t - s0) * FPS)))
             pk = (int(CXS - pl.shape[1] * 1.12 / 2 + 12), int(tcy - (pl.shape[0] - 28) * 1.12 / 2), int(CXS + pl.shape[1] * 1.12 / 2 - 12), int(tcy + (pl.shape[0] - 28) * 1.12 / 2))
             self.check(pk, 'cutaway title', t, face=False)
             comp(c, pl, CXS, tcy, scale=s2)
-        if sc.get('credit') and chh <= 600:   # small source credit under the card
-            k3 = ('cr', sc['credit'])
+        if sh.get('credit') and chh <= 600:   # small source credit under the card
+            k3 = ('cr', sh['credit'])
             if k3 not in self._t1_txt:
                 from template_render import text
-                self._t1_txt[k3] = text(sc['credit'], 'intertight-i:500', 26, fill='#FFFFFF', shadow=(2, 2, 3, 0.6))
+                self._t1_txt[k3] = text(sh['credit'], 'intertight-i:500', 26, fill='#FFFFFF', shadow=(2, 2, 3, 0.6))
             box = comp(c, self._t1_txt[k3], CXS, cy + chh / 2 + 30, alpha=0.8); self.check(box, 'credit', t, face=False)
+        self._t1_caption(c, t, C['cap_cy'], check_face=False)
+        from fx import grain
+        grain(c, int(t * FPS), amt=3.0)
+        return c
+
+    def _t1_fill(self, t, sc, sh, i, k, s0):
+        """Full-bleed B-roll: the clip covers the whole 1080x1920 frame (cover-fit, focus fx/fy), slow push-in,
+        dark top/bottom gradients so the title pill (HEAD band) and the caption stay readable."""
+        from template_render import comp, text
+        C = self._t1(); is_vid = sh['image'].endswith(('.mp4', '.mov', '.webm'))
+        tin = max(0.0, t - s0) + sh.get('in', 0)
+        m = self._media(sh['image'], tin)
+        if sh.get('crop'):
+            x0_, y0_, x1_, y1_ = sh['crop']; hh_, ww_ = m.shape[:2]
+            m = m[int(y0_ * hh_):int(y1_ * hh_), int(x0_ * ww_):int(x1_ * ww_)]
+        mh, mw = m.shape[:2]
+        dur_ = sh['dur'] if sc.get('clips') else sc['t1'] - sc['t0']
+        ps_ = min(1.0, max(0.0, (t - s0) / max(0.1, dur_)))
+        z = (1.0 + 0.08 * ps_) if is_vid else (1.0 + 0.16 * ps_)
+        s = max(W / mw, H / mh) * z
+        bw, bh = int(mw * s) + 2, int(mh * s) + 2
+        fx, fy = sh.get('fx', 0.5), sh.get('fy', 0.5)
+        if not is_vid: fx = fx + (0.5 - ps_) * 0.08 * (1 if (i + k) % 2 else -1)
+        ox = int(np.clip(fx * bw - W / 2, 0, bw - W)); oy = int(np.clip(fy * bh - H / 2, 0, bh - H))
+        # resize only the visible window (faster than resizing the whole cover image)
+        x0s, y0s = ox / s, oy / s; ws, hs = W / s, H / s
+        win = m[int(y0s):int(np.ceil(y0s + hs)) + 1, int(x0s):int(np.ceil(x0s + ws)) + 1]
+        c = cv2.resize(win, (W, H), interpolation=cv2.INTER_LINEAR).astype(np.float32)
+        if 'fillgrad' not in C:
+            yy = np.linspace(0, 1, H)[:, None, None]
+            g = np.clip(1 - yy / 0.26, 0, 1) ** 1.6 * 0.72 + np.clip((yy - 0.55) / 0.45, 0, 1) ** 1.4 * 0.78
+            C['fillgrad'] = (1 - g).astype(np.float32)
+        c = c * 0.92 * C['fillgrad']
+        c = c * (1 - C['glow']) + C['glow_col'] * C['glow']
+        b = int(round((t - s0) * FPS))
+        if k > 0 and 0 <= b < 3:   # quick cut: 3-frame zoom kick
+            zk = [1.05, 1.025, 1.01][b]; cc = cv2.resize(c, (int(W * zk), int(H * zk)))
+            oy2, ox2 = (cc.shape[0] - H) // 2, (cc.shape[1] - W) // 2; c = cc[oy2:oy2 + H, ox2:ox2 + W]
+        a = max(0, int(round((t - sc['t0']) * FPS)))
+        if sh.get('title'):
+            k2 = ('ttl', sh['title'])
+            if k2 not in self._t1_txt: self._t1_txt[k2] = _fit_pill(sh['title'], 'intertight-i:800', 44, padx=30, pady=14)
+            pl = self._t1_txt[k2]; tcy = 352
+            same = k > 0 and sc['clips'][k - 1].get('title', sc.get('title')) == sh['title']
+            s2 = 1.0 if same else _pop((a - 2) if k == 0 else b)
+            pk = (int(CXS - pl.shape[1] * 1.12 / 2 + 12), int(tcy - (pl.shape[0] - 28) * 1.12 / 2), int(CXS + pl.shape[1] * 1.12 / 2 - 12), int(tcy + (pl.shape[0] - 28) * 1.12 / 2))
+            self.check(pk, 'cutaway title', t, face=False)
+            comp(c, pl, CXS, tcy, scale=s2)
+        if sh.get('credit'):
+            k3 = ('cr', sh['credit'])
+            if k3 not in self._t1_txt: self._t1_txt[k3] = text(sh['credit'], 'intertight-i:500', 26, fill='#FFFFFF', shadow=(2, 2, 3, 0.6))
+            box = comp(c, self._t1_txt[k3], CXS, 412, alpha=0.75); self.check(box, 'credit', t, face=False)
         self._t1_caption(c, t, C['cap_cy'], check_face=False)
         from fx import grain
         grain(c, int(t * FPS), amt=3.0)

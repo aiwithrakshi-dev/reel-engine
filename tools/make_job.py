@@ -36,7 +36,7 @@ job = dict(template=plan.get('template', 1), hook=plan['hook'], title=plan.get('
            face=dict(cap_top=f['cap_top'] + dy - grow, chin=f['chin'] + dy + grow, x0=f['x0'] - growx, x1=f['x1'] + growx),
            face_src_c=prep['face_src_c'], punch=cuts, punch_scale=scale,
            words=words, glossary=plan.get('glossary', {}), headlines=heads, scenes=plan.get('scenes', []),
-           vo=os.path.join(rd, 'vo.wav'), music=plan['music'], music_db=plan.get('music_db', -27),
+           vo=os.path.join(rd, 'vo.wav'), music=plan['music'], music_db=plan.get('music_db', -29),
            sfx=plan.get('sfx', {}), end_hit=round(vo_end + 0.28, 3), caption_px=plan.get('caption_px', 50))
 json.dump(job, open(os.path.join(rd, 'job.json'), 'w'), indent=1)
 print('job', rd, 'dur', dur, 'dy', dy, 'cap_top', job['face']['cap_top'], 'chin', job['face']['chin'], 'cuts', len(cuts),

@@ -336,6 +336,22 @@ red-glow backdrop.
      run with `< /dev/null` inside shell loops.
 - B-roll in batches: official product media (credited "Source: <site>") + Magnific stock (credited "Magnific stock").
   No faces in B-roll unless it is the product UI itself; skip or crop any person's face.
+- **Moving B-roll first (v2, 25 Nov 2026)** — Rakshith rejected cutaways built mostly from still images. Target 30–45 %
+  of the runtime as B-roll, mostly video:
+  1. official product video: `tools/fetch_media.py <url> <dir> --videos` also finds MP4/WebM referenced in scripts/JSON
+     (Next.js, CMS payloads); official GIF demos → convert to MP4 (`ffmpeg -vf fps=30,format=yuv420p`);
+  2. Magnific stock video (`stock_search content_type=video` → `stock_download type=video max_bytes`), cut to ≤ 12 s;
+  3. stills only for the exact screen the voice names (pricing table, settings page) — they get a Ken Burns move.
+  Scene keys: `fill: true` = full-bleed 1080×1920 cover-fit with `fx`/`fy` focus (best for stock footage and vertical
+  official clips; dark top/bottom gradients keep the title pill and caption readable); default = red-bordered card
+  (best for UI screen recordings); `clips: [{image, in, dur, title, credit, fill, crop, fx, fy}]` = several shots
+  inside one scene with 3-frame zoom-kick quick cuts (+ a tick SFX); `in` = start offset into the clip.
+  Never show faces in B-roll (use `in`/`crop`/`fx` to stay on hands, screens and product).
+- **Audio audit** (`tools/audio_audit.py`, run by `batch_audit.py`): rebuilds the mix with voice / music / SFX stems
+  and checks voice (no clipping, no clicks at silence-cut joins, steady level), music (≥ 18 dB under the voice while
+  talking — default bed −29 dB ≈ 20 dB under —, never swelling in pauses, still audible), SFX (no hit louder than the
+  voice, hits audible, never within 4 LU of a word — SFX are sidechain-ducked under the voice, `sfx_db` default −15)
+  and the final mix (−14 LUFS ±1, ≤ −1 dBTP, LRA ≤ 9, no jump-scare opening, no dead air). Any FAIL → re-mix/re-edit.
 - **Text match**: captions, labels, big words and card titles must say the same thing the same way — numbers as
   digits everywhere ("4 minutes", "9 references", "5–15-second"), product names in their official spelling and case
   (n8n, Realtime, Settings → Migration Report), the comment keyword in CAPS ("Comment PROMPT"), no stray capitals
