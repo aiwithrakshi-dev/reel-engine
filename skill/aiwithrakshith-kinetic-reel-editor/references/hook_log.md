@@ -5,6 +5,11 @@ Add a row when a reel is delivered (newest first). Hooks are listed in `SKILL.md
 
 | Date | Reel | Brand / language | Topic energy | Hook | Notes |
 |---|---|---|---|---|---|
+| 2026-11-24 | Higgsfield Cinema Studio 4.0: the Director's Panel (/temp-1) | aiwithrakshith.global / English | high | `face_punch` | music Night_Run_Sequence, ~20 dB under the voice |
+| 2026-11-24 | Hera: AI motion designer for launch videos (/temp-1) | aiwithrakshith.global / English | high | `shutter_blinds` | music Boot_Sequence, ~20 dB under the voice |
+| 2026-11-24 | GPT-6.1 Terra: half the price, 3x faster (the catch) (/temp-1) | aiwithrakshith.global / English | high | `slice_glitch` | music Pressure_Line, ~20 dB under the voice |
+| 2026-11-24 | Wizshot 1.0: 9 references, same face every shot (/temp-1) | aiwithrakshith.global / English | high | `halftone_iris` | music Liquid_Motion, ~20 dB under the voice |
+| 2026-11-24 | Kling 4.0: one 30-second AI shot with keyframes (/temp-1) | aiwithrakshith.global / English | high | `rgb_converge` | music Rainframe, ~20 dB under the voice |
 | 2026-11-24 | Perplexity Computer works inside Slack (/temp-1) | aiwithrakshith.global / English | high | `zoom_punch` | music Machine_Loop, ~20 dB under the voice |
 | 2026-11-24 | Riverside Agents: 4 AI agents for your podcast (/temp-1) | aiwithrakshith.global / English | high | `red_wipe` | music Timeline_Glide, ~20 dB under the voice |
 | 2026-11-24 | Zapier AI steps now cost up to 20 tasks a run (/temp-1) | aiwithrakshith.global / English | high | `pixel_assemble` | music Compile_Signal, ~20 dB under the voice |

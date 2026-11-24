@@ -36,3 +36,8 @@ red-glow backdrop.
      run with `< /dev/null` inside shell loops.
 - B-roll in batches: official product media (credited "Source: <site>") + Magnific stock (credited "Magnific stock").
   No faces in B-roll unless it is the product UI itself; skip or crop any person's face.
+- **Text match**: captions, labels, big words and card titles must say the same thing the same way — numbers as
+  digits everywhere ("4 minutes", "9 references", "5–15-second"), product names in their official spelling and case
+  (n8n, Realtime, Settings → Migration Report), the comment keyword in CAPS ("Comment PROMPT"), no stray capitals
+  from ASR ("Character drift", not "Character Drift"). Print every job's caption text before rendering and fix it with
+  `word_fix`.
