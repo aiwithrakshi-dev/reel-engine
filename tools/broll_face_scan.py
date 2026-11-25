@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Scan every B-roll window a plan uses for faces (Rakshith: "don't use any kind of faces" in B-roll).
+"""Scan every B-roll window a plan uses for faces and black/flash frames or clips that end too early (Rakshith: "don't use any kind of faces" in B-roll).
 
   python3 tools/broll_face_scan.py <reel_dir> [<reel_dir> ...]
 
@@ -31,6 +31,17 @@ for rd in sys.argv[1:]:
                 for t in np.arange(0, du, 0.25):
                     cap.set(1, int((c.get('in', 0) + t) * fps)); ok, f = cap.read()
                     if ok and faces(f, c.get('crop')): hits.append(round(c.get('in', 0) + t, 2))
+                n0 = int(c.get('in', 0) * fps); cap.set(1, n0); dark = []
+                cap2 = cv2.VideoCapture(img); nn = int(cap2.get(7)); med = []
+                for q in np.linspace(0, max(0, nn - 1), 12).astype(int):
+                    cap2.set(1, int(q)); ok2, g2 = cap2.read()
+                    if ok2: med.append(cv2.resize(g2, (64, 36)).mean())
+                lowkey = np.median(med) < 25 if med else False   # a dark-by-design clip (product on black) is fine
+                for k_ in range(int(du * fps)):   # also catch black / flash frames inside the window (stock montages)
+                    ok, f = cap.read()
+                    if not ok: dark.append('END'); break
+                    if not lowkey and cv2.resize(f, (64, 36)).mean() < 12: dark.append(round(c.get('in', 0) + k_ / fps, 2))
+                if dark: flag += 1; print(f'{os.path.basename(rd)}  {img}  in {c.get("in", 0)}  -> black/ended frames at {dark[:6]}')
             else:
                 f = cv2.imread(img)
                 if f is not None and faces(f, c.get('crop')): hits.append('image')

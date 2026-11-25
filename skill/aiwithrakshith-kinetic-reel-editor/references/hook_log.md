@@ -5,6 +5,7 @@ Add a row when a reel is delivered (newest first). Hooks are listed in `SKILL.md
 
 | Date | Reel | Brand / language | Topic energy | Hook | Notes |
 |---|---|---|---|---|---|
+| 2026-11-25 | Kling 4.0: one 30-second AI shot with keyframes (/temp-1) | aiwithrakshith.global / English | high | `rgb_converge` | music Rainframe, ~20 dB under the voice; v2 |
 | 2026-11-25 | Perplexity Computer works inside Slack (/temp-1) | aiwithrakshith.global / English | high | `zoom_punch` | music Machine_Loop, ~20 dB under the voice; v2 |
 | 2026-11-25 | Riverside Agents: 4 AI agents for your podcast (/temp-1) | aiwithrakshith.global / English | high | `red_wipe` | music Timeline_Glide, ~20 dB under the voice; v2 |
 | 2026-11-24 | Zapier AI steps now cost up to 20 tasks a run (/temp-1) | aiwithrakshith.global / English | high | `pixel_assemble` | music Compile_Signal, ~20 dB under the voice; v2: moving B-roll + audio audit |
