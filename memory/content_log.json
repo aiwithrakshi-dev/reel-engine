@@ -2,6 +2,19 @@
  "reels": [
   {
    "date": "2026-11-25",
+   "title": "WhatsApp order mistakes — order confirmation system",
+   "brand": "kannada",
+   "lang": null,
+   "template": 1,
+   "hook": "slice_glitch",
+   "duration": 60.12,
+   "drive": null,
+   "qc": null,
+   "notes": null,
+   "headlines": null
+  },
+  {
+   "date": "2026-11-25",
    "title": "n8n 3.0 migration check (take 2)",
    "brand": "aiwithrakshith.global",
    "lang": "en",
