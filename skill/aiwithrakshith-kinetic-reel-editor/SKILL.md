@@ -352,6 +352,12 @@ red-glow backdrop.
   talking — default bed −29 dB ≈ 20 dB under —, never swelling in pauses, still audible), SFX (no hit louder than the
   voice, hits audible, never within 4 LU of a word — SFX are sidechain-ducked under the voice, `sfx_db` default −15)
   and the final mix (−14 LUFS ±1, ≤ −1 dBTP, LRA ≤ 9, no jump-scare opening, no dead air). Any FAIL → re-mix/re-edit.
+  The bed and SFX are auto-levelled against each reel's own voice (`music_under` −15.5 LU before ducking ≈ 21–22 dB
+  after; SFX scaled with the voice) and library SFX tails are cut (impact 0.75 s, whoosh 0.6 s, pop 0.28 s, tick
+  0.2 s) so they never sit under the next words. Audio-only fixes: `tools/remix_audio.py <reel_dir>` (no re-render).
+  WER compares like with like (digits ↔ number words, "1x", "+", "$").
+- **Face scan**: `tools/broll_face_scan.py <reel_dirs>` before rendering; look at every flagged window (Haar flags
+  server racks and mics too) and move `in`/`crop` off any real face — official demo videos often show avatars.
 - **Text match**: captions, labels, big words and card titles must say the same thing the same way — numbers as
   digits everywhere ("4 minutes", "9 references", "5–15-second"), product names in their official spelling and case
   (n8n, Realtime, Settings → Migration Report), the comment keyword in CAPS ("Comment PROMPT"), no stray capitals

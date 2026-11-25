@@ -211,7 +211,11 @@ def build_audio(job, spec, out_wav, stems_dir=None):
     sr = 48000; dur = job['duration']; n = int(sr * dur); sfx = np.zeros(n, np.float32)
     lib = job.get('sfx', {})     # e.g. {'impact': '/path/impact.mp3', 'pop': ..., 'whoosh': ...} (Magnific SFX)
     def add(kind, t, gain):
-        y = (_sample(lib[kind]) if kind in lib else synth(kind)) * gain; i = int(t * sr); j = min(n, i + len(y))
+        y = (_sample(lib[kind]) if kind in lib else synth(kind)) * gain
+        L = int(sr * {'impact': 0.75, 'whoosh': 0.6, 'swoosh': 0.4, 'pop': 0.28, 'tick': 0.2}.get(kind, 0.8))
+        if len(y) > L:   # cut long library tails so they never sit under the next words (audio audit)
+            y = y[:L].copy(); k = int(L * 0.45); y[-k:] *= np.linspace(1, 0, k)[:, None] ** 2 if y.ndim == 2 else np.linspace(1, 0, k) ** 2
+        i = int(t * sr); j = min(n, i + len(y))
         if 0 <= i < n: sfx[i:j] += y[:j - i]
     add('impact', 0.0, 0.42)
     for h in job.get('headlines', []):
@@ -232,9 +236,23 @@ def build_audio(job, spec, out_wav, stems_dir=None):
     sf_path = out_wav + '.sfx.wav'
     import soundfile as sf; sf.write(sf_path, np.stack([sfx, sfx], 1), sr)
     mdb = job.get('music_db', -29)   # dialogue-safe: bed ~20 dB under the voice (22 Nov 2026)
+    sdb = job.get('sfx_db', -15)
+    try:   # auto level (audio audit, 25 Nov 2026): set the bed and SFX relative to THIS voice, not fixed dB
+        import soundfile as _sf, pyloudnorm as _pl
+        _v, _sr = _sf.read(job['vo'], always_2d=True); _v = _v[:int(dur * _sr)]
+        _gate = np.abs(_v.mean(1)) > 1e-3
+        _mtr = _pl.Meter(_sr); Lv = _mtr.integrated_loudness(_v)
+        _m, _sr2 = _sf.read(job['music'], always_2d=True); _m = _m[:int(min(len(_m) / _sr2, dur + 8) * _sr2)]
+        Lm = _pl.Meter(_sr2).integrated_loudness(_m)
+        if np.isfinite(Lv) and np.isfinite(Lm):
+            mdb = round((Lv + job.get('music_under', -15.5)) - Lm, 1)     # bed ~15.5 LU under before ducking ≈ 21-22 dB under after the sidechain
+            sdb = round(job.get('sfx_db', -15) + (Lv + 29.0), 1) if 'sfx_db' not in job else job['sfx_db']
+            print(f'audio auto-level: voice {Lv:.1f} LUFS, bed {Lm:.1f} -> {mdb} dB, sfx {sdb} dB', file=sys.stderr)
+    except Exception as e:
+        print('audio auto-level skipped:', e, file=sys.stderr)
     fc = (f"[1:a]atrim=0:{dur},asetpts=PTS-STARTPTS,volume={mdb}dB,highpass=f=60,lowpass=f=9000,equalizer=f=1800:t=q:w=1.2:g=-6,equalizer=f=3500:t=q:w=1.2:g=-4,afade=t=out:st={dur - 0.04}:d=0.04[m];"
           f"[0:a]atrim=0:{dur},asetpts=PTS-STARTPTS,asplit=3[v][vk][vk2];[m][vk]sidechaincompress=threshold=0.02:ratio=6:attack=20:release=450[md];"
-          f"[2:a]volume={job.get('sfx_db', -15)}dB[s0];[s0][vk2]sidechaincompress=threshold=0.03:ratio=4:attack=4:release=220:makeup=1[s];"   # SFX duck under words (audio audit 25 Nov 2026)
+          f"[2:a]volume={sdb}dB[s0];[s0][vk2]sidechaincompress=threshold=0.025:ratio=6:attack=3:release=240:makeup=1[s];"   # SFX duck under words (audio audit 25 Nov 2026)
           f"[v][md][s]amix=inputs=3:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]")
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', job['vo'], '-stream_loop', '-1', '-i', job['music'], '-i', sf_path,
                     '-filter_complex', fc, '-map', '[a]', '-ac', '2', '-t', str(dur), out_wav], check=True)

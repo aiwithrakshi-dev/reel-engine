@@ -36,8 +36,14 @@ import soundfile as sf
 from faster_whisper import WhisperModel
 m = WhisperModel('medium', device='cpu', compute_type='int8', cpu_threads=2)
 x, _ = sf.read(wav, dtype='float32'); segs, _ = m.transcribe(x, beam_size=3, language='en')
-hyp = re.findall(r"[a-z0-9']+", ' '.join(s.text for s in segs).lower())
-ref = re.findall(r"[a-z0-9']+", ' '.join(w[0] for w in words).lower())
+NUM = {w: str(i) for i, w in enumerate('zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty'.split())}
+def norm(txt):   # captions write numbers as digits ("1x", "+", "5-second"); Whisper writes words — compare like with like
+    t = txt.lower().replace('+', ' plus ').replace('%', ' percent ').replace('–', ' to ').replace('-', ' ').replace('→', ' ')
+    t = re.sub(r'(\d)x\b', r'\1 x', t); t = re.sub(r'\$(\d)', r'\1 dollars ', t)
+    toks = re.findall(r"[a-z0-9.']+", t)
+    return [NUM.get(k, k).strip('.') for k in toks if k.strip('.')]
+hyp = norm(' '.join(s.text for s in segs))
+ref = norm(' '.join(w[0] for w in words))
 d = np.zeros((len(ref) + 1, len(hyp) + 1), int); d[:, 0] = range(len(ref) + 1); d[0, :] = range(len(hyp) + 1)
 for i in range(1, len(ref) + 1):
     for j in range(1, len(hyp) + 1):
