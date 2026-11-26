@@ -222,6 +222,8 @@ def build_audio(job, spec, out_wav, stems_dir=None):
         if h['big_t'] < dur: add('pop' if spec['energy'] != 'calm' else 'tick', h['big_t'], 0.35)
     for s in job.get('scenes', []):
         if s['t0'] < dur: add('whoosh', max(0, s['t0'] - 0.18), 0.36); add('whoosh', max(0, s['t1'] - 0.18), 0.3)
+        for tl in s.get('tiles', []):              # /temp-1 icon tiles: a pop on every tile (and a tick on each arrow)
+            if tl['t'] < dur: add('pop', tl['t'], 0.32)
         acc = s['t0']
         for c in s.get('clips', [])[:-1]:          # quick cuts inside a multi-shot scene
             acc += c['dur']
@@ -251,7 +253,7 @@ def build_audio(job, spec, out_wav, stems_dir=None):
     except Exception as e:
         print('audio auto-level skipped:', e, file=sys.stderr)
     fc = (f"[1:a]atrim=0:{dur},asetpts=PTS-STARTPTS,volume={mdb}dB,highpass=f=60,lowpass=f=9000,equalizer=f=1800:t=q:w=1.2:g=-6,equalizer=f=3500:t=q:w=1.2:g=-4,afade=t=out:st={dur - 0.04}:d=0.04[m];"
-          f"[0:a]atrim=0:{dur},asetpts=PTS-STARTPTS,asplit=3[v][vk][vk2];[m][vk]sidechaincompress=threshold=0.02:ratio=6:attack=20:release=450[md];"
+          f"[0:a]apad,atrim=0:{dur},asetpts=PTS-STARTPTS,asplit=3[v][vk][vk2];[m][vk]sidechaincompress=threshold=0.02:ratio=6:attack=20:release=450[md];"
           f"[2:a]volume={sdb}dB[s0];[s0][vk2]sidechaincompress=threshold=0.025:ratio=6:attack=3:release=240:makeup=1[s];"   # SFX duck under words (audio audit 25 Nov 2026)
           f"[v][md][s]amix=inputs=3:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]")
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', job['vo'], '-stream_loop', '-1', '-i', job['music'], '-i', sf_path,

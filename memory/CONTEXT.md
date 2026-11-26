@@ -1,6 +1,6 @@
 # Reel engine memory (generated — read this before every edit)
 
-Updated 2026-11-25 04:17. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
+Updated 2026-11-25 18:29. Source: memory/content_log.json + memory/lessons.md. Rebuild: `python3 tools/memory.py context`.
 
 ## Non-negotiables
 - 1080x1920, **60 fps**, H.264 High + AAC 48 kHz, -14 LUFS, true peak <= -1 dBTP.
@@ -33,13 +33,14 @@ Updated 2026-11-25 04:17. Source: memory/content_log.json + memory/lessons.md. R
 ## Google Drive
 - Social Media root: https://drive.google.com/drive/folders/1JBIU5uDtb8-5eDNs4hDbtGomyTqXzTmt (id `1JBIU5uDtb8-5eDNs4hDbtGomyTqXzTmt`)
 - Months: 2026-11 November `1jjPyisRuBOBlO1WUWUo41KETIct3Lw7G`
-- Days: 2026-11-21 `1FP4073opUPgKV2jep81VwPWFeUDnZX3H`, 2026-11-22 `1fGd3_QsMjWXREu18j51KieSfUR4JWQ8T`
+- Days: 2026-11-21 `1FP4073opUPgKV2jep81VwPWFeUDnZX3H`, 2026-11-22 `1fGd3_QsMjWXREu18j51KieSfUR4JWQ8T`, 2026-11-25 `18BSMTThrZUbc235eE4zydYqAd9LPMiJ-`
 - Layout: Social Media / YYYY-MM Month / Day DD - YYYY-MM-DD / <reel title> / video, thumbnail, Caption (Doc), Timeline (Doc)
 - Asset library (use FIRST, before the Magnific connector): https://drive.google.com/drive/folders/1w8JfNSj9YE5CduUC8q6NzJ2uqe-FMMXK — 98 icons (ai 26, code 18, app 18, money 18 lineal-color; social 18 outline) + 2 vectors (tech-bg, dev-scenes)
 
 ## Recent reels (newest first)
 | date | title | brand | template | hook | Drive |
 |---|---|---|---|---|---|
+| 2026-11-25 | WhatsApp order mistakes — order confirmation system | kannada | 1 | `slice_glitch` |  |
 | 2026-11-25 | n8n 3.0 migration check (take 2) | aiwithrakshith.global | 1 | `rgb_converge` |  |
 | 2026-11-25 | n8n 3.0 is a one-way door (migration check) | aiwithrakshith.global | 1 | `red_wipe` |  |
 | 2026-11-25 | Boson Higgs Realtime handles interruptions | aiwithrakshith.global | 1 | `halftone_iris` |  |
@@ -54,12 +55,11 @@ Updated 2026-11-25 04:17. Source: memory/content_log.json + memory/lessons.md. R
 | 2026-11-25 | Kling 4.0: one 30-second AI shot with keyframes | aiwithrakshith.global | 1 | `rgb_converge` |  |
 | 2026-11-25 | Perplexity Computer works inside Slack | aiwithrakshith.global | 1 | `zoom_punch` |  |
 | 2026-11-25 | Riverside Agents: 4 AI agents for your podcast | aiwithrakshith.global | 1 | `red_wipe` |  |
-| 2026-11-24 | Zapier AI steps now cost up to 20 tasks a run | aiwithrakshith.global | 1 | `pixel_assemble` |  |
 
 ## Next reel
-- Blocked hooks (last 5): `halftone_iris`, `pixel_assemble`, `red_wipe`, `rgb_converge`, `strip_slam`
+- Blocked hooks (last 5): `halftone_iris`, `red_wipe`, `rgb_converge`, `slice_glitch`, `strip_slam`
 - Least-used templates lately: /temp-2, /temp-3, /temp-4
-- Free hooks: `neg_flash`, `zoom_punch`, `slice_glitch`, `letterbox_open` (run `tools/memory.py suggest --energy high|medium|calm`)
+- Free hooks: `neg_flash`, `pixel_assemble`, `zoom_punch`, `letterbox_open` (run `tools/memory.py suggest --energy high|medium|calm`)
 
 ## Lessons (from Rakshith — keep applying)
 - Keep his real room as the background; never matte him onto a studio/plain background unless asked for that one video.
@@ -82,3 +82,4 @@ Updated 2026-11-25 04:17. Source: memory/content_log.json + memory/lessons.md. R
 - 2026-11-22: Music was too loud on Day 24 and Instagram's auto-translate could not hear the dialogue. Rakshith wants slow, soft background music: bed ~20 dB under the voice, vocal-band EQ dip, SFX ~6 dB under; verify with Whisper on the final mix (0 % WER vs the clean voice).
 - 2026-11-22: Every reel must end with five outputs: Instagram thumbnail, 4K 60 fps video, short SEO caption (keyword first, comment-keyword CTA, 3-5 hashtags) with alt text + pinned comment, DM reply text, and a DM document (.docx + .pdf) with the full explanation and an 'AI with Rakshith' watermark (tools/reel_package.py --post).
 - 2026-11-22: Templates that keep the talking head clean (/temp-2) need a cover title on the thumbnail: set thumb_title/thumb_sub in post.json.
+- 2026-11-25: 2026-11-25: Kannada reels on /temp-1: label pills now render Kannada with Noto Sans Kannada (_pill_kn). VO shorter than the reel made -shortest cut the end hit; build_audio now apads the VO. New /temp-1 'tiles' scene: icon tiles (grid or arrow flow) popping on the spoken word.

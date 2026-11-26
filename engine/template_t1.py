@@ -32,11 +32,26 @@ def _pill(txt, font, bg=RED, fg=(255, 255, 255), padx=26, pady=12):
     return np.asarray(im)
 
 
+def _pill_kn(txt, size, bg=RED, padx=26, pady=12):
+    """Kanglish pill: Kannada runs in Noto Sans Kannada, Latin runs in Inter Tight (RAQM shaping, 10° shear)."""
+    from kannada_text import render_text
+    lay = (render_text(txt, size=size, weight=600, shadow=False) * 255).astype(np.uint8)
+    a = lay[..., 3]; ys, xs = np.where(a > 8)
+    lay = lay[max(0, ys.min() - 2):ys.max() + 3, max(0, xs.min() - 2):xs.max() + 3]
+    th, tw = lay.shape[:2]; w = tw + 2 * padx; h = th + 2 * pady
+    im = Image.new('RGBA', (w + 24, h + 28), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+    d.rounded_rectangle((14, 18, 14 + w, 18 + h), h // 2, fill=(0, 0, 0, 90))
+    d.rounded_rectangle((10, 10, 10 + w, 10 + h), h // 2, fill=bg + (255,))
+    im.alpha_composite(Image.fromarray(lay, 'RGBA'), (10 + padx, 10 + pady))
+    return np.asarray(im)
+
+
 def _fit_pill(txt, spec, size, padx=26, pady=12, maxw=780):
     """Pill whose font shrinks until its PEAK (1.12x pop) width fits the safe box (895 px wide)."""
     from template_render import font
+    from kannada_text import has_kannada
     while True:
-        pl = _pill(txt, font(spec, size), padx=padx, pady=pady)
+        pl = _pill_kn(txt, size, padx=padx, pady=pady) if has_kannada(txt) else _pill(txt, font(spec, size), padx=padx, pady=pady)
         if (pl.shape[1] - 24) <= maxw or size <= 24: return pl
         size -= 2
 
@@ -201,8 +216,66 @@ class StyleT1:
                 return sh, k, acc
             acc += c['dur']
 
+    def _t1_tile(self, icon, label, w, h):
+        key = ('tile', icon, label, w, h)
+        if key not in self._t1_txt:
+            from template_render import font
+            im = Image.new('RGBA', (w + 24, h + 28), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+            d.rounded_rectangle((14, 20, 14 + w, 20 + h), 34, fill=(0, 0, 0, 110))
+            d.rounded_rectangle((10, 10, 10 + w, 10 + h), 34, fill=(255, 255, 255, 255), outline=RED + (255,), width=5)
+            ic = Image.open(icon).convert('RGBA'); s = int(min(w, h) * 0.5); ic = ic.resize((s, s), Image.LANCZOS)
+            im.alpha_composite(ic, (10 + (w - s) // 2, 10 + int(h * 0.12)))
+            f = font('intertight-i:800', 40)
+            while f.getlength(label) > w - 30 and f.size > 24: f = font('intertight-i:800', f.size - 2)
+            tw = f.getlength(label); d.text((10 + (w - tw) / 2, 10 + int(h * 0.12) + s + 14), label, font=f, fill=(20, 16, 18, 255))
+            self._t1_txt[key] = np.asarray(im)
+        return self._t1_txt[key]
+
+    def _t1_tiles(self, t, sc, i):
+        """Icon tiles on the dark red-glow stage: sc['tiles'] = [{icon, label, t}], sc['cols'] (2 = grid, n = row),
+        sc['arrows'] = True draws red chevrons between tiles in a row (a flow). Each tile pops on its spoken word."""
+        from template_render import comp
+        C = self._t1()
+        if 'dark' not in C:
+            yy = np.linspace(0, 1, H)[:, None, None]; C['dark'] = (np.array((10, 9, 12), np.float32) * (1 - yy) + np.array((34, 4, 8), np.float32) * yy) * np.ones((1, W, 1), np.float32)
+        c = C['dark'] * (1 - C['glow']) + C['glow_col'] * C['glow']
+        c = c.astype(np.float32).copy()
+        tiles = sc['tiles']; n = len(tiles); cols = sc.get('cols', n)
+        rows = math.ceil(n / cols); gap = 40 if not sc.get('arrows') else 70
+        w = int(min(340, (860 - gap * (cols - 1)) / cols)); h = int(w * 1.05)
+        cy0 = 790 - (rows * h + (rows - 1) * 40) / 2 + h / 2
+        a = max(0, int(round((t - sc['t0']) * FPS)))
+        # title pill
+        if sc.get('title'):
+            k2 = ('ttl', sc['title'])
+            if k2 not in self._t1_txt: self._t1_txt[k2] = _fit_pill(sc['title'], 'intertight-i:800', 44, padx=30, pady=14)
+            pl = self._t1_txt[k2]; tcy = 352; s2 = _pop(a - 2)
+            pk = (int(CXS - pl.shape[1] * 1.12 / 2 + 12), int(tcy - (pl.shape[0] - 28) * 1.12 / 2), int(CXS + pl.shape[1] * 1.12 / 2 - 12), int(tcy + (pl.shape[0] - 28) * 1.12 / 2))
+            self.check(pk, 'tiles title', t, face=False)
+            comp(c, pl, CXS, tcy, scale=s2)
+        for j, tl in enumerate(tiles):
+            r, q = divmod(j, cols); in_row = min(cols, n - r * cols)
+            x = CXS + (q - (in_row - 1) / 2) * (w + gap); y = cy0 + r * (h + 40)
+            b = int(round((t - tl['t']) * FPS))
+            if b < 0: continue
+            s = _pop(b, 6) if b < 6 else 1.0
+            lay = self._t1_tile(tl['icon'], tl['label'], w, h)
+            pk = (int(x - w * 1.12 / 2), int(y - h * 1.12 / 2), int(x + w * 1.12 / 2), int(y + h * 1.12 / 2))
+            self.check(pk, 'icon tile', t, face=False)
+            comp(c, lay, x, y + 9, scale=s)
+            if sc.get('arrows') and j > 0 and q > 0:      # red chevron between the previous tile and this one
+                ax = x - (w + gap) / 2; p = min(1.0, b / 6.0)
+                for dd in (-10, 6):
+                    pts = np.array([[ax + dd - 12, y - 24], [ax + dd + 10, y], [ax + dd - 12, y + 24]], np.int32)
+                    cv2.polylines(c, [pts], False, tuple(float(v) for v in RED), 9 if p >= 1 else 6, cv2.LINE_AA)
+        self._t1_caption(c, t, C['cap_cy'], check_face=False)
+        from fx import grain
+        grain(c, int(t * FPS), amt=3.0)
+        return c
+
     def t1_scene(self, t, sc, i):
         from template_render import comp, rounded_card
+        if sc.get('tiles'): return self._t1_tiles(t, sc, i)
         sh, k, s0 = self._t1_shot(t, sc)
         if sh.get('fill'): return self._t1_fill(t, sc, sh, i, k, s0)
         C = self._t1(); is_vid = sh['image'].endswith(('.mp4', '.mov', '.webm'))
